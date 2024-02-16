@@ -15,11 +15,11 @@ import { _mock } from 'src/_mock';
 export function useMockedUser() {
   const user = {
     id: '8864c717-587d-472a-929a-8e5f298024da-0',
-    displayName: 'Jaydon Frankie',
-    email: 'demo@minimals.cc',
+    displayName: 'Multi System',
+    email: 'info@multisystem-eg.com',
     password: 'demo1234',
     photoURL: _mock.image.avatar(24),
-    phoneNumber: '+40 777666555',
+    phoneNumber: '+2(01000323369/01090903959)',
     country: 'United States',
     address: '90210 Broadway Blvd',
     state: 'California',

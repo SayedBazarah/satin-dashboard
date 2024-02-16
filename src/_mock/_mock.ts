@@ -1,6 +1,6 @@
 import { sub } from 'date-fns';
 
-import { ASSETS_API } from 'src/config-global';
+const ASSETS_API = 'https://api-dev-minimal-v510.vercel.app';
 
 import {
   _id,

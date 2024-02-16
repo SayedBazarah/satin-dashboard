@@ -1,3 +1,11 @@
+export type Locale = 'ar' | 'en';
+export type DefaultPageProps = {
+  params: {
+    locale: Locale;
+  };
+  searchParams: Object;
+};
+
 // ----------------------------------------------------------------------
 
 export type SettingsValueProps = {

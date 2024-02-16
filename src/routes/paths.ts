@@ -1,5 +1,12 @@
+import { paramCase } from 'src/utils/change-case';
+
+import { _id, _postTitles } from 'src/_mock/assets';
+
 // ----------------------------------------------------------------------
 
+const MOCK_ID = _id[1];
+
+const MOCK_TITLE = _postTitles[2];
 const ROOTS = {
   AUTH: '/auth',
   DASHBOARD: '/dashboard',
@@ -19,13 +26,26 @@ export const paths = {
   // DASHBOARD
   dashboard: {
     root: ROOTS.DASHBOARD,
-    one: `${ROOTS.DASHBOARD}/one`,
-    two: `${ROOTS.DASHBOARD}/two`,
-    three: `${ROOTS.DASHBOARD}/three`,
-    group: {
-      root: `${ROOTS.DASHBOARD}/group`,
-      five: `${ROOTS.DASHBOARD}/group/five`,
-      six: `${ROOTS.DASHBOARD}/group/six`,
+    checkout: `/product/checkout`,
+    products: {
+      root: `${ROOTS.DASHBOARD}/product`,
+      new: `${ROOTS.DASHBOARD}/product/new`,
+      details: (id: string) => `${ROOTS.DASHBOARD}/product/${id}`,
+      edit: (id: string) => `${ROOTS.DASHBOARD}/product/${id}/edit`,
+      demo: {
+        details: (slug: string) => `${ROOTS.DASHBOARD}/product/${slug}`,
+        edit: (slug: string) => `${ROOTS.DASHBOARD}/product/${slug}/edit`,
+      },
     },
+    orders: `${ROOTS.DASHBOARD}/order`,
+    order: {
+      root: `${ROOTS.DASHBOARD}/order`,
+      details: (id: string) => `${ROOTS.DASHBOARD}/order/${id}`,
+      demo: {
+        details: `${ROOTS.DASHBOARD}/order/${MOCK_ID}`,
+      },
+    },
+    categories: `${ROOTS.DASHBOARD}/categories`,
+    employees: `${ROOTS.DASHBOARD}/employees`,
   },
 };

@@ -1,5 +1,9 @@
 /* eslint-disable perfectionist/sort-imports */
 import 'src/global.css';
+/* eslint-disable perfectionist/sort-imports */
+
+// i18n
+import 'src/locales/i18n';
 
 // ----------------------------------------------------------------------
 
@@ -11,6 +15,8 @@ import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
+import DashboardLayout from 'src/layouts/dashboard';
+import { LocalizationProvider } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -22,10 +28,9 @@ export const viewport = {
 };
 
 export const metadata = {
-  title: 'Minimal UI Kit',
-  description:
-    'The starting point for your next project with Minimal UI Kit, built on the newest version of Material-UI ©, ready to be customized to your style',
-  keywords: 'react,material,kit,application,dashboard,admin,template',
+  title: 'TripleUp',
+  description: 'Fast, scalable, and custom code ecommerce platform.',
+  keywords: 'ecommerce',
   manifest: '/manifest.json',
   icons: [
     { rel: 'icon', url: '/favicon/favicon.ico' },
@@ -44,24 +49,26 @@ export default function RootLayout({ children }: Props) {
     <html lang="en" className={primaryFont.className}>
       <body>
         <AuthProvider>
-          <SettingsProvider
-            defaultSettings={{
-              themeMode: 'light', // 'light' | 'dark'
-              themeDirection: 'ltr', //  'rtl' | 'ltr'
-              themeContrast: 'default', // 'default' | 'bold'
-              themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-              themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-              themeStretch: false,
-            }}
-          >
-            <ThemeProvider>
-              <MotionLazy>
-                <SettingsDrawer />
-                <ProgressBar />
-                {children}
-              </MotionLazy>
-            </ThemeProvider>
-          </SettingsProvider>
+          <LocalizationProvider>
+            <SettingsProvider
+              defaultSettings={{
+                themeMode: 'light', // 'light' | 'dark'
+                themeDirection: 'rtl', //  'rtl' | 'ltr'
+                themeContrast: 'default', // 'default' | 'bold'
+                themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+                themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+                themeStretch: false,
+              }}
+            >
+              <ThemeProvider>
+                <MotionLazy>
+                  <SettingsDrawer />
+                  <ProgressBar />
+                  <DashboardLayout>{children}</DashboardLayout>
+                </MotionLazy>
+              </ThemeProvider>
+            </SettingsProvider>
+          </LocalizationProvider>
         </AuthProvider>
       </body>
     </html>

@@ -44,37 +44,25 @@ const ICONS = {
 // ----------------------------------------------------------------------
 
 export function useNavData() {
+  const t = (s: string) => s;
   const data = useMemo(
     () => [
       // OVERVIEW
       // ----------------------------------------------------------------------
       {
-        subheader: 'overview v5.7.0',
+        subheader: 'overview',
         items: [
-          { title: 'one', path: paths.dashboard.root, icon: ICONS.dashboard },
-          { title: 'two', path: paths.dashboard.two, icon: ICONS.ecommerce },
+          { title: t('dashboard'), path: paths.dashboard.root, icon: ICONS.dashboard },
+          { title: t('products'), path: paths.dashboard.products.root, icon: ICONS.product },
           {
-            title: 'three',
-            path: paths.dashboard.three,
-            icon: ICONS.analytics,
+            title: t('orders'),
+            path: paths.dashboard.orders,
+            icon: ICONS.ecommerce,
           },
-        ],
-      },
-
-      // MANAGEMENT
-      // ----------------------------------------------------------------------
-      {
-        subheader: 'management',
-        items: [
           {
-            title: 'user',
-            path: paths.dashboard.group.root,
-            icon: ICONS.user,
-            children: [
-              { title: 'four', path: paths.dashboard.group.root },
-              { title: 'five', path: paths.dashboard.group.five },
-              { title: 'six', path: paths.dashboard.group.six },
-            ],
+            title: t('category'),
+            path: paths.dashboard.categories,
+            icon: ICONS.label,
           },
         ],
       },
