@@ -42,7 +42,7 @@ type CanRemove = {
   confirmRegister?: (email: string, code: string) => Promise<void>;
   forgotPassword?: (email: string) => Promise<void>;
   resendCodeRegister?: (email: string) => Promise<void>;
-  newPassword?: (email: string, code: string, password: string) => Promise<void>;
+  newPassword?: (token: string, password: string, confirm: string) => Promise<void>;
   updatePassword?: (password: string) => Promise<void>;
 };
 

@@ -12,6 +12,7 @@ import { useSettingsContext } from 'src/components/settings';
 import { palette } from './palette';
 import { shadows } from './shadows';
 import { typography } from './typography';
+
 // options
 import RTL from './options/right-to-left';
 import { customShadows } from './custom-shadows';
@@ -59,7 +60,6 @@ export default function ThemeProvider({ children }: Props) {
   );
 
   const theme = createTheme(memoizedValue as ThemeOptions);
-
   theme.components = merge(componentsOverrides(theme), contrast.components);
 
   return (

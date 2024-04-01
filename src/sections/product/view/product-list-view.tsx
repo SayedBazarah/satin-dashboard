@@ -280,14 +280,7 @@ export default function ProductListView() {
           }}
         />
 
-        <Card
-          sx={{
-            height: { xs: 800, md: 2 },
-            flexGrow: { md: 1 },
-            display: { md: 'flex' },
-            flexDirection: { md: 'column' },
-          }}
-        >
+        <Card sx={{}}>
           <DataGrid
             checkboxSelection
             disableRowSelectionOnClick
@@ -298,7 +291,7 @@ export default function ProductListView() {
             pageSizeOptions={[5, 10, 25]}
             initialState={{
               pagination: {
-                paginationModel: { pageSize: 20 },
+                paginationModel: { pageSize: 5 },
               },
             }}
             onRowSelectionModelChange={(newSelectionModel) => {
@@ -310,15 +303,15 @@ export default function ProductListView() {
               toolbar: () => (
                 <>
                   <GridToolbarContainer>
-                    {/* <ProductTableToolbar
+                    <ProductTableToolbar
                       filters={filters}
                       onFilters={handleFilters}
                       stockOptions={PRODUCT_STOCK_OPTIONS}
                       publishOptions={PUBLISH_OPTIONS}
                     />
 
-                    <GridToolbarQuickFilter /> */}
-                    {/* 
+                    <GridToolbarQuickFilter />
+
                     <Stack
                       spacing={1}
                       flexGrow={1}
@@ -340,7 +333,7 @@ export default function ProductListView() {
                       <GridToolbarColumnsButton />
                       <GridToolbarFilterButton />
                       <GridToolbarExport />
-                    </Stack> */}
+                    </Stack>
                   </GridToolbarContainer>
 
                   {canReset && (
@@ -370,8 +363,8 @@ export default function ProductListView() {
         open={confirmRows.value}
         onClose={confirmRows.onFalse}
         title={t('product.delete')}
-        content={t('product.delete_message', {
-          delete_message: selectedRowIds.length,
+        content={t('product.delete_multi_message', {
+          length: selectedRowIds.length,
         })}
         action={
           <Button

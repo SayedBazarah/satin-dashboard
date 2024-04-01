@@ -41,7 +41,7 @@ type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
 // ----------------------------------------------------------------------
 
 const initialState: AuthStateType = {
-  user: null,
+  user: {},
   loading: true,
 };
 
@@ -133,7 +133,6 @@ export function AuthProvider({ children }: Props) {
       email,
       password,
     };
-
     const res = await axios.post(endpoints.auth.login, data);
 
     const { accessToken, user } = res.data;
@@ -188,6 +187,27 @@ export function AuthProvider({ children }: Props) {
     });
   }, []);
 
+  // FORGOT PASSWORD
+  const forgotPassword = useCallback(async (email: string) => {
+    await axios.post(endpoints.auth.forgot, { email });
+  }, []);
+
+  // NEW PASSWORD
+  const newPassword = useCallback(async (token: string, confirm: string, password: string) => {
+    await axios.post(
+      endpoints.auth.update,
+      {
+        password,
+        confirm,
+      },
+      {
+        headers: {
+          token,
+        },
+      }
+    );
+  }, []);
+
   // ----------------------------------------------------------------------
 
   const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
@@ -205,8 +225,10 @@ export function AuthProvider({ children }: Props) {
       login,
       register,
       logout,
+      forgotPassword,
+      newPassword,
     }),
-    [login, logout, register, state.user, status]
+    [login, logout, register, forgotPassword, newPassword, state.user, status]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;

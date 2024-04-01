@@ -47,10 +47,13 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
   });
 
   useServerInsertedHTML(() => {
+    console.log('first');
     const inserted = registry.flush();
+
     if (inserted.length === 0) {
       return null;
     }
+
     let styles = '';
     let dataEmotionAttribute = registry.cache.key;
 

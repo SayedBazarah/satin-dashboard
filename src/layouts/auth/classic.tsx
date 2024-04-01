@@ -22,16 +22,6 @@ export default function AuthClassicLayout({ children, image, title }: Props) {
 
   const mdUp = useResponsive('up', 'md');
 
-  const renderLogo = (
-    <Logo
-      sx={{
-        zIndex: 9,
-        position: 'absolute',
-        m: { xs: 2, md: 5 },
-      }}
-    />
-  );
-
   const renderContent = (
     <Stack
       sx={{
@@ -63,10 +53,6 @@ export default function AuthClassicLayout({ children, image, title }: Props) {
         }),
       }}
     >
-      <Typography variant="h3" sx={{ maxWidth: 480, textAlign: 'center' }}>
-        {title || 'Hi, Welcome back'}
-      </Typography>
-
       <Box
         component="img"
         alt="auth"
@@ -90,8 +76,6 @@ export default function AuthClassicLayout({ children, image, title }: Props) {
         minHeight: '100vh',
       }}
     >
-      {renderLogo}
-
       {mdUp && renderSection}
 
       {renderContent}

@@ -13,6 +13,7 @@ import Logo from 'src/components/logo';
 import { HEADER } from '../config-layout';
 import HeaderShadow from './header-shadow';
 import SettingsButton from './settings-button';
+import LanguagePopover from './language-popover';
 
 // ----------------------------------------------------------------------
 
@@ -47,14 +48,10 @@ export default function HeaderSimple() {
         <Logo />
 
         <Stack direction="row" alignItems="center" spacing={1}>
+          <LanguagePopover />
           <SettingsButton />
-
-          <Link color="inherit" sx={{ typography: 'subtitle2' }}>
-            Need help?
-          </Link>
         </Stack>
       </Toolbar>
-
       {offsetTop && <HeaderShadow />}
     </AppBar>
   );

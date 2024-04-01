@@ -143,15 +143,26 @@ export const _userList = [...Array(20)].map((_, index) => ({
   zipCode: '85807',
   state: 'Virginia',
   city: 'Rancho Cordova',
-  role: _mock.role(index),
   email: _mock.email(index),
   address: '908 Jack Locks',
   name: _mock.fullName(index),
   isVerified: _mock.boolean(index),
   company: _mock.companyName(index),
   country: countries[index + 1].label,
-  avatarUrl: _mock.image.avatar(index),
-  phoneNumber: _mock.phoneNumber(index),
-  status:
-    (index % 2 && 'pending') || (index % 3 && 'banned') || (index % 4 && 'rejected') || 'active',
+  profileImage: _mock.image.avatar(index),
+  phone: _mock.phoneNumber(index),
+  role: (index % 2 && { code: 'AI', label: 'Cashier', permissions: [] }) ||
+    (index % 3 && { code: 'AL', label: 'Store Assistant', permissions: [] }) || {
+      code: 'AM',
+      label: 'Inventory Control Specialists',
+      permissions: [],
+    },
+  branch: (index % 2 && { code: 'AL', label: 'Alex', phone: '0111-116-7050' }) ||
+    (index % 3 && { code: 'AM', label: 'Giza', phone: '0111-118-0465' }) || {
+      code: 'AI',
+      label: 'Cairo',
+      phone: '0101-991-0600',
+    },
+  status: (index % 3 && false) || true,
+  coverUrl: _mock.image.cover(index),
 }));

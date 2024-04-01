@@ -46,7 +46,7 @@ export const allLangs = [
     icon: 'flagpack:gb-nir',
     numberFormat: {
       code: 'en-US',
-      currency: 'USD',
+      currency: 'EGP',
     },
   },
   {
@@ -57,7 +57,7 @@ export const allLangs = [
     icon: 'flagpack:sa',
     numberFormat: {
       code: 'ar',
-      currency: 'AED',
+      currency: 'EGP',
     },
   },
 ];

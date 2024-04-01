@@ -16,6 +16,7 @@ import OrderDetailsInfo from '../order-details-info';
 import OrderDetailsItems from '../order-details-item';
 import OrderDetailsToolbar from '../order-details-toolbar';
 import OrderDetailsHistory from '../order-details-history';
+import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +25,8 @@ type Props = {
 };
 
 export default function OrderDetailsView({ id }: Props) {
+  const { t } = useTranslate();
+
   const settings = useSettingsContext();
 
   const currentOrder = _orders.filter((order) => order.id === id)[0];
@@ -55,6 +58,7 @@ export default function OrderDetailsView({ id }: Props) {
               discount={currentOrder.discount}
               subTotal={currentOrder.subTotal}
               totalAmount={currentOrder.totalAmount}
+              t={t}
             />
 
             <OrderDetailsHistory history={currentOrder.history} />

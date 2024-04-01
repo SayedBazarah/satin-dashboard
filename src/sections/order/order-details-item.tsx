@@ -6,6 +6,8 @@ import CardHeader from '@mui/material/CardHeader';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 
+import type { TFunction } from 'i18next';
+
 import { fCurrency } from 'src/utils/format-number';
 
 import Iconify from 'src/components/iconify';
@@ -22,6 +24,7 @@ type Props = {
   subTotal: number;
   totalAmount: number;
   items: IOrderProductItem[];
+  t: TFunction<'translation', undefined>;
 };
 
 export default function OrderDetailsItems({

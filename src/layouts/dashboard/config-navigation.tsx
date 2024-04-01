@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { paths } from 'src/routes/paths';
 
 import SvgColor from 'src/components/svg-color';
+import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -44,25 +45,95 @@ const ICONS = {
 // ----------------------------------------------------------------------
 
 export function useNavData() {
-  const t = (s: string) => s;
+  const { t } = useTranslate();
   const data = useMemo(
     () => [
       // OVERVIEW
       // ----------------------------------------------------------------------
       {
-        subheader: 'overview',
+        subheader: t('nav.overview'),
         items: [
-          { title: t('dashboard'), path: paths.dashboard.root, icon: ICONS.dashboard },
-          { title: t('products'), path: paths.dashboard.products.root, icon: ICONS.product },
           {
-            title: t('orders'),
-            path: paths.dashboard.orders,
+            title: t('nav.reports'),
+            path: 'paths.dashboard.root',
+            icon: ICONS.dashboard,
+            children: [
+              {
+                title: t('nav.overview'),
+                path: paths.dashboard.root,
+              },
+              {
+                title: t('nav.sales'),
+                path: '/1',
+              },
+            ],
+          },
+          { title: t('nav.products'), path: paths.dashboard.products.root, icon: ICONS.product },
+
+          {
+            title: t('nav.categories'),
+            path: paths.dashboard.categories,
+            icon: ICONS.label,
+          },
+          {
+            title: t('nav.promotions'),
+            path: paths.dashboard.promotions.root,
+            icon: ICONS.label,
+          },
+          {
+            title: t('nav.inventory'),
+            path: paths.dashboard.inventory.root,
+            icon: ICONS.banking,
+          },
+          {
+            title: t('nav.orders'),
+            path: paths.dashboard.order.root,
             icon: ICONS.ecommerce,
           },
           {
-            title: t('category'),
-            path: paths.dashboard.categories,
+            title: t('nav.invoices'),
+            path: paths.dashboard.invoices.root,
+            icon: ICONS.invoice,
+          },
+          {
+            title: t('nav.logistics'),
+            path: paths.dashboard.legistics.root,
+            icon: ICONS.external,
+          },
+          {
+            title: t('nav.employees'),
+            path: paths.dashboard.employees.root,
             icon: ICONS.label,
+            children: [
+              {
+                title: t('nav.employees_create'),
+                path: paths.dashboard.employees.new,
+              },
+              {
+                title: t('nav.employees_list'),
+                path: paths.dashboard.employees.root,
+              },
+
+              {
+                title: t('nav.employees_permissions'),
+                path: paths.dashboard.employees.permission,
+              },
+            ],
+          },
+          {
+            title: t('nav.customers'),
+            path: paths.dashboard.customers.root,
+            icon: ICONS.label,
+          },
+          {
+            title: t('nav.notification'),
+            path: paths.dashboard.notification.root,
+            icon: ICONS.chat,
+          },
+          {
+            title: t('nav.blog'),
+            path: paths.dashboard.blog.root,
+            icon: ICONS.blog,
           },
         ],
       },

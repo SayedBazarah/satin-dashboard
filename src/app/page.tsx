@@ -1,7 +1,19 @@
-import { JwtLoginView } from 'src/sections/auth/jwt';
+'use client';
+
+import { useEffect } from 'react';
+
+import { useRouter } from 'src/routes/hooks';
+
+import { PATH_AFTER_LOGIN } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
-  return <JwtLoginView />;
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push(PATH_AFTER_LOGIN);
+  }, [router]);
+
+  return null;
 }

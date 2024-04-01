@@ -20,7 +20,8 @@ export const paths = {
   auth: {
     jwt: {
       login: `${ROOTS.AUTH}/jwt/login`,
-      register: `${ROOTS.AUTH}/jwt/register`,
+      forget: `${ROOTS.AUTH}/jwt/forgot-password`,
+      token_expired: `${ROOTS.AUTH}/jwt/token-expired`,
     },
   },
   // DASHBOARD
@@ -37,7 +38,6 @@ export const paths = {
         edit: (slug: string) => `${ROOTS.DASHBOARD}/product/${slug}/edit`,
       },
     },
-    orders: `${ROOTS.DASHBOARD}/order`,
     order: {
       root: `${ROOTS.DASHBOARD}/order`,
       details: (id: string) => `${ROOTS.DASHBOARD}/order/${id}`,
@@ -46,6 +46,32 @@ export const paths = {
       },
     },
     categories: `${ROOTS.DASHBOARD}/categories`,
-    employees: `${ROOTS.DASHBOARD}/employees`,
+    employees: {
+      root: `${ROOTS.DASHBOARD}/employees`,
+      new: `${ROOTS.DASHBOARD}/employees/create`,
+      permission: `${ROOTS.DASHBOARD}/employees/permissions`,
+      edit: (slug: string) => `${ROOTS.DASHBOARD}/employees/${slug}/edit`,
+    },
+    promotions: {
+      root: `${ROOTS.DASHBOARD}/promotions`,
+    },
+    inventory: {
+      root: `${ROOTS.DASHBOARD}/inventory`,
+    },
+    customers: {
+      root: `${ROOTS.DASHBOARD}/customers`,
+    },
+    legistics: {
+      root: `${ROOTS.DASHBOARD}/legistics`,
+    },
+    invoices: {
+      root: `${ROOTS.DASHBOARD}/invoices`,
+    },
+    notification: {
+      root: `${ROOTS.DASHBOARD}/notification`,
+    },
+    blog: {
+      root: `${ROOTS.DASHBOARD}/blog`,
+    },
   },
 };

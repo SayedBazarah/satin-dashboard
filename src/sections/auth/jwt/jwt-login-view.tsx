@@ -13,8 +13,8 @@ import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
+import { useTranslate } from 'src/locales';
+
 import { useRouter, useSearchParams } from 'src/routes/hooks';
 
 import { useBoolean } from 'src/hooks/use-boolean';
@@ -24,6 +24,7 @@ import { PATH_AFTER_LOGIN } from 'src/config-global';
 
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +32,8 @@ export default function JwtLoginView() {
   const { login } = useAuthContext();
 
   const router = useRouter();
+
+  const { t } = useTranslate();
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -46,7 +49,7 @@ export default function JwtLoginView() {
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
+    email: 'sayed@multisystem-eg.com',
     password: 'demo1234',
   };
 
@@ -63,9 +66,9 @@ export default function JwtLoginView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await login?.(data.email, data.password);
+      await login(data.email, data.password);
 
-      router.push(returnTo || PATH_AFTER_LOGIN);
+      // router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
       reset();
@@ -75,25 +78,17 @@ export default function JwtLoginView() {
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5 }}>
-      <Typography variant="h4">Sign in to Minimal</Typography>
-
-      <Stack direction="row" spacing={0.5}>
-        <Typography variant="body2">New user?</Typography>
-
-        <Link component={RouterLink} href={paths.auth.jwt.register} variant="subtitle2">
-          Create an account
-        </Link>
-      </Stack>
+      <Typography variant="h4">{t('auth.sign_in_to')}</Typography>
     </Stack>
   );
 
   const renderForm = (
     <Stack spacing={2.5}>
-      <RHFTextField name="email" label="Email address" />
+      <RHFTextField name="email" label={t('auth.email')} />
 
       <RHFTextField
         name="password"
-        label="Password"
+        label={t('auth.password')}
         type={password.value ? 'text' : 'password'}
         InputProps={{
           endAdornment: (
@@ -106,8 +101,14 @@ export default function JwtLoginView() {
         }}
       />
 
-      <Link variant="body2" color="inherit" underline="always" sx={{ alignSelf: 'flex-end' }}>
-        Forgot password?
+      <Link
+        href={paths.auth.jwt.forget}
+        variant="body2"
+        color="inherit"
+        underline="always"
+        sx={{ alignSelf: 'flex-end' }}
+      >
+        {t('auth.forgot_password')}
       </Link>
 
       <LoadingButton
@@ -118,7 +119,7 @@ export default function JwtLoginView() {
         variant="contained"
         loading={isSubmitting}
       >
-        Login
+        {t('auth.login')}
       </LoadingButton>
     </Stack>
   );
@@ -128,7 +129,8 @@ export default function JwtLoginView() {
       {renderHead}
 
       <Alert severity="info" sx={{ mb: 3 }}>
-        Use email : <strong>demo@minimals.cc</strong> / password :<strong> demo1234</strong>
+        {t('auth.email')} : <strong>sayed@multisystem-eg.com</strong> / {t('auth.password')} :
+        <strong> demo1234</strong>
       </Alert>
 
       {!!errorMsg && (

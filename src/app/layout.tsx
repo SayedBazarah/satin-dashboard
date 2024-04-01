@@ -15,7 +15,6 @@ import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsDrawer, SettingsProvider } from 'src/components/settings';
 
 import { AuthProvider } from 'src/auth/context/jwt';
-import DashboardLayout from 'src/layouts/dashboard';
 import { LocalizationProvider } from 'src/locales';
 
 // ----------------------------------------------------------------------
@@ -64,7 +63,7 @@ export default function RootLayout({ children }: Props) {
                 <MotionLazy>
                   <SettingsDrawer />
                   <ProgressBar />
-                  <DashboardLayout>{children}</DashboardLayout>
+                  {children}
                 </MotionLazy>
               </ThemeProvider>
             </SettingsProvider>

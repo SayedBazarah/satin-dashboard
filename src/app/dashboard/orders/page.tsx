@@ -1,9 +1,16 @@
 // ----------------------------------------------------------------------
 
+import { Container } from '@mui/material';
+import ComingSoonView from 'src/sections/coming-soon/view';
+
 export const metadata = {
-  title: 'Dashboard: Three',
+  title: 'Dashboard: Categories',
 };
 
 export default function Page() {
-  return <h1>Hello</h1>;
+  return (
+    <Container>
+      <ComingSoonView />
+    </Container>
+  );
 }

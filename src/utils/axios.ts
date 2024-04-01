@@ -31,8 +31,24 @@ export const endpoints = {
   calendar: '/api/calendar',
   auth: {
     me: '/api/auth/me',
-    login: '/api/auth/login',
-    register: '/api/auth/register',
+    login: '/api/auth/signin',
+    register: '/api/auth/signup',
+    forgot: '/api/auth/forgot-password',
+    update: '/api/auth/update-password',
+    check_token: '/api/auth/token-validator',
+  },
+  employee: {
+    list: '/api/employee',
+    single: '/api/employee/single',
+    update: '/api/employee',
+    details: '/api/employee/single',
+    ids: '/api/employee/ids',
+    create: '/api/employee/create',
+  },
+  roles: {
+    all: '/api/role',
+    update: '/api/role/single',
+    delete: '/api/role/single',
   },
   mail: {
     list: '/api/mail/list',
