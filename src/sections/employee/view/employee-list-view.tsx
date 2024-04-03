@@ -1,15 +1,12 @@
 'use client';
 
 import isEqual from 'lodash/isEqual';
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
-import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
@@ -21,7 +18,9 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { _roles, _userList } from 'src/_mock';
+import axios, { endpoints } from 'src/utils/axios';
+
+import { useGetRoles } from 'src/api/role';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -44,20 +43,18 @@ import {
   IEmployeeItem,
   IEmployeeTableFilters,
   IEmployeeTableFilterValue,
+  QuickUpdateEmployeeItem,
 } from 'src/types/employee';
 
 import EmployeeTableRow from '../employee-table-row';
 import EmployeeTableToolbar from '../employee-table-toolbar';
 import EmployeeTableFiltersResult from '../employee-table-filters-result';
-import { roles } from '../employee-quick-edit-form';
-import { useGetRoles } from 'src/api/role';
-import axios, { endpoints } from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name' },
-  { id: 'branch', label: 'Branch', width: '60px' },
+  // { id: 'branch', label: 'Branch', width: '60px' },
   { id: 'role', label: 'Role', width: '120px' },
   { id: 'phone', label: 'Phone', width: '120px' },
   { id: '', width: 88 },
@@ -130,8 +127,26 @@ export default function UserListView() {
     setFilters(defaultFilters);
   }, []);
 
+  const handleUpdateRow = useCallback(
+    (data: QuickUpdateEmployeeItem) => {
+      const index = tableData.findIndex((row) => row._id === data._id);
+      const updatedRow = tableData;
+      if (index !== -1) {
+        updatedRow[index] = {
+          ...updatedRow[index],
+          ...data,
+        };
+        setTableData(updatedRow);
+      }
+      enqueueSnackbar('Updated success!');
+      table.onUpdatePageDeleteRow(dataInPage.length);
+    },
+    [dataInPage.length, enqueueSnackbar, table, tableData]
+  );
   const handleDeleteRow = useCallback(
-    (id: string) => {
+    async (id: string) => {
+      await axios.delete(endpoints.employee.delete(id));
+
       const deleteRow = tableData.filter((row) => row._id !== id);
 
       enqueueSnackbar('Delete success!');
@@ -143,8 +158,11 @@ export default function UserListView() {
     [dataInPage.length, enqueueSnackbar, table, tableData]
   );
 
-  const handleDeleteRows = useCallback(() => {
+  const handleDeleteRows = useCallback(async () => {
     const deleteRows = tableData.filter((row) => !table.selected.includes(row._id));
+    await axios.delete(endpoints.employee.delete_rows, {
+      data: { employees: table.selected },
+    });
 
     enqueueSnackbar('Delete success!');
 
@@ -266,6 +284,7 @@ export default function UserListView() {
                         onSelectRow={() => table.onSelectRow(row._id)}
                         onDeleteRow={() => handleDeleteRow(row._id)}
                         onEditRow={() => handleEditRow(row._id)}
+                        onQuickEditRow={handleUpdateRow}
                       />
                     ))}
 

@@ -1,18 +1,23 @@
+import React from 'react';
+
 import {
   Button,
-  Checkbox,
-  IconButton,
-  ListItemText,
-  TableCell,
-  TableRow,
   Tooltip,
+  Checkbox,
+  TableRow,
+  TableCell,
+  IconButton,
   Typography,
+  ListItemText,
 } from '@mui/material';
-import React from 'react';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import Iconify from 'src/components/iconify';
+
 import { useBoolean } from 'src/hooks/use-boolean';
+
+import Iconify from 'src/components/iconify';
+import { ConfirmDialog } from 'src/components/custom-dialog';
+
 import { IRole } from 'src/types/employee';
+
 import EmployeeRoleEditForm from './employee-role-create-edit-form';
 
 type Props = {
@@ -44,10 +49,10 @@ export default function EmployeeRoleRow({
           <ListItemText primary={row.label} />
         </TableCell>
         <TableCell>
-          <Typography textAlign={'center'}>{row.permissions.length}</Typography>
+          <Typography textAlign="center">{row.permissions.length}</Typography>
         </TableCell>
         <TableCell>
-          <Typography textAlign={'center'}>{row.employees}</Typography>
+          <Typography textAlign="center">{row.employees}</Typography>
         </TableCell>
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <Tooltip title="Edit" placement="top" arrow>

@@ -1,39 +1,34 @@
 import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
 import { useMemo, useCallback } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Switch from '@mui/material/Switch';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
 import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 
 import { fData } from 'src/utils/format-number';
+import axios, { endpoints } from 'src/utils/axios';
 
-import { countries } from 'src/assets/data';
+import { useGetRoles } from 'src/api/role';
 
-import Label from 'src/components/label';
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
-  RHFSwitch,
   RHFTextField,
   RHFUploadAvatar,
   RHFAutocomplete,
 } from 'src/components/hook-form';
 
 import { IEmployeeItem } from 'src/types/employee';
-import { branches, roles } from './employee-quick-edit-form';
-import { Badge } from '@mui/material';
-import axios, { endpoints } from 'src/utils/axios';
-import { useGetRoles } from 'src/api/role';
+import { fileToBase64 } from 'src/utils/base64-convertor';
+import { ASSETS_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -44,8 +39,9 @@ type Props = {
 export default function UserNewEditForm({ currentEmployee }: Props) {
   const router = useRouter();
 
-  const { roles } = useGetRoles();
   const { enqueueSnackbar } = useSnackbar();
+
+  const { roles } = useGetRoles();
 
   const NewUserSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -64,9 +60,9 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
       phone: currentEmployee?.phone || '',
       state: currentEmployee?.state || '',
       area: currentEmployee?.area || '',
-      role: currentEmployee?.role?.label || '',
+      role: currentEmployee?.role.label || '',
 
-      profileImage: currentEmployee?.profileImage || null,
+      profileImage: `${ASSETS_API}/${currentEmployee?.profileImage}` || null,
     }),
     [currentEmployee]
   );
@@ -78,31 +74,28 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
 
   const {
     reset,
-    watch,
-    control,
     setValue,
+    watch,
+    register,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
   const values = watch();
-
   const onSubmit = handleSubmit(async (data) => {
     try {
-      const employee = {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        state: data.state,
-        area: data.area,
-        role: roles[roles.findIndex((value) => value.label === data.role)]._id,
-        profileImage: data.profileImage.preview,
-      };
-      console.log('currentEmployee');
-      console.log(currentEmployee);
-      if (currentEmployee)
-        await axios.patch(endpoints.employee.update, { _id: currentEmployee.id, ...employee });
-      else await axios.post(endpoints.employee.create);
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone);
+      formData.append('state', data.state);
+      formData.append('area', data.area);
+      formData.append('profileImage', data.profileImage);
+      formData.append('_id', (currentEmployee && currentEmployee._id) || '');
+      formData.append('role', roles[roles.findIndex((item) => item.label === data.role)]._id);
+
+      if (currentEmployee) await axios.patch(endpoints.employee.update, formData);
+      else await axios.post(endpoints.employee.create, formData);
 
       reset();
       enqueueSnackbar(currentEmployee ? 'Update success!' : 'Create success!');
@@ -113,7 +106,7 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
   });
 
   const handleDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    async (acceptedFiles: File[]) => {
       const file = acceptedFiles[0];
 
       const newFile = Object.assign(file, {
@@ -134,9 +127,9 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
           <Card sx={{ pt: 10, pb: 5, px: 3 }}>
             <Box>
               <RHFUploadAvatar
-                name="profileImage"
                 maxSize={3145728}
                 onDrop={handleDrop}
+                {...register('profileImage')}
                 helperText={
                   <Typography
                     variant="caption"

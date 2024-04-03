@@ -1,4 +1,5 @@
 'use client';
+
 import Box from '@mui/material/Box';
 
 import { useBoolean } from 'src/hooks/use-boolean';

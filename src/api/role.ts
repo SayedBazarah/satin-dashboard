@@ -1,9 +1,8 @@
-import useSWR from 'swr';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
-import axios, { fetcher, endpoints } from 'src/utils/axios';
+import axios, { endpoints } from 'src/utils/axios';
 
-import { IEmployeeItem, IRole } from 'src/types/employee';
+import { IRole } from 'src/types/employee';
 
 // ----------------------------------------------------------------------
 
@@ -15,8 +14,6 @@ export function useGetRoles() {
     (async () => {
       try {
         axios.get(URL).then((res) => {
-          console.log('res');
-          console.log(res.data);
           setRoles(res.data.roles);
         });
       } catch (error) {
@@ -31,7 +28,7 @@ export function useGetRoles() {
   const memoizedValue = useMemo(
     () => ({
       roles: roles || [],
-      isLoading: isLoading,
+      isLoading,
     }),
     [roles, isLoading]
   );

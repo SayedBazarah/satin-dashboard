@@ -1,4 +1,5 @@
 import { CustomFile } from 'src/components/upload';
+import { string } from 'yup';
 
 export type IEmployeeTableFilterValue = string | string[];
 
@@ -93,15 +94,22 @@ export type IEmployeeCard = {
 };
 
 export type IEmployeeItem = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   phone: string;
-  isOnline: boolean;
+  isOnline?: boolean;
   profileImage?: string;
   state?: string;
   area?: string;
   branch?: string;
+  role: IRole;
+};
+export type QuickUpdateEmployeeItem = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
   role: IRole;
 };
 

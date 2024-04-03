@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -22,6 +22,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import { isAfter, isBetween } from 'src/utils/format-time';
 
 import { _orders } from 'src/_mock';
+import { useTranslate } from 'src/locales';
 
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
@@ -46,7 +47,6 @@ import { IOrderItem, IOrderTableFilters, IOrderTableFilterValue } from 'src/type
 import OrderTableRow from '../order-table-row';
 import OrderTableToolbar from '../order-table-toolbar';
 import OrderTableFiltersResult from '../order-table-filters-result';
-import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 

@@ -12,7 +12,6 @@ import { useSettingsContext } from 'src/components/settings';
 import { palette } from './palette';
 import { shadows } from './shadows';
 import { typography } from './typography';
-
 // options
 import RTL from './options/right-to-left';
 import { customShadows } from './custom-shadows';

@@ -1,19 +1,20 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 import Container from '@mui/material/Container';
 
 import { paths } from 'src/routes/paths';
 
-import { _userList } from 'src/_mock';
+import axios, { endpoints } from 'src/utils/axios';
 
 import { useSettingsContext } from 'src/components/settings';
+import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 
-import EmployeeNewEditForm from '../employee-new-edit-form';
-import { useEffect, useState } from 'react';
-import axios, { endpoints } from 'src/utils/axios';
 import { IEmployeeItem } from 'src/types/employee';
-import { LoadingScreen } from 'src/components/loading-screen';
+
+import EmployeeNewEditForm from '../employee-new-edit-form';
 
 // ----------------------------------------------------------------------
 

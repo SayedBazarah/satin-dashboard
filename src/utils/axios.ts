@@ -39,8 +39,10 @@ export const endpoints = {
   },
   employee: {
     list: '/api/employee',
-    single: '/api/employee/single',
     update: '/api/employee',
+    delete: (id: string) => `/api/employee/delete/${id}`,
+    delete_rows: `/api/employee`,
+    single: '/api/employee/single',
     details: '/api/employee/single',
     ids: '/api/employee/ids',
     create: '/api/employee/create',

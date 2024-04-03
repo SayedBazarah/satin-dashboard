@@ -26,8 +26,8 @@ import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { useTranslate } from 'src/locales';
 import { useGetProducts } from 'src/api/product';
-import { PRODUCT_STOCK_OPTIONS } from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import { useSnackbar } from 'src/components/snackbar';
@@ -47,7 +47,6 @@ import {
   RenderCellProduct,
   RenderCellCreatedAt,
 } from '../product-table-row';
-import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 

@@ -1,7 +1,5 @@
 import { sub } from 'date-fns';
 
-const ASSETS_API = 'https://api-dev-minimal-v510.vercel.app';
-
 import {
   _id,
   _ages,
@@ -28,6 +26,8 @@ import {
   _descriptions,
   _phoneNumbers,
 } from './assets';
+
+const ASSETS_API = 'https://api-dev-minimal-v510.vercel.app';
 
 // ----------------------------------------------------------------------
 

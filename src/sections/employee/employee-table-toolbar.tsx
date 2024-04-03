@@ -14,7 +14,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IEmployeeTableFilters, IEmployeeTableFilterValue, IRole } from 'src/types/employee';
+import { IRole, IEmployeeTableFilters, IEmployeeTableFilterValue } from 'src/types/employee';
 
 // ----------------------------------------------------------------------
 

@@ -2,27 +2,27 @@
 
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
+import { useState, useEffect } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import { Alert, Box, IconButton, InputAdornment, useTheme } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-
-import axios, { endpoints } from 'src/utils/axios';
+import { Box, Alert, useTheme, IconButton, InputAdornment } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
 import { useRouter, useSearchParams } from 'src/routes/hooks';
 
+import { useBoolean } from 'src/hooks/use-boolean';
+
+import axios, { endpoints } from 'src/utils/axios';
+
+import { useTranslate } from 'src/locales';
 import { useAuthContext } from 'src/auth/hooks';
 import { PasswordIcon } from 'src/assets/icons';
 
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
-import { useTranslate } from 'src/locales';
-import { useEffect, useState } from 'react';
-import { useBoolean } from 'src/hooks/use-boolean';
 
 // ----------------------------------------------------------------------
 

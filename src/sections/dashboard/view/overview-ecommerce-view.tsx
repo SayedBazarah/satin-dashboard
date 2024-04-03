@@ -1,35 +1,31 @@
 'use client';
 
+import Link from 'next/link';
+
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 
+import { paths } from 'src/routes/paths';
+
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
+import { Locale, useLocales, useTranslate } from 'src/locales';
 import { MotivationIllustration } from 'src/assets/illustrations';
 import {
-  _ecommerceNewProducts,
   _ecommerceBestSaleItems,
-  _ecommerceSalesOverview,
   _ecommerceLatestProducts,
 } from 'src/_mock';
 
 import { useSettingsContext } from 'src/components/settings';
 
 import EcommerceWelcome from '../ecommerce-welcome';
-import EcommerceNewProducts from '../ecommerce-new-products';
 import EcommerceYearlySales from '../ecommerce-yearly-sales';
 import EcommerceBestSaleItem from '../ecommerce-best-salesman';
 import EcommerceSaleByGender from '../ecommerce-sale-by-gender';
-import EcommerceSalesOverview from '../ecommerce-sales-overview';
 import EcommerceWidgetSummary from '../ecommerce-widget-summary';
 import EcommerceLatestProducts from '../ecommerce-latest-products';
-import EcommerceCurrentBalance from '../ecommerce-current-balance';
-import { useTranslation } from 'react-i18next';
-import { Locale, useLocales, useTranslate } from 'src/locales';
-import Link from 'next/link';
-import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 

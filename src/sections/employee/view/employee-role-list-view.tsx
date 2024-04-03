@@ -1,38 +1,38 @@
 'use client';
 
-import isEqual from 'lodash/isEqual';
-import { useState, useCallback } from 'react';
-
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/navigation';
+import { useState, useCallback } from 'react';
 
 import {
+  Table,
+  Button,
+  Tooltip,
+  Container,
+  TableBody,
+  IconButton,
+  TableContainer,
+} from '@mui/material';
+
+import { paths } from 'src/routes/paths';
+
+import { useBoolean } from 'src/hooks/use-boolean';
+
+import Iconify from 'src/components/iconify';
+import Scrollbar from 'src/components/scrollbar';
+import { useSettingsContext } from 'src/components/settings';
+import { ConfirmDialog } from 'src/components/custom-dialog';
+import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import {
+  useTable,
+  getComparator,
   TableHeadCustom,
   TableSelectedAction,
-  getComparator,
-  useTable,
 } from 'src/components/table';
-import { useSettingsContext } from 'src/components/settings';
-import {
-  Button,
-  Container,
-  Dialog,
-  IconButton,
-  Table,
-  TableBody,
-  TableContainer,
-  Tooltip,
-} from '@mui/material';
-import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
-import { paths } from 'src/routes/paths';
+
 import { IRole, IRoleTableFilters } from 'src/types/employee';
 
 import EmployeeRoleRow from '../employee-role-row';
-import Iconify from 'src/components/iconify';
-import { RouterLink } from 'src/routes/components';
-import { useBoolean } from 'src/hooks/use-boolean';
-import { ConfirmDialog } from 'src/components/custom-dialog';
-import Scrollbar from 'src/components/scrollbar';
 import EmployeeRoleCreateEditForm from '../employee-role-create-edit-form';
 
 // -----------------------------------------------------

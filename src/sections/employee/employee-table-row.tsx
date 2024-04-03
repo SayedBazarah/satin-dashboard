@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import { Badge, Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
@@ -17,7 +19,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { IEmployeeItem } from 'src/types/employee';
 
 import EmployeeQuickEditForm from './employee-quick-edit-form';
-import { Badge } from '@mui/material';
+import { ASSETS_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +29,7 @@ type Props = {
   row: IEmployeeItem;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  onQuickEditRow: (data: IEmployeeItem) => void;
 };
 
 export default function EmployeeTableRow({
@@ -35,15 +38,15 @@ export default function EmployeeTableRow({
   onEditRow,
   onSelectRow,
   onDeleteRow,
+  onQuickEditRow,
 }: Props) {
-  const { name, profileImage, status, branch, role, phone } = row;
-
+  const { name, profileImage, isOnline, branch, role, phone } = row;
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
 
   const popover = usePopover();
-
+  const profile = `${ASSETS_API}/${profileImage}`;
   return (
     <>
       <TableRow hover selected={selected}>
@@ -52,8 +55,15 @@ export default function EmployeeTableRow({
         </TableCell>
 
         <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-          <Badge variant={status ? 'online' : 'offline'} sx={{ mr: 2 }}>
-            <Avatar alt={name} src={profileImage} />
+          <Badge variant={isOnline ? 'online' : 'offline'} sx={{ mr: 2 }}>
+            <Image
+              width={45}
+              height={45}
+              src={profile}
+              style={{ borderRadius: 999 }}
+              crossOrigin="anonymous"
+              alt=""
+            />
           </Badge>
 
           <ListItemText
@@ -66,7 +76,7 @@ export default function EmployeeTableRow({
           />
         </TableCell>
 
-        <TableCell sx={{ whiteSpace: 'nowrap' }}>{branch?.label}</TableCell>
+        {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>{branch?.label}</TableCell> */}
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{role?.label}</TableCell>
 
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{phone}</TableCell>
@@ -86,6 +96,7 @@ export default function EmployeeTableRow({
 
       <EmployeeQuickEditForm
         currentEmployee={row}
+        onQuickEditRow={onQuickEditRow}
         open={quickEdit.value}
         onClose={quickEdit.onFalse}
       />

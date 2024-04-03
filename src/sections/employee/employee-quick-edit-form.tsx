@@ -4,22 +4,21 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Box from '@mui/material/Box';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
-import MenuItem from '@mui/material/MenuItem';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
-import { countries } from 'src/assets/data';
-import { USER_STATUS_OPTIONS } from 'src/_mock';
-
 import { useSnackbar } from 'src/components/snackbar';
-import FormProvider, { RHFSelect, RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
+import FormProvider, { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
-import { IEmployeeItem } from 'src/types/employee';
+import { IEmployeeItem, QuickUpdateEmployeeItem } from 'src/types/employee';
+import { useGetRoles } from 'src/api/role';
+import axios, { endpoints } from 'src/utils/axios';
+import { useRouter } from 'next/navigation';
+import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -27,29 +26,29 @@ type Props = {
   open: boolean;
   onClose: VoidFunction;
   currentEmployee?: IEmployeeItem;
+  onQuickEditRow: (data: QuickUpdateEmployeeItem) => void;
 };
 
-export const branches = [
-  { code: 'AI', label: 'Cairo', phone: '500-268-4826' },
-  { code: 'AL', label: 'Alex', phone: '500-268-4826' },
-  { code: 'AM', label: 'Giza', phone: '500-268-4826' },
-];
+export const branches = [];
 
-export const roles = [
-  { code: 'AI', label: 'Cashier', permissions: [] },
-  { code: 'AL', label: 'Store Assistant', permissions: [] },
-  { code: 'AM', label: 'Inventory Control Specialists', permissions: [] },
-];
+export const roles = [];
 
-export default function EmployeeQuickEditForm({ currentEmployee, open, onClose }: Props) {
+export default function EmployeeQuickEditForm({
+  onQuickEditRow,
+  currentEmployee,
+  open,
+  onClose,
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter();
+
+  const { roles } = useGetRoles();
 
   const NewEmployeeSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     phone: Yup.string().required('Phone number is required'),
     role: Yup.string().required('Role is required'),
-    branch: Yup.string().required('Role is required'),
   });
 
   const defaultValues = useMemo(
@@ -58,7 +57,6 @@ export default function EmployeeQuickEditForm({ currentEmployee, open, onClose }
       role: currentEmployee?.role?.label || '',
       email: currentEmployee?.email || '',
       phone: currentEmployee?.phone || '',
-      branch: currentEmployee?.branch || '',
     }),
     [currentEmployee]
   );
@@ -76,11 +74,24 @@ export default function EmployeeQuickEditForm({ currentEmployee, open, onClose }
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      const employee = {
+        _id: currentEmployee?._id || '',
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+      };
+      await axios.patch(endpoints.employee.update, {
+        ...employee,
+        role: roles[roles.findIndex((value) => value.label === data.role)]._id,
+      });
+      onQuickEditRow({
+        ...employee,
+        role: roles[roles.findIndex((value) => value.label === data.role)],
+      });
       reset();
       onClose();
       enqueueSnackbar('Update success!');
-      console.info('DATA', data);
+      router.replace(paths.dashboard.employees.root);
     } catch (error) {
       console.error(error);
     }
@@ -113,14 +124,14 @@ export default function EmployeeQuickEditForm({ currentEmployee, open, onClose }
             <RHFTextField name="name" label="Full Name" />
             <RHFTextField name="email" label="Email Address" />
             <RHFTextField name="phone" label="Phone Number" />
-
+            {/* 
             <RHFAutocomplete
               name="branch"
               label="Branch"
               placeholder="Choose a Branch"
               fullWidth
               options={branches.map((option) => option.label)}
-            />
+            /> */}
 
             <RHFAutocomplete
               name="role"

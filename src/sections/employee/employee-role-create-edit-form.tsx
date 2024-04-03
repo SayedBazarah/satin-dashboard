@@ -1,24 +1,22 @@
-import React, { useCallback, useMemo } from 'react';
-
 import * as Yup from 'yup';
+import React, { useMemo } from 'react';
+import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 
+import { LoadingButton } from '@mui/lab';
 import {
   Box,
+  Stack,
   Button,
   Dialog,
+  DialogTitle,
   DialogActions,
   DialogContent,
-  DialogTitle,
-  Stack,
 } from '@mui/material';
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import { useSnackbar } from 'notistack';
-import { LoadingButton } from '@mui/lab';
-import { RHFAutocomplete, RHFTextField } from 'src/components/hook-form';
-
 import FormProvider from 'src/components/hook-form/form-provider';
+import { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
 import { IRole } from 'src/types/employee';
 
@@ -39,7 +37,7 @@ export default function EmployeeRoleCreateEditForm({ currentRole, open, onClose 
 
   const defaultValues = useMemo(
     () => ({
-      code: currentRole?.code || '',
+      code: currentRole?._id || '',
       label: currentRole?.label || '',
       permissions: currentRole?.permissions || [],
     }),
@@ -59,8 +57,6 @@ export default function EmployeeRoleCreateEditForm({ currentRole, open, onClose 
 
   const values = watch();
 
-  console.log('values ---');
-  console.log(values);
   const onSubmit = handleSubmit(async (data) => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -87,7 +83,7 @@ export default function EmployeeRoleCreateEditForm({ currentRole, open, onClose 
             <Box
               rowGap={3}
               columnGap={2}
-              display={'grid'}
+              display="grid"
               gridTemplateColumns={{
                 xs: 'repeat(1, 1fr)',
                 sm: 'repeat(2, 1fr)',
@@ -98,7 +94,7 @@ export default function EmployeeRoleCreateEditForm({ currentRole, open, onClose 
             </Box>
             <RHFAutocomplete
               multiple
-              name={'permissions'}
+              name="permissions"
               label="Select Permissions"
               options={['Orders', 'Invoices', 'Products']}
             />

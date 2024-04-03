@@ -10,7 +10,6 @@ import TableContainer from '@mui/material/TableContainer';
 import { fCurrency } from 'src/utils/format-number';
 
 import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { TableHeadCustom } from 'src/components/table';
 

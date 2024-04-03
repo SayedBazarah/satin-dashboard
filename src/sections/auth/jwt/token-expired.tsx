@@ -1,29 +1,19 @@
 'use client';
 
-import * as Yup from 'yup';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
+import { Box, useTheme } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { Alert, Box, IconButton, InputAdornment, useTheme } from '@mui/material';
-import LoadingButton from '@mui/lab/LoadingButton';
-
-import axios, { endpoints } from 'src/utils/axios';
 
 import { paths } from 'src/routes/paths';
-import { useRouter, useSearchParams } from 'src/routes/hooks';
+import { useRouter } from 'src/routes/hooks';
+import { RouterLink } from 'src/routes/components';
 
-import { useAuthContext } from 'src/auth/hooks';
-import { ExpiredIcon, PasswordIcon } from 'src/assets/icons';
+import { useTranslate } from 'src/locales';
+import { ExpiredIcon } from 'src/assets/icons';
 
 import Iconify from 'src/components/iconify';
-import FormProvider, { RHFTextField } from 'src/components/hook-form';
-import { useTranslate } from 'src/locales';
-import { useEffect, useState } from 'react';
-import { useBoolean } from 'src/hooks/use-boolean';
-import { RouterLink } from 'src/routes/components';
 
 // ----------------------------------------------------------------------
 

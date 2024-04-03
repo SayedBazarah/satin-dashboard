@@ -1,4 +1,12 @@
 module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
+    ],
+  },
   trailingSlash: true,
   modularizeImports: {
     '@mui/icons-material': {

@@ -1,6 +1,7 @@
 // ----------------------------------------------------------------------
 
 import { Container } from '@mui/material';
+
 import ComingSoonView from 'src/sections/coming-soon/view';
 
 export const metadata = {

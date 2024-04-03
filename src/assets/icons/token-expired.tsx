@@ -1,6 +1,7 @@
-import { Box, BoxProps } from '@mui/material';
 import * as React from 'react';
-import { forwardRef, memo } from 'react';
+import { memo, forwardRef } from 'react';
+
+import { Box, BoxProps } from '@mui/material';
 
 const SvgComponent = ({ ...other }: BoxProps) => (
   <Box

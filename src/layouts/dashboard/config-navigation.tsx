@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 
 import { paths } from 'src/routes/paths';
 
-import SvgColor from 'src/components/svg-color';
 import { useTranslate } from 'src/locales';
+
+import SvgColor from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
 

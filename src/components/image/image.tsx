@@ -56,6 +56,7 @@ const Image = forwardRef<HTMLSpanElement, ImageProps>(
         //
         alt={alt}
         src={src}
+        crossOrigin="anonymous"
         afterLoad={afterLoad}
         delayTime={delayTime}
         threshold={threshold}
