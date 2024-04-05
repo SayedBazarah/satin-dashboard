@@ -1,8 +1,7 @@
 'use client';
 
 import { useSnackbar } from 'notistack';
-import { useRouter } from 'next/navigation';
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import {
   Table,
@@ -17,6 +16,8 @@ import {
 import { paths } from 'src/routes/paths';
 
 import { useBoolean } from 'src/hooks/use-boolean';
+
+import axios, { endpoints } from 'src/utils/axios';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -49,19 +50,16 @@ export default function PermissionsListView() {
 
   const settings = useSettingsContext();
 
-  const router = useRouter();
-
   const [tableData, setTableData] = useState<IRole[]>([
-    {
-      _id: 'hr',
-      label: 'Human Resourses',
-      employees: 5,
-      permissions: ['Human Resourses', 'Sales'],
-    },
-    { _id: 'store', label: 'Store Assistance', employees: 2, permissions: ['profile'] },
+    // {
+    //   _id: 'hr',
+    //   label: 'Human Resourses',
+    //   employees: 5,
+    //   permissions: ['Human Resourses', 'Sales'],
+    // },
+    // { _id: 'store', label: 'Store Assistance', employees: 2, permissions: ['profile'] },
   ]);
-
-  const [filters, setFilters] = useState(defaultFilters);
+  const [filters] = useState(defaultFilters);
 
   const confirm = useBoolean();
 
@@ -76,8 +74,6 @@ export default function PermissionsListView() {
     { id: '', width: 88 },
   ];
 
-  // ------------------------------------------------
-
   const dataFiltered = applyFilter({
     inputData: tableData,
     comparator: getComparator(table.order, table.orderBy),
@@ -89,7 +85,13 @@ export default function PermissionsListView() {
     table.page * table.rowsPerPage + table.rowsPerPage
   );
 
-  const handleDeleteRows = useCallback(() => {
+  const handleDeleteRows = useCallback(async () => {
+    console.log('handleDeleteRows');
+    await axios.delete(endpoints.roles.delete_rows, {
+      data: {
+        roles: table.selected,
+      },
+    });
     const deleteRows = tableData.filter((row) => !table.selected.includes(row._id));
 
     enqueueSnackbar('Delete success!');
@@ -103,7 +105,8 @@ export default function PermissionsListView() {
   }, [dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
 
   const handleDeleteRow = useCallback(
-    (_id: string) => {
+    async (_id: string) => {
+      await axios.delete(endpoints.roles.delete(_id));
       const deleteRow = tableData.filter((row) => row._id !== _id);
 
       enqueueSnackbar('Delete success!');
@@ -115,12 +118,22 @@ export default function PermissionsListView() {
     [dataInPage.length, enqueueSnackbar, table, tableData]
   );
 
-  const handleEditRow = useCallback(
-    (code: string) => {
-      router.push(paths.dashboard.employees.edit(code));
-    },
-    [router]
-  );
+  const updateData = useCallback(async () => {
+    try {
+      const { data } = await axios.get(endpoints.roles.all);
+      if (data) setTableData(data.roles);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
+  // ------------------------------------------------
+
+  useEffect(() => {
+    updateData();
+  }, [updateData]);
+
+  // ------------------------------------------------
 
   return (
     <>
@@ -202,7 +215,7 @@ export default function PermissionsListView() {
                       selected={table.selected.includes(row._id)}
                       onSelectRow={() => table.onSelectRow(row._id)}
                       onDeleteRow={() => handleDeleteRow(row._id)}
-                      onEditRow={() => handleEditRow(row._id)}
+                      onEditRow={updateData}
                     />
                   ))}
               </TableBody>
@@ -210,7 +223,11 @@ export default function PermissionsListView() {
           </Scrollbar>
         </TableContainer>
       </Container>
-      <EmployeeRoleCreateEditForm onClose={quickCreate.onFalse} open={quickCreate.value} />
+      <EmployeeRoleCreateEditForm
+        onEditRow={updateData}
+        onClose={quickCreate.onFalse}
+        open={quickCreate.value}
+      />
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
@@ -221,6 +238,7 @@ export default function PermissionsListView() {
             variant="contained"
             color="error"
             onClick={() => {
+              console.log('ConfirmDialog');
               handleDeleteRows();
               confirm.onFalse();
             }}

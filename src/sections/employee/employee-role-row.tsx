@@ -31,9 +31,9 @@ type Props = {
 export default function EmployeeRoleRow({
   row,
   selected,
-  onEditRow,
   onSelectRow,
   onDeleteRow,
+  onEditRow,
 }: Props) {
   const confirm = useBoolean();
 
@@ -71,7 +71,12 @@ export default function EmployeeRoleRow({
         </TableCell>
       </TableRow>
 
-      <EmployeeRoleEditForm open={quickEdit.value} onClose={quickEdit.onFalse} currentRole={row} />
+      <EmployeeRoleEditForm
+        open={quickEdit.value}
+        onClose={quickEdit.onFalse}
+        currentRole={row}
+        onEditRow={onEditRow}
+      />
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}

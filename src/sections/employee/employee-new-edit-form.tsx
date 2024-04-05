@@ -18,6 +18,7 @@ import { fData } from 'src/utils/format-number';
 import axios, { endpoints } from 'src/utils/axios';
 
 import { useGetRoles } from 'src/api/role';
+import { ASSETS_API } from 'src/config-global';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
@@ -27,8 +28,6 @@ import FormProvider, {
 } from 'src/components/hook-form';
 
 import { IEmployeeItem } from 'src/types/employee';
-import { fileToBase64 } from 'src/utils/base64-convertor';
-import { ASSETS_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -75,13 +74,11 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
   const {
     reset,
     setValue,
-    watch,
     register,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
   const onSubmit = handleSubmit(async (data) => {
     try {
       const formData = new FormData();

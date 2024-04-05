@@ -1,13 +1,11 @@
 'use client';
 
-
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import { Box, useTheme } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useTranslate } from 'src/locales';
@@ -18,8 +16,6 @@ import Iconify from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export default function TokenExpiredView() {
-  const router = useRouter();
-
   const theme = useTheme();
 
   const { t } = useTranslate();

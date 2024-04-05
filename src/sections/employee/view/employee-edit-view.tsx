@@ -25,14 +25,12 @@ type Props = {
 export default function EmployeeEditView({ id }: Props) {
   const settings = useSettingsContext();
   const [currentEmployee, setCurrentEmployee] = useState<IEmployeeItem>();
-  console.log('id');
-  console.log(id);
   useEffect(() => {
     (async () => {
       const { data } = await axios.get(`${endpoints.employee.details}/${id}`);
       setCurrentEmployee(data.user);
     })();
-  }, []);
+  }, [id]);
   if (!currentEmployee) return <LoadingScreen />;
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>

@@ -13,10 +13,7 @@ import { useMockedUser } from 'src/hooks/use-mocked-user';
 
 import { Locale, useLocales, useTranslate } from 'src/locales';
 import { MotivationIllustration } from 'src/assets/illustrations';
-import {
-  _ecommerceBestSaleItems,
-  _ecommerceLatestProducts,
-} from 'src/_mock';
+import { _ecommerceBestSaleItems, _ecommerceLatestProducts } from 'src/_mock';
 
 import { useSettingsContext } from 'src/components/settings';
 
@@ -183,14 +180,18 @@ export default function OverviewEcommerceView() {
             title={t('best-saleing-item')}
             tableData={_ecommerceBestSaleItems}
             tableLabels={[
-              { id: 'name', label: currentLang.value == 'en' ? 'Item' : 'العنصر' },
-              { id: 'category', label: currentLang.value == 'en' ? 'Category' : 'الفئة' },
+              { id: 'name', label: currentLang.value === 'en' ? 'Item' : 'العنصر' },
+              { id: 'category', label: currentLang.value === 'en' ? 'Category' : 'الفئة' },
               {
                 id: 'totalAmount',
-                label: currentLang.value == 'en' ? 'Total Sales' : 'السعر',
+                label: currentLang.value === 'en' ? 'Total Sales' : 'السعر',
                 align: 'right',
               },
-              { id: 'rank', label: currentLang.value == 'en' ? 'Rank' : 'الترتيب', align: 'right' },
+              {
+                id: 'rank',
+                label: currentLang.value === 'en' ? 'Rank' : 'الترتيب',
+                align: 'right',
+              },
             ]}
           />
         </Grid>

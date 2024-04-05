@@ -56,7 +56,7 @@ export default function ResetPasswordView() {
         router.push(paths.auth.jwt.token_expired);
       }
     })();
-  }, []);
+  }, [router, token]);
 
   // -------------------------------------------
   const ResetPasswordSchema = Yup.object().shape({

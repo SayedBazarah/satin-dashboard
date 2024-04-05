@@ -13,17 +13,16 @@ export function useGetRoles() {
   useEffect(() => {
     (async () => {
       try {
-        axios.get(URL).then((res) => {
+        axios.get(endpoints.roles.all).then((res) => {
           setRoles(res.data.roles);
         });
       } catch (error) {
+        console.error(error);
       } finally {
         setIsLoading(false);
       }
     })();
   }, []);
-
-  const URL = endpoints.roles.all;
 
   const memoizedValue = useMemo(
     () => ({

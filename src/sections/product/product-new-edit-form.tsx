@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useMemo, useState, useEffect, useCallback } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -21,9 +21,7 @@ import { useRouter } from 'src/routes/hooks';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { useTranslate } from 'src/locales';
-import {
-  PRODUCT_CATEGORY_GROUP_OPTIONS,
-} from 'src/_mock';
+import { PRODUCT_CATEGORY_GROUP_OPTIONS } from 'src/_mock';
 
 // import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
@@ -50,7 +48,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
   // const { enqueueSnackbar } = useSnackbar();
 
-  const [includeTaxes, setIncludeTaxes] = useState(false);
+  // const [includeTaxes, setIncludeTaxes] = useState(false);
 
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required('Name is required'),
@@ -116,13 +114,13 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     }
   }, [currentProduct, defaultValues, reset]);
 
-  useEffect(() => {
-    if (includeTaxes) {
-      setValue('taxes', 0);
-    } else {
-      setValue('taxes', currentProduct?.taxes || 0);
-    }
-  }, [currentProduct?.taxes, includeTaxes, setValue]);
+  // useEffect(() => {
+  //   if (includeTaxes) {
+  //     setValue('taxes', 0);
+  //   } else {
+  //     setValue('taxes', currentProduct?.taxes || 0);
+  //   }
+  // }, [currentProduct?.taxes, includeTaxes, setValue]);
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -163,9 +161,9 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     setValue('images', []);
   }, [setValue]);
 
-  const handleChangeIncludeTaxes = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setIncludeTaxes(event.target.checked);
-  }, []);
+  // const handleChangeIncludeTaxes = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setIncludeTaxes(event.target.checked);
+  // }, []);
 
   const renderDetails = (
     <>

@@ -139,7 +139,7 @@ export function useNavData() {
         ],
       },
     ],
-    []
+    [t]
   );
 
   return data;

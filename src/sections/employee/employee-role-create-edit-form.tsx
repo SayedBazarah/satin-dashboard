@@ -15,6 +15,8 @@ import {
   DialogContent,
 } from '@mui/material';
 
+import axios, { endpoints } from 'src/utils/axios';
+
 import FormProvider from 'src/components/hook-form/form-provider';
 import { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
@@ -24,20 +26,26 @@ type Props = {
   currentRole?: IRole;
   open: boolean;
   onClose: VoidFunction;
+  onEditRow: VoidFunction;
 };
 
-export default function EmployeeRoleCreateEditForm({ currentRole, open, onClose }: Props) {
+export default function EmployeeRoleCreateEditForm({
+  currentRole,
+  open,
+  onClose,
+  onEditRow,
+}: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewRoleSchema = Yup.object().shape({
-    code: Yup.string(),
+    _id: Yup.string(),
     label: Yup.string().required('Role label is needed'),
     permissions: Yup.array().of(Yup.string()),
   });
 
   const defaultValues = useMemo(
     () => ({
-      code: currentRole?._id || '',
+      _id: currentRole?._id || '',
       label: currentRole?.label || '',
       permissions: currentRole?.permissions || [],
     }),
@@ -51,18 +59,20 @@ export default function EmployeeRoleCreateEditForm({ currentRole, open, onClose 
 
   const {
     handleSubmit,
-    watch,
     formState: { isSubmitting },
   } = methods;
 
-  const values = watch();
-
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      if (currentRole)
+        await axios.patch(endpoints.roles.update, {
+          ...data,
+          _id: currentRole._id,
+        });
+      else await axios.post(endpoints.roles.create, data);
+      onEditRow();
       onClose();
       enqueueSnackbar('Update success!');
-      console.info('DATA', data);
     } catch (error) {
       console.error(error && error);
     }
@@ -89,7 +99,7 @@ export default function EmployeeRoleCreateEditForm({ currentRole, open, onClose 
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="code" label="Code" />
+              <RHFTextField name="_id" label="Id" disabled />
               <RHFTextField name="label" label="Label" />
             </Box>
             <RHFAutocomplete

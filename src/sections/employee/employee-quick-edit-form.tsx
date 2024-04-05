@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Box from '@mui/material/Box';
@@ -11,14 +12,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
+import { paths } from 'src/routes/paths';
+
+import axios, { endpoints } from 'src/utils/axios';
+
+import { useGetRoles } from 'src/api/role';
+
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, { RHFTextField, RHFAutocomplete } from 'src/components/hook-form';
 
 import { IEmployeeItem, QuickUpdateEmployeeItem } from 'src/types/employee';
-import { useGetRoles } from 'src/api/role';
-import axios, { endpoints } from 'src/utils/axios';
-import { useRouter } from 'next/navigation';
-import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -28,10 +31,6 @@ type Props = {
   currentEmployee?: IEmployeeItem;
   onQuickEditRow: (data: QuickUpdateEmployeeItem) => void;
 };
-
-export const branches = [];
-
-export const roles = [];
 
 export default function EmployeeQuickEditForm({
   onQuickEditRow,

@@ -42,8 +42,8 @@ import {
 import {
   IEmployeeItem,
   IEmployeeTableFilters,
-  IEmployeeTableFilterValue,
   QuickUpdateEmployeeItem,
+  IEmployeeTableFilterValue,
 } from 'src/types/employee';
 
 import EmployeeTableRow from '../employee-table-row';
@@ -159,10 +159,10 @@ export default function UserListView() {
   );
 
   const handleDeleteRows = useCallback(async () => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row._id));
     await axios.delete(endpoints.employee.delete_rows, {
       data: { employees: table.selected },
     });
+    const deleteRows = tableData.filter((row) => !table.selected.includes(row._id));
 
     enqueueSnackbar('Delete success!');
 
@@ -181,12 +181,12 @@ export default function UserListView() {
     [router]
   );
 
-  const handleFilterStatus = useCallback(
-    (event: React.SyntheticEvent, newValue: string) => {
-      handleFilters('status', newValue);
-    },
-    [handleFilters]
-  );
+  // const handleFilterStatus = useCallback(
+  //   (event: React.SyntheticEvent, newValue: string) => {
+  //     handleFilters('status', newValue);
+  //   },
+  //   [handleFilters]
+  // );
 
   return (
     <>
@@ -349,7 +349,7 @@ function applyFilter({
   comparator: (a: any, b: any) => number;
   filters: IEmployeeTableFilters;
 }) {
-  const { name, status, role } = filters;
+  const { name, role } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 

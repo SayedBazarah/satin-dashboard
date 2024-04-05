@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -76,12 +76,15 @@ export default function OrderListView() {
     { id: '', width: 88 },
   ];
 
-  const defaultFilters: IOrderTableFilters = {
-    name: '',
-    status: 'all',
-    startDate: null,
-    endDate: null,
-  };
+  const defaultFilters: IOrderTableFilters = useMemo(
+    () => ({
+      name: '',
+      status: 'all',
+      startDate: null,
+      endDate: null,
+    }),
+    []
+  );
 
   // ----------------------------------------------------
 
@@ -133,7 +136,7 @@ export default function OrderListView() {
 
   const handleResetFilters = useCallback(() => {
     setFilters(defaultFilters);
-  }, []);
+  }, [defaultFilters]);
 
   const handleDeleteRow = useCallback(
     (id: string) => {
@@ -145,7 +148,7 @@ export default function OrderListView() {
 
       table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [dataInPage.length, enqueueSnackbar, table, tableData]
+    [t, dataInPage.length, enqueueSnackbar, table, tableData]
   );
 
   const handleDeleteRows = useCallback(() => {
@@ -159,7 +162,7 @@ export default function OrderListView() {
       totalRowsInPage: dataInPage.length,
       totalRowsFiltered: dataFiltered.length,
     });
-  }, [dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
+  }, [t, dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
 
   const handleViewRow = useCallback(
     (id: string) => {

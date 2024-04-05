@@ -1,5 +1,5 @@
+
 import { CustomFile } from 'src/components/upload';
-import { string } from 'yup';
 
 export type IEmployeeTableFilterValue = string | string[];
 

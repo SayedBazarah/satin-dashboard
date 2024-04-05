@@ -52,16 +52,10 @@ export default function EmployeeProfileView() {
 
   const { user } = useMockedUser();
 
-  const [searchFriends, setSearchFriends] = useState('');
-
   const [currentTab, setCurrentTab] = useState('profile');
 
   const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
     setCurrentTab(newValue);
-  }, []);
-
-  const handleSearchFriends = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchFriends(event.target.value);
   }, []);
 
   return (

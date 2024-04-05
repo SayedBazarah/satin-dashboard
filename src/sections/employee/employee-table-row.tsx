@@ -1,7 +1,7 @@
 import Image from 'next/image';
-import { Badge, Box } from '@mui/material';
+
+import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
@@ -12,6 +12,8 @@ import ListItemText from '@mui/material/ListItemText';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
+import { ASSETS_API } from 'src/config-global';
+
 import Iconify from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
@@ -19,7 +21,6 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { IEmployeeItem } from 'src/types/employee';
 
 import EmployeeQuickEditForm from './employee-quick-edit-form';
-import { ASSETS_API } from 'src/config-global';
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +41,7 @@ export default function EmployeeTableRow({
   onDeleteRow,
   onQuickEditRow,
 }: Props) {
-  const { name, profileImage, isOnline, branch, role, phone } = row;
+  const { name, profileImage, isOnline, role, phone } = row;
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();

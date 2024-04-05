@@ -34,6 +34,7 @@ export default function OrderDetailsItems({
   discount,
   subTotal,
   totalAmount,
+  t,
 }: Props) {
   const renderTotal = (
     <Stack
@@ -42,7 +43,7 @@ export default function OrderDetailsItems({
       sx={{ my: 3, textAlign: 'right', typography: 'body2' }}
     >
       <Stack direction="row">
-        <Box sx={{ color: 'text.secondary' }}>Subtotal</Box>
+        <Box sx={{ color: 'text.secondary' }}>Subtotal {t('congrats')}</Box>
         <Box sx={{ width: 160, typography: 'subtitle2' }}>{fCurrency(subTotal) || '-'}</Box>
       </Stack>
 

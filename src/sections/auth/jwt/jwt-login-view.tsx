@@ -20,6 +20,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { useTranslate } from 'src/locales';
 import { useAuthContext } from 'src/auth/hooks';
+import { PATH_AFTER_LOGIN } from 'src/config-global';
 
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
@@ -66,7 +67,7 @@ export default function JwtLoginView() {
     try {
       await login(data.email, data.password);
 
-      // router.push(returnTo || PATH_AFTER_LOGIN);
+      router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
       reset();
