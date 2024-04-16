@@ -66,8 +66,14 @@ export const endpoints = {
     search: '/api/post/search',
   },
   product: {
+    test: '/api/test',
+    create: '/api/product',
+    update: (id: string) => `/api/product/${id}`,
+
     list: '/api/product/list',
-    details: '/api/product/details',
+    details: (slug: string) => `/api/product/details/${slug}`,
     search: '/api/product/search',
+    delete: (id: string) => `/api/product/${id}`,
+    delete_rows: `/api/product/rows`,
   },
 };

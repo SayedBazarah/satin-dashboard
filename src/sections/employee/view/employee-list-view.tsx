@@ -63,7 +63,7 @@ const TABLE_HEAD = [
 const defaultFilters: IEmployeeTableFilters = {
   name: '',
   role: [],
-  status: 'all',
+  status: '',
 };
 
 // ----------------------------------------------------------------------
@@ -219,6 +219,10 @@ export default function UserListView() {
             onFilters={handleFilters}
             //
             roleOptions={roles}
+            statusOptions={[
+              { _id: 1, label: 'Online' },
+              { _id: 2, label: 'Offline' },
+            ]}
           />
 
           {canReset && (
@@ -349,8 +353,7 @@ function applyFilter({
   comparator: (a: any, b: any) => number;
   filters: IEmployeeTableFilters;
 }) {
-  const { name, role } = filters;
-
+  const { name, role, status } = filters;
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
   stabilizedThis.sort((a, b) => {
@@ -367,6 +370,11 @@ function applyFilter({
     );
   }
 
+  if (status.length) {
+    inputData = inputData.filter((employee) =>
+      status.includes((employee.isOnline && 'Online') || 'Offline')
+    );
+  }
   if (role.length) {
     inputData = inputData.filter((employee) => role.includes(employee.role?.label));
   }

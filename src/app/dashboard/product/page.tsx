@@ -3,7 +3,7 @@
 import { ProductListView } from 'src/sections/product/view';
 
 export const metadata = {
-  title: 'Products',
+  title: 'Dashboard: Products',
 };
 
 export default async function Page() {

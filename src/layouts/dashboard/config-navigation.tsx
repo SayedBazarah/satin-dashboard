@@ -73,7 +73,7 @@ export function useNavData() {
 
           {
             title: t('nav.categories'),
-            path: paths.dashboard.categories,
+            path: paths.dashboard.tags,
             icon: ICONS.label,
           },
           {
@@ -81,21 +81,21 @@ export function useNavData() {
             path: paths.dashboard.promotions.root,
             icon: ICONS.label,
           },
-          {
-            title: t('nav.inventory'),
-            path: paths.dashboard.inventory.root,
-            icon: ICONS.banking,
-          },
+          // {
+          //   title: t('nav.inventory'),
+          //   path: paths.dashboard.inventory.root,
+          //   icon: ICONS.banking,
+          // },
           {
             title: t('nav.orders'),
             path: paths.dashboard.order.root,
             icon: ICONS.ecommerce,
           },
-          {
-            title: t('nav.invoices'),
-            path: paths.dashboard.invoices.root,
-            icon: ICONS.invoice,
-          },
+          // {
+          //   title: t('nav.invoices'),
+          //   path: paths.dashboard.invoices.root,
+          //   icon: ICONS.invoice,
+          // },
           {
             title: t('nav.logistics'),
             path: paths.dashboard.legistics.root,

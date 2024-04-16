@@ -32,16 +32,17 @@ export type IProductReview = {
 };
 
 export type IProductItem = {
-  id: string;
+  _id: string;
   sku: string;
   name: string;
+  slug: string;
   code: string;
   price: number;
   taxes: number;
   tags: string[];
   gender: string;
   sizes: string[];
-  publish: string;
+  publish: boolean;
   coverUrl: string;
   images: string[];
   colors: string[];
@@ -77,4 +78,5 @@ export type IProductTableFilterValue = string | string[];
 export type IProductTableFilters = {
   stock: string[];
   publish: string[];
+  name: string;
 };

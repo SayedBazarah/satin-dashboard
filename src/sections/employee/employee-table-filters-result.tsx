@@ -35,7 +35,7 @@ export default function EmployeeTableFiltersResult({
   }, [onFilters]);
 
   const handleRemoveStatus = useCallback(() => {
-    onFilters('status', 'all');
+    onFilters('status', '');
   }, [onFilters]);
 
   const handleRemoveRole = useCallback(
@@ -57,7 +57,7 @@ export default function EmployeeTableFiltersResult({
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
-        {filters.status !== 'all' && (
+        {filters.status !== '' && (
           <Block label="Status:">
             <Chip size="small" label={filters.status} onDelete={handleRemoveStatus} />
           </Block>

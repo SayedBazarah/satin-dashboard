@@ -30,6 +30,10 @@ export default function ProductTableFiltersResult({
   results,
   ...other
 }: Props) {
+  const handleRemoveName = useCallback(() => {
+    onFilters('name', '');
+  }, [onFilters]);
+
   const handleRemoveStock = useCallback(
     (inputValue: string) => {
       const newValue = filters.stock.filter((item) => item !== inputValue);
@@ -58,6 +62,12 @@ export default function ProductTableFiltersResult({
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
+        {!!filters.name.length && (
+          <Block label="Keyword:">
+            <Chip label={filters.name} size="small" onDelete={handleRemoveName} />
+          </Block>
+        )}
+
         {!!filters.stock.length && (
           <Block label="Stock:">
             {filters.stock.map((item) => (

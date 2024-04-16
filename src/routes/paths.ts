@@ -43,7 +43,7 @@ export const paths = {
         details: `${ROOTS.DASHBOARD}/order/${MOCK_ID}`,
       },
     },
-    categories: `${ROOTS.DASHBOARD}/categories`,
+    tags: `${ROOTS.DASHBOARD}/tags`,
     employees: {
       root: `${ROOTS.DASHBOARD}/employees`,
       new: `${ROOTS.DASHBOARD}/employees/create`,

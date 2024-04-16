@@ -5,6 +5,7 @@ import { Theme, SxProps } from '@mui/material/styles';
 
 import DownloadButton from './download-button';
 import { fileData, fileThumb, fileFormat } from './utils';
+import Image from '../image';
 
 // ----------------------------------------------------------------------
 
@@ -31,17 +32,18 @@ export default function FileThumbnail({
 
   const renderContent =
     format === 'image' && imageView ? (
-      <Box
-        component="img"
-        src={preview}
-        sx={{
-          width: 1,
-          height: 1,
-          flexShrink: 0,
-          objectFit: 'cover',
-          ...imgSx,
-        }}
-      />
+      <>
+        <Image
+          src={preview}
+          sx={{
+            width: 1,
+            height: 1,
+            flexShrink: 0,
+            objectFit: 'cover',
+            ...imgSx,
+          }}
+        />
+      </>
     ) : (
       <Box
         component="img"

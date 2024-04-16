@@ -23,6 +23,7 @@ type Props = {
   onFilters: (name: string, value: IEmployeeTableFilterValue) => void;
   //
   roleOptions: IRole[];
+  statusOptions: { _id: number; label: string }[];
 };
 
 export default function EmployeeTableToolbar({
@@ -30,6 +31,7 @@ export default function EmployeeTableToolbar({
   onFilters,
   //
   roleOptions,
+  statusOptions,
 }: Props) {
   const popover = usePopover();
 
@@ -44,6 +46,15 @@ export default function EmployeeTableToolbar({
     (event: SelectChangeEvent<string[]>) => {
       onFilters(
         'role',
+        typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value
+      );
+    },
+    [onFilters]
+  );
+  const handleFilterStatus = useCallback(
+    (event: SelectChangeEvent<string[]>) => {
+      onFilters(
+        'status',
         typeof event.target.value === 'string' ? event.target.value.split(',') : event.target.value
       );
     },
@@ -77,7 +88,7 @@ export default function EmployeeTableToolbar({
             value={filters.role}
             onChange={handleFilterRole}
             input={<OutlinedInput label="Role" />}
-            renderValue={(selected) => selected.map((value) => value).join(', ')}
+            renderValue={(selected) => selected.map((value) => value).join(',  ')}
             MenuProps={{
               PaperProps: {
                 sx: { maxHeight: 240 },
@@ -90,6 +101,37 @@ export default function EmployeeTableToolbar({
                   disableRipple
                   size="small"
                   checked={filters.role.includes(option.label)}
+                />
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl
+          sx={{
+            flexShrink: 0,
+            width: { xs: 1, md: 200 },
+          }}
+        >
+          <InputLabel>Status</InputLabel>
+
+          <Select
+            value={filters.status as ''}
+            onChange={handleFilterStatus}
+            input={<OutlinedInput label="Status" />}
+            renderValue={(selected) => selected}
+            MenuProps={{
+              PaperProps: {
+                sx: { maxHeight: 240 },
+              },
+            }}
+          >
+            {statusOptions.map((option) => (
+              <MenuItem key={option._id} value={option.label}>
+                <Checkbox
+                  disableRipple
+                  size="small"
+                  checked={filters.status.includes(option.label)}
                 />
                 {option.label}
               </MenuItem>

@@ -1,4 +1,3 @@
-
 import { CustomFile } from 'src/components/upload';
 
 export type IEmployeeTableFilterValue = string | string[];

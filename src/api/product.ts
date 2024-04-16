@@ -28,8 +28,8 @@ export function useGetProducts() {
 
 // ----------------------------------------------------------------------
 
-export function useGetProduct(productId: string) {
-  const URL = productId ? [endpoints.product.details, { params: { productId } }] : '';
+export function useGetProduct(slug: string) {
+  const URL = endpoints.product.details(slug);
 
   const { data, isLoading, error, isValidating } = useSWR(URL, fetcher);
 
