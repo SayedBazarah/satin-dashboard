@@ -7,7 +7,6 @@ import axios, { endpoints } from 'src/utils/axios';
 import { AuthContext } from './auth-context';
 import { setSession, isValidToken } from './utils';
 import { AuthUserType, ActionMapType, AuthStateType } from '../../types';
-import axiosInstance from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 /**
@@ -203,7 +202,7 @@ export function AuthProvider({ children }: Props) {
       },
       {
         headers: {
-          token,
+          authorization: token,
         },
       }
     );

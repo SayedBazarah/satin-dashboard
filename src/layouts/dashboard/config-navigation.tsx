@@ -76,11 +76,11 @@ export function useNavData() {
             path: paths.dashboard.tags,
             icon: ICONS.label,
           },
-          {
-            title: t('nav.promotions'),
-            path: paths.dashboard.promotions.root,
-            icon: ICONS.label,
-          },
+          // {
+          //   title: t('nav.promotions'),
+          //   path: paths.dashboard.promotions.root,
+          //   icon: ICONS.label,
+          // },
           // {
           //   title: t('nav.inventory'),
           //   path: paths.dashboard.inventory.root,
@@ -96,11 +96,11 @@ export function useNavData() {
           //   path: paths.dashboard.invoices.root,
           //   icon: ICONS.invoice,
           // },
-          {
-            title: t('nav.logistics'),
-            path: paths.dashboard.legistics.root,
-            icon: ICONS.external,
-          },
+          // {
+          //   title: t('nav.logistics'),
+          //   path: paths.dashboard.legistics.root,
+          //   icon: ICONS.external,
+          // },
           {
             title: t('nav.employees'),
             path: paths.dashboard.employees.root,
@@ -121,21 +121,21 @@ export function useNavData() {
               },
             ],
           },
-          {
-            title: t('nav.customers'),
-            path: paths.dashboard.customers.root,
-            icon: ICONS.label,
-          },
-          {
-            title: t('nav.notification'),
-            path: paths.dashboard.notification.root,
-            icon: ICONS.chat,
-          },
-          {
-            title: t('nav.blog'),
-            path: paths.dashboard.blog.root,
-            icon: ICONS.blog,
-          },
+          // {
+          //   title: t('nav.customers'),
+          //   path: paths.dashboard.customers.root,
+          //   icon: ICONS.label,
+          // },
+          // {
+          //   title: t('nav.notification'),
+          //   path: paths.dashboard.notification.root,
+          //   icon: ICONS.chat,
+          // },
+          // {
+          //   title: t('nav.blog'),
+          //   path: paths.dashboard.blog.root,
+          //   icon: ICONS.blog,
+          // },
         ],
       },
     ],

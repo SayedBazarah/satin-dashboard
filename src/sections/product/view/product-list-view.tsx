@@ -5,7 +5,6 @@ import { useState, useEffect, useCallback } from 'react';
 
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import { GridRowSelectionModel, GridColumnVisibilityModel } from '@mui/x-data-grid';
 import {
   Card,
   Table,
@@ -17,7 +16,6 @@ import {
 } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { useBoolean } from 'src/hooks/use-boolean';
@@ -26,7 +24,6 @@ import axios, { endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 import { useGetProducts } from 'src/api/product';
-import { PRODUCT_PUBLISH_OPTIONS } from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -59,11 +56,9 @@ const defaultFilters: IProductTableFilters = {
   name: '',
 };
 
-const HIDE_COLUMNS = {
-  category: false,
-};
-
-const HIDE_COLUMNS_TOGGLABLE = ['category', 'actions'];
+// const HIDE_COLUMNS = {
+//   category: false,
+// };
 
 // ----------------------------------------------------------------------
 
@@ -74,26 +69,20 @@ export default function ProductListView() {
 
   const theme = useTheme();
 
-  const confirmRows = useBoolean();
-
-  const router = useRouter();
-
   const table = useTable();
 
   const confirm = useBoolean();
 
   const settings = useSettingsContext();
 
-  const { products, productsLoading } = useGetProducts();
+  const { products } = useGetProducts();
 
   const [tableData, setTableData] = useState<IProductItem[]>([]);
 
   const [filters, setFilters] = useState(defaultFilters);
 
-  const [selectedRowIds, setSelectedRowIds] = useState<GridRowSelectionModel>([]);
-
-  const [columnVisibilityModel, setColumnVisibilityModel] =
-    useState<GridColumnVisibilityModel>(HIDE_COLUMNS);
+  // const [columnVisibilityModel, setColumnVisibilityModel] =
+  //   useState<GridColumnVisibilityModel>(HIDE_COLUMNS);
 
   // ----------------------------------------------------------------------
 
@@ -168,14 +157,7 @@ export default function ProductListView() {
     enqueueSnackbar('Delete success!');
 
     setTableData(deleteRows);
-  }, [table.selected, axios, enqueueSnackbar, selectedRowIds, tableData]);
-
-  const handleEditRow = useCallback(
-    (id: string) => {
-      router.push(paths.dashboard.products.edit(id));
-    },
-    [router]
-  );
+  }, [table, enqueueSnackbar, tableData]);
 
   // -------------------------------------------------------------
 
@@ -228,7 +210,7 @@ export default function ProductListView() {
             filters={filters}
             onFilters={handleFilters}
             stockOptions={PRODUCT_STOCK_OPTIONS}
-            publishOptions={PRODUCT_PUBLISH_OPTIONS}
+            publishOptions={PUBLISH_OPTIONS}
           />
           {canReset && (
             <ProductTableFiltersResult

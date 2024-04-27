@@ -22,7 +22,7 @@ import { useResponsive } from 'src/hooks/use-responsive';
 
 import axios, { endpoints } from 'src/utils/axios';
 
-import { _tags, PRODUCT_CATEGORY_GROUP_OPTIONS } from 'src/_mock';
+import { useGetCategoriesTags } from 'src/api/product';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
@@ -35,7 +35,6 @@ import FormProvider, {
 } from 'src/components/hook-form';
 
 import { IProductItem } from 'src/types/product';
-import { useGetCategoriesTags } from 'src/api/product';
 
 // -------------------------------------
 
@@ -148,7 +147,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
           formData.append(key, value.toString());
       });
 
-      formData.append('slug', data.slug.replace(/\ /g, '-').toString().toLowerCase());
+      formData.append('slug', data.slug.replace(/ /g, '-').toString().toLowerCase());
 
       formData.append(`newLabel[content]`, data.newLabel.content?.toString() || '');
       formData.append(`newLabel[enabled]`, data.newLabel.enabled?.toString() || '');
@@ -160,10 +159,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
       data.images.map((image) => {
         formData.append(`images`, image);
+        return null;
       });
 
       data.tags?.map((tag) => {
         formData.append(`tags`, tag);
+        return null;
       });
 
       if (currentProduct) await axios.patch(endpoints.product.update(currentProduct._id), formData);
@@ -293,7 +294,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 InputLabelProps={{ shrink: true }}
               />
               <RHFSelect native name="category" label="Category" InputLabelProps={{ shrink: true }}>
-                <option value=""></option>
+                <option value="" />
                 {categories &&
                   categories.map((category, index) => (
                     <option key={index} value={category._id}>
