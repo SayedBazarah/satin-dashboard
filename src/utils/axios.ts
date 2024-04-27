@@ -71,6 +71,7 @@ export const endpoints = {
     update: (id: string) => `/api/product/${id}`,
 
     list: '/api/product/list',
+    categories_tags: () => `/api/product/categories-tags`,
     details: (slug: string) => `/api/product/details/${slug}`,
     search: '/api/product/search',
     delete: (id: string) => `/api/product/${id}`,

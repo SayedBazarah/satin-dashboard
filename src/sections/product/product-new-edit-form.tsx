@@ -8,7 +8,6 @@ import Chip from '@mui/material/Chip';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Switch from '@mui/material/Switch';
-import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Unstable_Grid2';
 import CardHeader from '@mui/material/CardHeader';
 import Typography from '@mui/material/Typography';
@@ -21,13 +20,9 @@ import { useRouter } from 'src/routes/hooks';
 
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import {
-  _tags,
-  PRODUCT_SIZE_OPTIONS,
-  PRODUCT_GENDER_OPTIONS,
-  PRODUCT_COLOR_NAME_OPTIONS,
-  PRODUCT_CATEGORY_GROUP_OPTIONS,
-} from 'src/_mock';
+import axios, { endpoints } from 'src/utils/axios';
+
+import { _tags, PRODUCT_CATEGORY_GROUP_OPTIONS } from 'src/_mock';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
@@ -36,16 +31,13 @@ import FormProvider, {
   RHFUpload,
   RHFSwitch,
   RHFTextField,
-  RHFMultiSelect,
   RHFAutocomplete,
-  RHFMultiCheckbox,
-  RHFRadioGroup,
 } from 'src/components/hook-form';
 
 import { IProductItem } from 'src/types/product';
-import axios, { endpoints } from 'src/utils/axios';
+import { useGetCategoriesTags } from 'src/api/product';
 
-// ----------------------------------------------------------------------
+// -------------------------------------
 
 type Props = {
   currentProduct?: IProductItem;
@@ -53,6 +45,8 @@ type Props = {
 
 export default function ProductNewEditForm({ currentProduct }: Props) {
   const router = useRouter();
+
+  const { productsTags, categories } = useGetCategoriesTags();
 
   const mdUp = useResponsive('up', 'md');
 
@@ -63,15 +57,12 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   const NewProductSchema = Yup.object().shape({
     publish: Yup.boolean(),
     name: Yup.string().required('Name is required'),
-    colors: Yup.array(),
-    sizes: Yup.array(),
     tags: Yup.array().min(1, 'Must have at least 1 tags'),
     slug: Yup.string().required('Select Properties Template is required'),
-    template: Yup.string().required('Select Properties Template is required'),
-    category: Yup.string().required('Category is required'),
     price: Yup.number()
       .moreThan(0, 'Price should not be $0.00')
       .required('Price should not be $0.00'),
+    category: Yup.string(),
     code: Yup.string(),
     sku: Yup.string(),
     gender: Yup.string(),
@@ -109,10 +100,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       tags: currentProduct?.tags || [],
       taxes: currentProduct?.taxes || 0,
       gender: currentProduct?.gender || '',
-      category: currentProduct?.category || '',
-      template: 'default',
-      colors: currentProduct?.colors || [],
-      sizes: currentProduct?.sizes || [],
+      category: currentProduct?.category.title || '',
       newLabel: currentProduct?.newLabel || { enabled: false, content: '' },
       saleLabel: currentProduct?.saleLabel || { enabled: false, content: '' },
     }),
@@ -133,7 +121,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   } = methods;
 
   const values = watch();
-  console.log(values);
+
   useEffect(() => {
     if (currentProduct) {
       reset(defaultValues);
@@ -150,20 +138,17 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
   // -----------------------------------------------------------------
 
-  const PRODUCT_TYPE = [
-    { id: 'default', label: 'default' },
-    { id: 'fashion', label: 'fashion' },
-  ];
-
   // -----------------------------------------------------------------
   const onSubmit = handleSubmit(async (data) => {
     try {
       const formData = new FormData();
 
       Object.entries(data).forEach(([key, value]) => {
-        if (!['images', 'newLabel', 'saleLabel', 'category', 'tags', 'colors'].includes(key))
+        if (!['slug', 'images', 'newLabel', 'saleLabel', 'tags', 'colors'].includes(key))
           formData.append(key, value.toString());
       });
+
+      formData.append('slug', data.slug.replace(/\ /g, '-').toString().toLowerCase());
 
       formData.append(`newLabel[content]`, data.newLabel.content?.toString() || '');
       formData.append(`newLabel[enabled]`, data.newLabel.enabled?.toString() || '');
@@ -175,10 +160,6 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
       data.images.map((image) => {
         formData.append(`images`, image);
-      });
-
-      data.colors?.map((color) => {
-        formData.append(`colors`, color);
       });
 
       data.tags?.map((tag) => {
@@ -275,32 +256,6 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     </>
   );
 
-  const renderPropertiesType = (
-    <>
-      {mdUp && (
-        <Grid md={4}>
-          <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Product Properties Type
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Select product functions and attributes template
-          </Typography>
-        </Grid>
-      )}
-      <Grid xs={12} md={8}>
-        <Card sx={{ p: 3 }}>
-          <RHFSelect native name="template" label="template" InputLabelProps={{ shrink: true }}>
-            {PRODUCT_TYPE.map((type) => (
-              <option key={type.id} value={type.label}>
-                {type.label}
-              </option>
-            ))}
-          </RHFSelect>
-        </Card>
-      </Grid>
-    </>
-  );
-
   const renderProperties = (
     <>
       {mdUp && (
@@ -329,9 +284,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
               }}
             >
               <RHFTextField name="code" label="Product Code" />
-
               <RHFTextField name="sku" label="Product SKU" />
-
               <RHFTextField
                 name="quantity"
                 label="Quantity"
@@ -339,71 +292,44 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 type="number"
                 InputLabelProps={{ shrink: true }}
               />
-
               <RHFSelect native name="category" label="Category" InputLabelProps={{ shrink: true }}>
-                {PRODUCT_CATEGORY_GROUP_OPTIONS.map((category) => (
-                  <optgroup key={category.group} label={category.group}>
-                    {category.classify.map((classify) => (
-                      <option key={classify} value={classify}>
-                        {classify}
-                      </option>
-                    ))}
-                  </optgroup>
-                ))}
+                <option value=""></option>
+                {categories &&
+                  categories.map((category, index) => (
+                    <option key={index} value={category._id}>
+                      {category.title}
+                    </option>
+                  ))}
               </RHFSelect>
-
-              {values.template === 'fashion' && (
-                <RHFMultiSelect
-                  checkbox
-                  name="colors"
-                  label="Colors"
-                  options={PRODUCT_COLOR_NAME_OPTIONS}
-                />
-              )}
-              {values.template === 'fashion' && (
-                <RHFMultiSelect
-                  checkbox
-                  name="sizes"
-                  label="Sizes"
-                  options={PRODUCT_SIZE_OPTIONS}
-                />
-              )}
             </Box>
-
-            <RHFAutocomplete
-              name="tags"
-              label="Tags"
-              placeholder="+ Tags"
-              multiple
-              freeSolo
-              options={_tags.map((option) => option)}
-              getOptionLabel={(option) => option}
-              renderOption={(props, option) => (
-                <li {...props} key={option}>
-                  {option}
-                </li>
-              )}
-              renderTags={(selected, getTagProps) =>
-                selected.map((option, index) => (
-                  <Chip
-                    {...getTagProps({ index })}
-                    key={option}
-                    label={option}
-                    size="small"
-                    color="info"
-                    variant="soft"
-                  />
-                ))
-              }
-            />
-
-            {values.template === 'fashion' && (
-              <Stack spacing={1}>
-                <Typography variant="subtitle2">Gender</Typography>
-                <RHFRadioGroup row name="gender" spacing={2} options={PRODUCT_GENDER_OPTIONS} />
-              </Stack>
-            )}
-
+            <Stack>
+              <RHFAutocomplete
+                name="tags"
+                label="Tags"
+                placeholder="+ Tags"
+                multiple
+                freeSolo
+                options={productsTags && productsTags.map((option) => option)}
+                getOptionLabel={(option) => option}
+                renderOption={(props, option) => (
+                  <li {...props} key={option}>
+                    {option}
+                  </li>
+                )}
+                renderTags={(selected, getTagProps) =>
+                  selected.map((option, index) => (
+                    <Chip
+                      {...getTagProps({ index })}
+                      key={option}
+                      label={option}
+                      size="small"
+                      color="info"
+                      variant="soft"
+                    />
+                  ))
+                }
+              />
+            </Stack>
             <Stack direction="row" alignItems="center" spacing={3}>
               <RHFSwitch name="saleLabel.enabled" label={null} sx={{ m: 0 }} />
               <RHFTextField
@@ -521,13 +447,10 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       </Grid>
     </>
   );
-
   return (
     <FormProvider methods={methods} onSubmit={onSubmit}>
       <Grid container spacing={3}>
         {renderDetails}
-
-        {renderPropertiesType}
 
         {renderProperties}
 

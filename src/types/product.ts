@@ -47,7 +47,7 @@ export type IProductItem = {
   images: string[];
   colors: string[];
   quantity: number;
-  category: string;
+  category: ICategory;
   available: number;
   totalSold: number;
   description: string;
@@ -71,6 +71,13 @@ export type IProductItem = {
     enabled: boolean;
     content: string;
   };
+};
+
+export type ICategory = {
+  _id: string;
+  slug: string;
+  title: string;
+  profileImage: string;
 };
 
 export type IProductTableFilterValue = string | string[];

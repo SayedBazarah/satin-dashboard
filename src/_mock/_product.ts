@@ -72,16 +72,20 @@ export const PRODUCT_SORT_OPTIONS = [
 
 export const PRODUCT_CATEGORY_GROUP_OPTIONS = [
   {
-    group: 'Clothing',
-    classify: ['Shirts', 'T-shirts', 'Jeans', 'Leather', 'Accessories'],
+    _id: '66274c5ae6e797e4b975ea5e',
+    title: 'Alhamdullah',
+    slug: 'alhamdullah-سبحان-الله',
+    products: [],
+    coverImage:
+      'http://localhost:3000/media/images/categories/fb23cacb-d424-4b60-9bdc-7aae8dc18ada.gif',
   },
   {
-    group: 'Tailored',
-    classify: ['Suits', 'Blazers', 'Trousers', 'Waistcoats', 'Apparel'],
-  },
-  {
-    group: 'Accessories',
-    classify: ['Shoes', 'Backpacks and bags', 'Bracelets', 'Face masks'],
+    _id: '6627abe9646995d8db297f3b',
+    title: 'Fashion',
+    slug: 'fashion-fss-ss-oo',
+    products: [],
+    coverImage:
+      'http://localhost:3000/media/images/categories/1d38968a-143b-46c3-967c-c33e936a7e9c.gif',
   },
 ];
 

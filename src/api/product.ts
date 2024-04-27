@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 
 import { fetcher, endpoints } from 'src/utils/axios';
 
-import { IProductItem } from 'src/types/product';
+import { ICategory, IProductItem } from 'src/types/product';
 
 // ----------------------------------------------------------------------
 
@@ -64,6 +64,29 @@ export function useSearchProducts(query: string) {
       searchEmpty: !isLoading && !data?.results.length,
     }),
     [data?.results, error, isLoading, isValidating]
+  );
+
+  return memoizedValue;
+}
+
+// ----------------------------------------------------------------------
+
+export function useGetCategoriesTags() {
+  const { data, isLoading, error, isValidating } = useSWR(
+    endpoints.product.categories_tags,
+    fetcher
+  );
+  // محروس عويس
+  // امال
+  const memoizedValue = useMemo(
+    () => ({
+      productsTags: data?.tags as string[],
+      categories: data?.categories as ICategory[],
+      searchLoading: isLoading,
+      searchError: error,
+      searchValidating: isValidating,
+    }),
+    [data?.tags, data?.categories, error, isLoading, isValidating]
   );
 
   return memoizedValue;

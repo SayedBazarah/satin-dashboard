@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
@@ -6,12 +6,12 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import { IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
-import { IconButton, InputAdornment, Stack, TextField } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -58,8 +58,7 @@ export default function ProductTableToolbar({
   );
 
   return (
-    <>
-      <Stack
+    <Stack
         direction={{
           xs: 'column',
           md: 'row',
@@ -182,6 +181,5 @@ export default function ProductTableToolbar({
           </MenuItem>
         </CustomPopover>
       </Stack>
-    </>
   );
 }

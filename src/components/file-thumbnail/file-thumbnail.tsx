@@ -3,9 +3,9 @@ import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import { Theme, SxProps } from '@mui/material/styles';
 
+import Image from '../image';
 import DownloadButton from './download-button';
 import { fileData, fileThumb, fileFormat } from './utils';
-import Image from '../image';
 
 // ----------------------------------------------------------------------
 
@@ -32,8 +32,7 @@ export default function FileThumbnail({
 
   const renderContent =
     format === 'image' && imageView ? (
-      <>
-        <Image
+      <Image
           src={preview}
           sx={{
             width: 1,
@@ -43,7 +42,6 @@ export default function FileThumbnail({
             ...imgSx,
           }}
         />
-      </>
     ) : (
       <Box
         component="img"

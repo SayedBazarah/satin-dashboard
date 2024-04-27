@@ -7,13 +7,13 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { GridRowSelectionModel, GridColumnVisibilityModel } from '@mui/x-data-grid';
 import {
+  Card,
   Table,
   Tooltip,
+  useTheme,
   TableBody,
   IconButton,
   TableContainer,
-  Card,
-  useTheme,
 } from '@mui/material';
 
 import { paths } from 'src/routes/paths';
@@ -26,6 +26,7 @@ import axios, { endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 import { useGetProducts } from 'src/api/product';
+import { PRODUCT_PUBLISH_OPTIONS } from 'src/_mock';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -35,21 +36,19 @@ import { useSettingsContext } from 'src/components/settings';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import {
   useTable,
+  emptyRows,
+  TableNoData,
+  getComparator,
+  TableEmptyRows,
   TableHeadCustom,
   TableSelectedAction,
   TablePaginationCustom,
-  TableNoData,
-  emptyRows,
-  TableEmptyRows,
-  getComparator,
 } from 'src/components/table';
 
 import { IProductItem, IProductTableFilters, IProductTableFilterValue } from 'src/types/product';
 
 import { ProductTableRow } from '../product-table-row';
 import ProductTableToolbar from '../product-table-toolbar';
-import { PRODUCT_PUBLISH_OPTIONS } from 'src/_mock';
-import ProductFiltersResult from '../product-filters-result';
 import ProductTableFiltersResult from '../product-table-filters-result';
 
 // ----------------------------------------------------------------------
