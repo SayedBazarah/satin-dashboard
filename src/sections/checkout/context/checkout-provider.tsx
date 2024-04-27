@@ -180,12 +180,7 @@ export function CheckoutProvider({ children }: Props) {
   const completed = state.activeStep === PRODUCT_CHECKOUT_STEPS.length;
 
   // Reset
-  const onReset = useCallback(() => {
-    if (completed) {
-      reset();
-      router.replace(paths.shop.root);
-    }
-  }, [completed, reset, router]);
+  const onReset = useCallback(() => {}, []);
 
   const memoizedValue = useMemo(
     () => ({
