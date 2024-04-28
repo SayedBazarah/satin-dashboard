@@ -1,5 +1,6 @@
+import { TFunction } from 'i18next';
+
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
 import Checkbox from '@mui/material/Checkbox';
@@ -18,7 +19,6 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ICategory } from 'src/types/product';
 
 import CategoryCreateEditForm from './category-create-edit-form';
-import { TFunction } from 'i18next';
 
 // ----------------------------------------------------------------------
 

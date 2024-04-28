@@ -1,6 +1,7 @@
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import Stack, { StackProps } from '@mui/material/Stack';
+
 import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------

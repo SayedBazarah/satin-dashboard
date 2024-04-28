@@ -18,11 +18,12 @@ import {
 
 import axios, { endpoints } from 'src/utils/axios';
 
+import { useTranslate } from 'src/locales';
+
 import FormProvider from 'src/components/hook-form/form-provider';
 import { RHFTextField, RHFUploadCover } from 'src/components/hook-form';
 
 import { ICategory } from 'src/types/product';
-import { useTranslate } from 'src/locales';
 
 type Props = {
   currentCategory?: ICategory;

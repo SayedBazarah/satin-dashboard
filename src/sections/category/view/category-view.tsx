@@ -19,6 +19,8 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import axios, { endpoints } from 'src/utils/axios';
 
+import { useTranslate } from 'src/locales';
+
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { useSettingsContext } from 'src/components/settings';
@@ -35,7 +37,6 @@ import { ICategory, ICategoryTableFilter } from 'src/types/product';
 
 import CategoryTableRow from '../category-table-row';
 import CategoryCreateEditForm from '../category-create-edit-form';
-import { useTranslate } from 'src/locales';
 
 // -----------------------------------------------------
 
