@@ -244,7 +244,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 multiple
                 thumbnail
                 name="images"
-                maxSize={3145728}
+                maxSize={1024}
                 onDrop={handleDrop}
                 onRemove={handleRemoveFile}
                 onRemoveAll={handleRemoveAllFiles}

@@ -44,6 +44,7 @@ export const paths = {
       },
     },
     tags: `${ROOTS.DASHBOARD}/tags`,
+    categories: `${ROOTS.DASHBOARD}/categories`,
     employees: {
       root: `${ROOTS.DASHBOARD}/employees`,
       new: `${ROOTS.DASHBOARD}/employees/create`,

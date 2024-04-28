@@ -73,7 +73,7 @@ export function useNavData() {
 
           {
             title: t('nav.categories'),
-            path: paths.dashboard.tags,
+            path: paths.dashboard.categories,
             icon: ICONS.label,
           },
           // {

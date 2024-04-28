@@ -5,6 +5,10 @@ module.exports = {
         protocol: 'http',
         hostname: 'localhost',
       },
+      {
+        protocol: 'https',
+        hostname: 'demo.multisystem-eg.com',
+      },
     ],
   },
   trailingSlash: true,

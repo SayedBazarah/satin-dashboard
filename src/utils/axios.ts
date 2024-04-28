@@ -54,6 +54,11 @@ export const endpoints = {
     delete: (id: string) => `/api/role/delete/${id}`,
     delete_rows: `/api/role/delete/rows`,
   },
+  categories: {
+    all: '/api/category',
+    create: '/api/category',
+    update: '/api/category',
+  },
   mail: {
     list: '/api/mail/list',
     details: '/api/mail/details',

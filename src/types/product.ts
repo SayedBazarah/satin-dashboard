@@ -77,7 +77,11 @@ export type ICategory = {
   _id: string;
   slug: string;
   title: string;
-  profileImage: string;
+  coverImage: string;
+};
+
+export type ICategoryTableFilter = {
+  label: string;
 };
 
 export type IProductTableFilterValue = string | string[];

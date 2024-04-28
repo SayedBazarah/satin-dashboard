@@ -17,3 +17,7 @@ export const UploadBox = dynamic(() => import('./upload-box'), {
 export const UploadAvatar = dynamic(() => import('./upload-avatar'), {
   ssr: false,
 });
+
+export const UploadCover = dynamic(() => import('./upload-cover'), {
+  ssr: false,
+});
