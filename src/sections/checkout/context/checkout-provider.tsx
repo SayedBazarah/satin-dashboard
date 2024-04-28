@@ -3,9 +3,6 @@
 import uniq from 'lodash/uniq';
 import { useMemo, useEffect, useCallback } from 'react';
 
-import { paths } from 'src/routes/paths';
-import { useRouter } from 'src/routes/hooks';
-
 import { getStorage, useLocalStorage } from 'src/hooks/use-local-storage';
 
 import { PRODUCT_CHECKOUT_STEPS } from 'src/_mock/_product';
@@ -35,9 +32,7 @@ type Props = {
 };
 
 export function CheckoutProvider({ children }: Props) {
-  const router = useRouter();
-
-  const { state, update, reset } = useLocalStorage(STORAGE_KEY, initialState);
+  const { state, update } = useLocalStorage(STORAGE_KEY, initialState);
 
   const onGetCart = useCallback(() => {
     const totalItems: number = state.items.reduce(

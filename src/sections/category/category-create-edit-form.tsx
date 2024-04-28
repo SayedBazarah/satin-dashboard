@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
-import React, { useCallback, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
+import React, { useMemo, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { LoadingButton } from '@mui/lab';
@@ -10,16 +10,17 @@ import {
   Stack,
   Button,
   Dialog,
+  Typography,
   DialogTitle,
   DialogActions,
   DialogContent,
-  Typography,
 } from '@mui/material';
 
 import axios, { endpoints } from 'src/utils/axios';
 
 import FormProvider from 'src/components/hook-form/form-provider';
 import { RHFTextField, RHFUploadCover } from 'src/components/hook-form';
+
 import { ICategory } from 'src/types/product';
 
 type Props = {
@@ -60,12 +61,9 @@ export default function CategoryCreateEditForm({
 
   const {
     handleSubmit,
-    watch,
     setValue,
     formState: { isSubmitting },
   } = methods;
-
-  const values = watch();
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -95,7 +93,7 @@ export default function CategoryCreateEditForm({
       });
       setValue('coverImage', newFile, { shouldValidate: true });
     },
-    [setValue, values.coverImage]
+    [setValue]
   );
 
   // ------------------------------------------------

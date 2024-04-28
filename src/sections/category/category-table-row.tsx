@@ -6,19 +6,17 @@ import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
+import { Box, Stack, Typography } from '@mui/material';
 
 import { useBoolean } from 'src/hooks/use-boolean';
 
-import { ASSETS_API } from 'src/config-global';
-
 import Iconify from 'src/components/iconify';
+import Image from 'src/components/image/image';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IEmployeeItem } from 'src/types/employee';
 import { ICategory } from 'src/types/product';
-import { Box, Stack, Typography } from '@mui/material';
-import Image from 'src/components/image/image';
+
 import CategoryCreateEditForm from './category-create-edit-form';
 
 // ----------------------------------------------------------------------
@@ -29,7 +27,6 @@ type Props = {
   row: ICategory;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
-  onQuickEditRow: (data: IEmployeeItem) => void;
 };
 
 export default function CategoryTableRow({
@@ -39,9 +36,9 @@ export default function CategoryTableRow({
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { title, coverImage, _id, slug } = row;
+  const { title, coverImage, slug } = row;
   const confirm = useBoolean();
-  console.log(row);
+
   const quickEdit = useBoolean();
 
   const popover = usePopover();

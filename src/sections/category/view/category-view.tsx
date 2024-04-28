@@ -31,9 +31,9 @@ import {
   TableSelectedAction,
 } from 'src/components/table';
 
-import CategoryTableRow from '../category-table-row';
 import { ICategory, ICategoryTableFilter } from 'src/types/product';
-import { IEmployeeItem } from 'src/types/employee';
+
+import CategoryTableRow from '../category-table-row';
 import CategoryCreateEditForm from '../category-create-edit-form';
 
 // -----------------------------------------------------
@@ -206,9 +206,6 @@ export default function PermissionsListView() {
                       onSelectRow={() => table.onSelectRow(row._id)}
                       onDeleteRow={() => handleDeleteRow(row._id)}
                       onEditRow={updateData}
-                      onQuickEditRow={function (data: IEmployeeItem): void {
-                        throw new Error('Function not implemented.');
-                      }}
                     />
                   ))}
               </TableBody>
