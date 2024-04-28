@@ -37,7 +37,7 @@ export default function EmployeeRoleCreateEditForm({
   onClose,
   onEditRow,
 }: Props) {
-  const { t, i18n } = useTranslate();
+  const { t } = useTranslate();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewRoleSchema = Yup.object().shape({

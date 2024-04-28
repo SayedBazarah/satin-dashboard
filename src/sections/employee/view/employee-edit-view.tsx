@@ -8,6 +8,8 @@ import { paths } from 'src/routes/paths';
 
 import axios, { endpoints } from 'src/utils/axios';
 
+import { useTranslate } from 'src/locales';
+
 import { useSettingsContext } from 'src/components/settings';
 import { LoadingScreen } from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
@@ -23,6 +25,8 @@ type Props = {
 };
 
 export default function EmployeeEditView({ id }: Props) {
+  const { t } = useTranslate();
+
   const settings = useSettingsContext();
   const [currentEmployee, setCurrentEmployee] = useState<IEmployeeItem>();
   useEffect(() => {
@@ -35,14 +39,14 @@ export default function EmployeeEditView({ id }: Props) {
   return (
     <Container maxWidth={settings.themeStretch ? false : 'lg'}>
       <CustomBreadcrumbs
-        heading="Edit"
+        heading={t('common.edit')}
         links={[
           {
-            name: 'Dashboard',
+            name: t('dashboard'),
             href: paths.dashboard.root,
           },
           {
-            name: 'Employee',
+            name: t('employee.root'),
             href: paths.dashboard.employees.root,
           },
           { name: currentEmployee?.name },

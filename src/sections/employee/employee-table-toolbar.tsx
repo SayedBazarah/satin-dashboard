@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { TFunction } from 'i18next';
 
 import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
@@ -19,6 +20,8 @@ import { IRole, IEmployeeTableFilters, IEmployeeTableFilterValue } from 'src/typ
 // ----------------------------------------------------------------------
 
 type Props = {
+  t: TFunction<'translation', undefined>;
+
   filters: IEmployeeTableFilters;
   onFilters: (name: string, value: IEmployeeTableFilterValue) => void;
   //
@@ -27,6 +30,8 @@ type Props = {
 };
 
 export default function EmployeeTableToolbar({
+  t,
+
   filters,
   onFilters,
   //
@@ -81,7 +86,7 @@ export default function EmployeeTableToolbar({
             width: { xs: 1, md: 200 },
           }}
         >
-          <InputLabel>Role</InputLabel>
+          <InputLabel>{t('employee.role-filter')}</InputLabel>
 
           <Select
             multiple
@@ -113,7 +118,7 @@ export default function EmployeeTableToolbar({
             width: { xs: 1, md: 200 },
           }}
         >
-          <InputLabel>Status</InputLabel>
+          <InputLabel>{t('employee.status')}</InputLabel>
 
           <Select
             value={filters.status as ''}
@@ -144,7 +149,7 @@ export default function EmployeeTableToolbar({
             fullWidth
             value={filters.name}
             onChange={handleFilterName}
-            placeholder="Search..."
+            placeholder={t('employee.search')}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -172,7 +177,7 @@ export default function EmployeeTableToolbar({
           }}
         >
           <Iconify icon="solar:printer-minimalistic-bold" />
-          Print
+          {t('common.print')}
         </MenuItem>
 
         <MenuItem
@@ -181,7 +186,7 @@ export default function EmployeeTableToolbar({
           }}
         >
           <Iconify icon="solar:import-bold" />
-          Import
+          {t('common.import')}
         </MenuItem>
 
         <MenuItem
@@ -190,7 +195,7 @@ export default function EmployeeTableToolbar({
           }}
         >
           <Iconify icon="solar:export-bold" />
-          Export
+          {t('common.export')}
         </MenuItem>
       </CustomPopover>
     </>

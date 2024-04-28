@@ -18,7 +18,7 @@ import { fData } from 'src/utils/format-number';
 import axios, { endpoints } from 'src/utils/axios';
 
 import { useGetRoles } from 'src/api/role';
-import { ASSETS_API } from 'src/config-global';
+import { useTranslate } from 'src/locales';
 
 import { useSnackbar } from 'src/components/snackbar';
 import FormProvider, {
@@ -36,6 +36,8 @@ type Props = {
 };
 
 export default function UserNewEditForm({ currentEmployee }: Props) {
+  const { t } = useTranslate();
+
   const router = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -43,12 +45,14 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
   const { roles } = useGetRoles();
 
   const NewUserSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    phone: Yup.string().required('Phone number is required'),
-    state: Yup.string().required('State is required'),
-    area: Yup.string().required('Area is required'),
-    role: Yup.string().required('Role is required'),
+    name: Yup.string().required(t('employee.yup.name')),
+    email: Yup.string()
+      .required(t('employee.yup.email'))
+      .email('Email must be a valid email address'),
+    phone: Yup.string().required(t('employee.yup.phone')),
+    state: Yup.string().required(t('employee.yup.state')),
+    area: Yup.string().required(t('employee.yup.area')),
+    role: Yup.string().required(t('employee.yup.role')),
     profileImage: Yup.mixed<any>().nonNullable().required(),
   });
 
@@ -59,9 +63,9 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
       phone: currentEmployee?.phone || '',
       state: currentEmployee?.state || '',
       area: currentEmployee?.area || '',
-      role: currentEmployee?.role.label || '',
+      role: currentEmployee?.role?.label || '',
 
-      profileImage: `${ASSETS_API}/${currentEmployee?.profileImage}` || null,
+      profileImage: currentEmployee?.profileImage || null,
     }),
     [currentEmployee]
   );
@@ -148,7 +152,7 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
             {currentEmployee && (
               <Stack justifyContent="center" alignItems="center" sx={{ mt: 3 }}>
                 <Button variant="soft" color="error">
-                  Delete User
+                  {t('employee.delete')}
                 </Button>
               </Stack>
             )}
@@ -166,26 +170,16 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="name" label="Full Name" />
-              <RHFTextField name="email" label="Email Address" />
-              <RHFTextField name="phone" label="Phone Number" />
+              <RHFTextField name="name" label={t('employee.name')} />
+              <RHFTextField name="email" label={t('employee.email')} />
+              <RHFTextField name="phone" label={t('employee.phone')} />
 
-              {/* <RHFAutocomplete
-                name="branch"
-                type="branch"
-                label="Branch"
-                placeholder="Choose a branch"
-                fullWidth
-                options={branches.map((option) => option.label)}
-              /> */}
-
-              <RHFTextField name="state" label="State/Region" />
-              <RHFTextField name="area" label="Area" />
+              <RHFTextField name="state" label={t('employee.state')} />
+              <RHFTextField name="area" label={t('employee.area')} />
               <RHFAutocomplete
                 name="role"
                 type="role"
-                label="Role"
-                placeholder="Choose a branch"
+                label={t('employee.role-table-title')}
                 fullWidth
                 options={roles.map((option) => option.label)}
               />
@@ -193,7 +187,7 @@ export default function UserNewEditForm({ currentEmployee }: Props) {
 
             <Stack alignItems="flex-end" sx={{ mt: 3 }}>
               <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                {!currentEmployee ? 'Create User' : 'Save Changes'}
+                {!currentEmployee ? t('employee.create') : t('employee.save')}
               </LoadingButton>
             </Stack>
           </Card>

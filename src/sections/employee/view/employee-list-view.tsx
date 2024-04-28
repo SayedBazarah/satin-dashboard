@@ -21,6 +21,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import axios, { endpoints } from 'src/utils/axios';
 
 import { useGetRoles } from 'src/api/role';
+import { useTranslate } from 'src/locales';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -52,14 +53,6 @@ import EmployeeTableFiltersResult from '../employee-table-filters-result';
 
 // ----------------------------------------------------------------------
 
-const TABLE_HEAD = [
-  { id: 'name', label: 'Name' },
-  // { id: 'branch', label: 'Branch', width: '60px' },
-  { id: 'role', label: 'Role', width: '120px' },
-  { id: 'phone', label: 'Phone', width: '120px' },
-  { id: '', width: 88 },
-];
-
 const defaultFilters: IEmployeeTableFilters = {
   name: '',
   role: [],
@@ -70,6 +63,8 @@ const defaultFilters: IEmployeeTableFilters = {
 
 export default function UserListView() {
   const { enqueueSnackbar } = useSnackbar();
+
+  const { t } = useTranslate();
 
   const table = useTable();
 
@@ -101,6 +96,15 @@ export default function UserListView() {
   const canReset = !isEqual(defaultFilters, filters);
 
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
+
+  // -----------------------------------------------------
+
+  const TABLE_HEAD = [
+    { id: 'name', label: t('employee.name') },
+    { id: 'role', label: t('employee.role-table-title'), width: '120px' },
+    { id: 'phone', label: t('employee.phone'), width: '120px' },
+    { id: '', width: 88 },
+  ];
 
   // -----------------------------------------------------
 
@@ -192,11 +196,11 @@ export default function UserListView() {
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="List"
+          heading={t('employee.list')}
           links={[
-            { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'User', href: paths.dashboard.employees.root },
-            { name: 'List' },
+            { name: t('dashboard'), href: paths.dashboard.root },
+            { name: t('employee.root'), href: paths.dashboard.employees.root },
+            { name: t('employee.list') },
           ]}
           action={
             <Button
@@ -205,7 +209,7 @@ export default function UserListView() {
               variant="contained"
               startIcon={<Iconify icon="mingcute:add-line" />}
             >
-              New User
+              {t('employee.new-employee')}
             </Button>
           }
           sx={{
@@ -215,18 +219,20 @@ export default function UserListView() {
 
         <Card>
           <EmployeeTableToolbar
+            t={t}
             filters={filters}
             onFilters={handleFilters}
             //
             roleOptions={roles}
             statusOptions={[
-              { _id: 1, label: 'Online' },
-              { _id: 2, label: 'Offline' },
+              { _id: 1, label: t('common.online') },
+              { _id: 2, label: t('common.offline') },
             ]}
           />
 
           {canReset && (
             <EmployeeTableFiltersResult
+              t={t}
               filters={filters}
               onFilters={handleFilters}
               //
@@ -249,7 +255,7 @@ export default function UserListView() {
                 )
               }
               action={
-                <Tooltip title="Delete">
+                <Tooltip title={t('common.delete')}>
                   <IconButton color="primary" onClick={confirm.onTrue}>
                     <Iconify icon="solar:trash-bin-trash-bold" />
                   </IconButton>
@@ -282,6 +288,7 @@ export default function UserListView() {
                     )
                     .map((row) => (
                       <EmployeeTableRow
+                        t={t}
                         key={row._id}
                         row={row}
                         selected={table.selected.includes(row._id)}
@@ -319,22 +326,20 @@ export default function UserListView() {
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content={
-          <>
-            Are you sure want to delete <strong> {table.selected.length} </strong> items?
-          </>
-        }
+        title={t('common.delete')}
+        content={t('common.delete-message')}
+        cancelTitle={t('common.cancel')}
         action={
           <Button
             variant="contained"
             color="error"
             onClick={() => {
+              console.log('ConfirmDialog');
               handleDeleteRows();
               confirm.onFalse();
             }}
           >
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />

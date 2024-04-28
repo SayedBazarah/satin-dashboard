@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { TFunction } from 'i18next';
 
 import Badge from '@mui/material/Badge';
 import Button from '@mui/material/Button';
@@ -25,6 +26,7 @@ import EmployeeQuickEditForm from './employee-quick-edit-form';
 // ----------------------------------------------------------------------
 
 type Props = {
+  t: TFunction<'translation', undefined>;
   selected: boolean;
   onEditRow: VoidFunction;
   row: IEmployeeItem;
@@ -34,6 +36,7 @@ type Props = {
 };
 
 export default function EmployeeTableRow({
+  t,
   row,
   selected,
   onEditRow,
@@ -42,6 +45,7 @@ export default function EmployeeTableRow({
   onQuickEditRow,
 }: Props) {
   const { name, profileImage, isOnline, role, phone } = row;
+
   const confirm = useBoolean();
 
   const quickEdit = useBoolean();
@@ -83,7 +87,7 @@ export default function EmployeeTableRow({
         <TableCell sx={{ whiteSpace: 'nowrap' }}>{phone}</TableCell>
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-          <Tooltip title="Quick Edit" placement="top" arrow>
+          <Tooltip title={t('common.edit')} placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
               <Iconify icon="solar:pen-bold" />
             </IconButton>
@@ -96,6 +100,7 @@ export default function EmployeeTableRow({
       </TableRow>
 
       <EmployeeQuickEditForm
+        t={t}
         currentEmployee={row}
         onQuickEditRow={onQuickEditRow}
         open={quickEdit.value}
@@ -116,7 +121,7 @@ export default function EmployeeTableRow({
           sx={{ color: 'error.main' }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
+          {t('common.delete')}
         </MenuItem>
 
         <MenuItem
@@ -126,18 +131,19 @@ export default function EmployeeTableRow({
           }}
         >
           <Iconify icon="solar:pen-bold" />
-          Edit
+          {t('common.edit')}
         </MenuItem>
       </CustomPopover>
 
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={t('common.delete')}
+        content={t('common.delete-message')}
+        cancelTitle={t('common.cancel')}
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />

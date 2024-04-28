@@ -26,6 +26,11 @@
       "drop": "Drop or Select file",
       "drop-description": "Drop files here or click browse thorough your machine"
     },
+    "online": "Online",
+    "offline": "Offline",
+
+    "results-found": "results found",
+
     "currency": "LE",
     "import": "import",
     "export": "export",
@@ -201,7 +206,20 @@
   },
   "employee": {
     "root": "Employees",
+    "list": "Employees List",
     "new-employee": "New Employee",
+    "create": "Create Employee",
+    "save": "Update Employee",
+    "role-table-title": "Role",
+    "role-filter": "Role:",
+    "status": "Status:",
+    "search": "search...",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "delete": "Delete employee",
+    "area": "Area",
+    "state": "State",
     "role": {
       "root": "Roles & Permissions",
       "new": "New Role",
@@ -217,7 +235,14 @@
       "orders": "Orders",
       "employees": "Employees"
     },
-    "x": "x",
+    "yup": {
+      "name": "Name is required",
+      "email": "Email is required",
+      "phone": "Phone number is required",
+      "area": "Area is required",
+      "state": "State is required",
+      "role": "Role is required"
+    },
     "y": "x"
   }
 }

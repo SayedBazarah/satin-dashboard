@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useMemo } from 'react';
+import { TFunction } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -26,6 +27,7 @@ import { IEmployeeItem, QuickUpdateEmployeeItem } from 'src/types/employee';
 // ----------------------------------------------------------------------
 
 type Props = {
+  t: TFunction<'translation', undefined>;
   open: boolean;
   onClose: VoidFunction;
   currentEmployee?: IEmployeeItem;
@@ -33,6 +35,7 @@ type Props = {
 };
 
 export default function EmployeeQuickEditForm({
+  t,
   onQuickEditRow,
   currentEmployee,
   open,
@@ -44,10 +47,12 @@ export default function EmployeeQuickEditForm({
   const { roles } = useGetRoles();
 
   const NewEmployeeSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().required('Email is required').email('Email must be a valid email address'),
-    phone: Yup.string().required('Phone number is required'),
-    role: Yup.string().required('Role is required'),
+    name: Yup.string().required(t('employee.yup.name')),
+    email: Yup.string()
+      .required(t('employee.yup.email'))
+      .email('Email must be a valid email address'),
+    phone: Yup.string().required(t('employee.yup.phone')),
+    role: Yup.string().required(t('employee.yup.role')),
   });
 
   const defaultValues = useMemo(
@@ -89,7 +94,7 @@ export default function EmployeeQuickEditForm({
       });
       reset();
       onClose();
-      enqueueSnackbar('Update success!');
+      enqueueSnackbar(t('common.update-success'));
       router.replace(paths.dashboard.employees.root);
     } catch (error) {
       console.error(error);
@@ -107,7 +112,7 @@ export default function EmployeeQuickEditForm({
       }}
     >
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>Quick Update</DialogTitle>
+        <DialogTitle>{t('common.update')}</DialogTitle>
 
         <DialogContent>
           <Box
@@ -120,22 +125,14 @@ export default function EmployeeQuickEditForm({
             }}
             paddingTop={2}
           >
-            <RHFTextField name="name" label="Full Name" />
-            <RHFTextField name="email" label="Email Address" />
-            <RHFTextField name="phone" label="Phone Number" />
-            {/* 
-            <RHFAutocomplete
-              name="branch"
-              label="Branch"
-              placeholder="Choose a Branch"
-              fullWidth
-              options={branches.map((option) => option.label)}
-            /> */}
+            <RHFTextField name="name" label={t('employee.name')} />
+            <RHFTextField name="email" label={t('employee.email')} />
+            <RHFTextField name="phone" label={t('employee.phone')} />
 
             <RHFAutocomplete
               name="role"
               type="role"
-              label="Role"
+              label={t('employee.role-table-title')}
               placeholder="Choose a branch"
               fullWidth
               options={roles.map((option) => option.label)}
@@ -145,11 +142,11 @@ export default function EmployeeQuickEditForm({
 
         <DialogActions>
           <Button variant="outlined" onClick={onClose}>
-            Cancel
+            {t('common.cancel')}
           </Button>
 
           <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-            Update
+            {t('common.update')}
           </LoadingButton>
         </DialogActions>
       </FormProvider>

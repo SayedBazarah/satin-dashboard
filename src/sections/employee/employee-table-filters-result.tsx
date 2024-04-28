@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { TFunction } from 'i18next';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -13,6 +14,7 @@ import { IEmployeeTableFilters, IEmployeeTableFilterValue } from 'src/types/empl
 // ----------------------------------------------------------------------
 
 type Props = StackProps & {
+  t: TFunction<'translation', undefined>;
   filters: IEmployeeTableFilters;
   onFilters: (name: string, value: IEmployeeTableFilterValue) => void;
   //
@@ -22,6 +24,7 @@ type Props = StackProps & {
 };
 
 export default function EmployeeTableFiltersResult({
+  t,
   filters,
   onFilters,
   //
@@ -52,19 +55,19 @@ export default function EmployeeTableFiltersResult({
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-          results found
+          {t('common.result-found')}
         </Box>
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
         {filters.status !== '' && (
-          <Block label="Status:">
+          <Block label={t('employee.status')}>
             <Chip size="small" label={filters.status} onDelete={handleRemoveStatus} />
           </Block>
         )}
 
         {!!filters.role.length && (
-          <Block label="Role:">
+          <Block label={t('employee.role-filter')}>
             {filters.role.map((item) => (
               <Chip key={item} label={item} size="small" onDelete={() => handleRemoveRole(item)} />
             ))}
@@ -82,7 +85,7 @@ export default function EmployeeTableFiltersResult({
           onClick={onResetFilters}
           startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
         >
-          Clear
+          {t('common.delete')}
         </Button>
       </Stack>
     </Stack>
