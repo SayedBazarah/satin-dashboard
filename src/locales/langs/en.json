@@ -15,11 +15,20 @@
   "yearly-sales": "Yearly Sales",
   "dashboard": "Dashboard",
   "products": "Products",
-  "category": "Tags",
   "orders": "Orders",
   "Print": "Print",
   "Edit": "Edit",
 
+  "common": {
+    "edit": "Edit",
+    "selected": "selected",
+    "cancel": "cancel",
+    "preview": "Preview",
+    "create": "Create",
+    "update": "Update",
+    "delete-selected": "Delete Selected",
+    "delete": "Delete"
+  },
   "product": {
     "root": "Product",
     "created_at": "Created At",
@@ -145,5 +154,19 @@
     "role": "Role",
     "phone": "Phone",
     "address": "Address"
+  },
+  "category": {
+    "root": "Categories",
+    "list": "List",
+    "new": "New Category",
+    "title": "Title",
+    "slug": "Slug",
+    "image": "Image",
+    "delete": "Are you sure want to delete?",
+    "form-error-slug": "product slug required",
+    "form-error-title": "category title is needed",
+    "form-error-image": "category image is needed",
+    "x": "x",
+    "y": "x"
   }
 }

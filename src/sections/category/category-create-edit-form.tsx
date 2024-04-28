@@ -22,6 +22,7 @@ import FormProvider from 'src/components/hook-form/form-provider';
 import { RHFTextField, RHFUploadCover } from 'src/components/hook-form';
 
 import { ICategory } from 'src/types/product';
+import { useTranslate } from 'src/locales';
 
 type Props = {
   currentCategory?: ICategory;
@@ -36,20 +37,21 @@ export default function CategoryCreateEditForm({
   onClose,
   onEditRow,
 }: Props) {
+  const { t } = useTranslate();
+
   const { enqueueSnackbar } = useSnackbar();
-  console.log('currentCategory');
-  console.log(currentCategory);
+
   const NewRoleSchema = Yup.object().shape({
-    slug: Yup.string().required('product slug required'),
-    title: Yup.string().required('category title is needed'),
-    coverImage: Yup.mixed().required('category image is needed'),
+    slug: Yup.string().required(t('category.form-error-slug')),
+    title: Yup.string().required(t('category.form-error-title')),
+    coverImage: Yup.mixed().required(t('category.form-error-image')),
   });
 
   const defaultValues = useMemo(
     () => ({
       slug: currentCategory?.slug || '',
       title: currentCategory?.title || '',
-      coverImage: currentCategory?.coverImage || '',
+      coverImage: currentCategory?.coverImage || {},
     }),
     [currentCategory]
   );
@@ -107,7 +109,7 @@ export default function CategoryCreateEditForm({
       PaperProps={{ sx: { maxWidth: 720 } }}
     >
       <FormProvider methods={methods} onSubmit={onSubmit}>
-        <DialogTitle>{(currentCategory && 'Quick Update') || 'New Category'}</DialogTitle>
+        <DialogTitle>{(currentCategory && t('common.edit')) || t('category.new')}</DialogTitle>
         <DialogContent>
           <Stack py={2} spacing={3}>
             <Box
@@ -119,21 +121,21 @@ export default function CategoryCreateEditForm({
                 sm: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="title" label="Title" />
-              <RHFTextField name="slug" label="Slug" />
+              <RHFTextField name="title" label={t('category.title')} />
+              <RHFTextField name="slug" label={t('category.slug')} />
             </Box>
             <Stack spacing={1.5}>
-              <Typography variant="subtitle2">Images</Typography>
+              <Typography variant="subtitle2">{t('category.image')} </Typography>
               <RHFUploadCover name="coverImage" maxFiles={1014} onDrop={handleDrop} />
             </Stack>
           </Stack>
         </DialogContent>
         <DialogActions>
           <Button variant="outlined" onClick={onClose}>
-            Cancel
+            {t('common.cancel')}
           </Button>
           <LoadingButton variant="contained" type="submit" loading={isSubmitting}>
-            Update
+            {(currentCategory && t('common.edit')) || t('category.new')}
           </LoadingButton>
         </DialogActions>
       </FormProvider>

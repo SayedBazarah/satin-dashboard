@@ -15,12 +15,21 @@
   "latest-products": "احدث المنتجات",
   "yearly-sales": "المبيعات السنوية",
   "dashboard": "لوحة التحكم",
-  "category": "الفئات",
   "products": "المنتجات",
   "orders": "الطلبات",
   "Print": "Print",
   "Edit": "Edit",
 
+  "common": {
+    "edit": "تعديل",
+    "preview": "عرض",
+    "selected": "تم تحديد",
+    "cancel": "الغاء",
+    "create": "انشاء",
+    "update": "تحديث",
+    "delete-selected": "مسح المحدد",
+    "delete": "مسح"
+  },
   "product": {
     "root": "المنتج",
     "created_at": "انشاء في",
@@ -137,5 +146,19 @@
     "blog": "المدونة",
     "logistics": "الشحن",
     "orders": "الطلبات"
+  },
+  "category": {
+    "root": "الفئات",
+    "list": "القائمة",
+    "new": "فئه جديده",
+    "title": "الاسم",
+    "slug": "الرابط",
+    "image": "الصورة",
+    "delete": "هل انت منتاكد من انك تريد المسح؟",
+    "form-error-slug": "رابط الفئة مطلوب",
+    "form-error-title": "اسم الفئة مطلوب",
+    "form-error-image": "سورة الفئة مطلوبة",
+    "x": "x",
+    "y": "x"
   }
 }

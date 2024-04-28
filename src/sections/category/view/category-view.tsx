@@ -35,6 +35,7 @@ import { ICategory, ICategoryTableFilter } from 'src/types/product';
 
 import CategoryTableRow from '../category-table-row';
 import CategoryCreateEditForm from '../category-create-edit-form';
+import { useTranslate } from 'src/locales';
 
 // -----------------------------------------------------
 
@@ -44,6 +45,8 @@ const defaultFilters: ICategoryTableFilter = {
 
 // -----------------------------------------------------
 export default function PermissionsListView() {
+  const { t } = useTranslate();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const table = useTable({ defaultOrderBy: 'label' });
@@ -61,7 +64,7 @@ export default function PermissionsListView() {
   // ------------------------------------------------
 
   const TABLE_HEAD = [
-    { id: 'title', label: 'Title' },
+    { id: 'title', label: t('category.title') },
     { id: '', width: 88 },
   ];
 
@@ -129,20 +132,20 @@ export default function PermissionsListView() {
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Categories"
+          heading={t('category.root')}
           links={[
-            { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'Products', href: paths.dashboard.products.root },
-            { name: 'Categories' },
+            { name: t('dashboard'), href: paths.dashboard.root },
+            { name: t('category.root'), href: paths.dashboard.products.root },
+            { name: t('category.list') },
           ]}
           action={
-            <Tooltip title="Create new role">
+            <Tooltip title={t('category.new')}>
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="mingcute:add-line" />}
                 onClick={quickCreate.onTrue}
               >
-                New Category
+                {t('category.new')}
               </Button>
             </Tooltip>
           }
@@ -162,7 +165,7 @@ export default function PermissionsListView() {
               )
             }
             action={
-              <Tooltip title="Delete Selected">
+              <Tooltip title={t('common.delete-selected')}>
                 <IconButton
                   onClick={() => {
                     confirm.onTrue();
@@ -201,6 +204,7 @@ export default function PermissionsListView() {
                   .map((row) => (
                     <CategoryTableRow
                       key={row._id}
+                      t={t}
                       row={row}
                       selected={table.selected.includes(row._id)}
                       onSelectRow={() => table.onSelectRow(row._id)}
@@ -221,8 +225,9 @@ export default function PermissionsListView() {
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={t('common.delete')}
+        content={t('category.delete')}
+        cancelTitle={t('common.cancel')}
         action={
           <Button
             variant="contained"
@@ -233,7 +238,7 @@ export default function PermissionsListView() {
               confirm.onFalse();
             }}
           >
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />

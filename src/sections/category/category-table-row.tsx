@@ -18,6 +18,7 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { ICategory } from 'src/types/product';
 
 import CategoryCreateEditForm from './category-create-edit-form';
+import { TFunction } from 'i18next';
 
 // ----------------------------------------------------------------------
 
@@ -27,9 +28,11 @@ type Props = {
   row: ICategory;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  t: TFunction<'translation', undefined>;
 };
 
 export default function CategoryTableRow({
+  t,
   row,
   selected,
   onEditRow,
@@ -77,12 +80,6 @@ export default function CategoryTableRow({
         {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>{branch?.label}</TableCell> */}
 
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-          <Tooltip title="Quick Edit" placement="top" arrow>
-            <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
-              <Iconify icon="solar:pen-bold" />
-            </IconButton>
-          </Tooltip>
-
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
@@ -104,34 +101,36 @@ export default function CategoryTableRow({
       >
         <MenuItem
           onClick={() => {
+            onEditRow();
+            popover.onClose();
+          }}
+        >
+          <Box onClick={quickEdit.onTrue}>
+            <Iconify icon="solar:pen-bold" />
+            {t('common.edit')}
+          </Box>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
             confirm.onTrue();
             popover.onClose();
           }}
           sx={{ color: 'error.main' }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
-        </MenuItem>
-
-        <MenuItem
-          onClick={() => {
-            onEditRow();
-            popover.onClose();
-          }}
-        >
-          <Iconify icon="solar:pen-bold" />
-          Edit
+          {t('common.delete')}
         </MenuItem>
       </CustomPopover>
 
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={t('common.delete')}
+        content={t('category.delete')}
+        cancelTitle={t('common.cancel')}
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />

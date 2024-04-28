@@ -1,6 +1,7 @@
 import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import Stack, { StackProps } from '@mui/material/Stack';
+import { useTranslate } from 'src/locales';
 
 // ----------------------------------------------------------------------
 
@@ -21,6 +22,8 @@ export default function TableSelectedAction({
   sx,
   ...other
 }: Props) {
+  const { t } = useTranslate();
+
   if (!numSelected) {
     return null;
   }
@@ -65,7 +68,7 @@ export default function TableSelectedAction({
           }),
         }}
       >
-        {numSelected} selected
+        {numSelected} {t('common.selected')}
       </Typography>
 
       {action && action}
