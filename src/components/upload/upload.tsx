@@ -7,6 +7,7 @@ import { alpha } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 
+import { useTranslate } from 'src/locales';
 import { UploadIllustration } from 'src/assets/illustrations';
 
 import Iconify from '../iconify';
@@ -40,6 +41,7 @@ export default function Upload({
     ...other,
   });
 
+  const { t } = useTranslate();
   const hasFile = !!file && !multiple;
 
   const hasFiles = !!files && multiple && !!files.length;
@@ -50,20 +52,9 @@ export default function Upload({
     <Stack spacing={3} alignItems="center" justifyContent="center" flexWrap="wrap">
       <UploadIllustration sx={{ width: 1, maxWidth: 200 }} />
       <Stack spacing={1} sx={{ textAlign: 'center' }}>
-        <Typography variant="h6">Drop or Select file</Typography>
+        <Typography variant="h6">{t('common.upload-box.drop')}</Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          Drop files here or click
-          <Box
-            component="span"
-            sx={{
-              mx: 0.5,
-              color: 'primary.main',
-              textDecoration: 'underline',
-            }}
-          >
-            browse
-          </Box>
-          thorough your machine
+          {t('common.upload-box.drop-description')}
         </Typography>
       </Stack>
     </Stack>
@@ -102,7 +93,7 @@ export default function Upload({
       <Stack direction="row" justifyContent="flex-end" spacing={1.5}>
         {onRemoveAll && (
           <Button color="inherit" variant="outlined" size="small" onClick={onRemoveAll}>
-            Remove All
+            {t('common.upload-box.remove-all')}
           </Button>
         )}
 
@@ -113,7 +104,7 @@ export default function Upload({
             onClick={onUpload}
             startIcon={<Iconify icon="eva:cloud-upload-fill" />}
           >
-            Upload
+            {t('common.upload-box.upload')}
           </Button>
         )}
       </Stack>

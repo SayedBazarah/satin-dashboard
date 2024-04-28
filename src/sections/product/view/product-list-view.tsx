@@ -98,12 +98,11 @@ export default function ProductListView() {
   ];
 
   const TABLE_HEAD = [
-    { id: 'Product', label: 'Product' },
-    { id: 'created_at', label: 'Created At', width: '130px' },
-    { id: 'stock', label: 'Stock', width: '120px' },
-    { id: 'price', label: 'Price', width: '80px' },
-    { id: 'totalSolid', label: 'Total Solid', width: '105px' },
-    { id: 'tags', label: 'Tags' },
+    { id: 'Product', label: t('product.product_name') },
+    { id: 'created_at', label: t('product.created_at'), width: '130px' },
+    { id: 'stock', label: t('product.stock'), width: '120px' },
+    { id: 'price', label: t('product.price'), width: '80px' },
+    { id: 'tags', label: t('product.tags') },
     { id: '', width: '20px' },
   ];
   // ----------------------------------------------------------------------
@@ -207,6 +206,7 @@ export default function ProductListView() {
 
         <Card>
           <ProductTableToolbar
+            t={t}
             filters={filters}
             onFilters={handleFilters}
             stockOptions={PRODUCT_STOCK_OPTIONS}
@@ -233,7 +233,7 @@ export default function ProductListView() {
                 )
               }
               action={
-                <Tooltip title="Delete">
+                <Tooltip title={t('common.delete')}>
                   <IconButton color="error" onClick={confirm.onTrue}>
                     <Iconify icon="solar:trash-bin-trash-bold" />
                   </IconButton>
@@ -269,6 +269,7 @@ export default function ProductListView() {
                     )
                     .map((row) => (
                       <ProductTableRow
+                        t={t}
                         key={row._id}
                         row={row}
                         selected={table.selected.includes(row._id)}

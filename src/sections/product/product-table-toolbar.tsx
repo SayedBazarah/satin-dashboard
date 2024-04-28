@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { TFunction } from 'i18next';
 
 import MenuItem from '@mui/material/MenuItem';
 import Checkbox from '@mui/material/Checkbox';
@@ -16,6 +17,8 @@ import { IProductTableFilters, IProductTableFilterValue } from 'src/types/produc
 // ----------------------------------------------------------------------
 
 type Props = {
+  t: TFunction<'translation', undefined>;
+
   filters: IProductTableFilters;
   onFilters: (name: string, value: IProductTableFilterValue) => void;
   //
@@ -30,6 +33,7 @@ type Props = {
 };
 
 export default function ProductTableToolbar({
+  t,
   filters,
   onFilters,
   //
@@ -82,7 +86,7 @@ export default function ProductTableToolbar({
           width: { xs: 1, md: 200 },
         }}
       >
-        <InputLabel>Stock</InputLabel>
+        <InputLabel>{t('product.stock')}</InputLabel>
 
         <Select
           multiple
@@ -107,7 +111,7 @@ export default function ProductTableToolbar({
           width: { xs: 1, md: 200 },
         }}
       >
-        <InputLabel>Publish</InputLabel>
+        <InputLabel>{t('product.publish')}</InputLabel>
 
         <Select
           multiple
@@ -135,7 +139,7 @@ export default function ProductTableToolbar({
           fullWidth
           value={filters.name}
           onChange={handleFilterName}
-          placeholder="Search..."
+          placeholder={t('common.search')}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
@@ -161,7 +165,7 @@ export default function ProductTableToolbar({
           }}
         >
           <Iconify icon="solar:printer-minimalistic-bold" />
-          Print
+          {t('common.print')}
         </MenuItem>
 
         <MenuItem
@@ -170,7 +174,7 @@ export default function ProductTableToolbar({
           }}
         >
           <Iconify icon="solar:import-bold" />
-          Import
+          {t('common.import')}
         </MenuItem>
 
         <MenuItem
@@ -179,7 +183,7 @@ export default function ProductTableToolbar({
           }}
         >
           <Iconify icon="solar:export-bold" />
-          Export
+          {t('common.export')}
         </MenuItem>
       </CustomPopover>
     </Stack>

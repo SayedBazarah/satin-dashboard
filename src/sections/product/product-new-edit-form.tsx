@@ -22,6 +22,7 @@ import { useResponsive } from 'src/hooks/use-responsive';
 
 import axios, { endpoints } from 'src/utils/axios';
 
+import { useTranslate } from 'src/locales';
 import { useGetCategoriesTags } from 'src/api/product';
 
 import { useSnackbar } from 'src/components/snackbar';
@@ -43,6 +44,8 @@ type Props = {
 };
 
 export default function ProductNewEditForm({ currentProduct }: Props) {
+  const { t } = useTranslate();
+
   const router = useRouter();
 
   const { productsTags, categories } = useGetCategoriesTags();
@@ -55,21 +58,19 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
   const NewProductSchema = Yup.object().shape({
     publish: Yup.boolean(),
-    name: Yup.string().required('Name is required'),
-    tags: Yup.array().min(1, 'Must have at least 1 tags'),
-    slug: Yup.string().required('Select Properties Template is required'),
-    price: Yup.number()
-      .moreThan(0, 'Price should not be $0.00')
-      .required('Price should not be $0.00'),
-    category: Yup.string(),
+    name: Yup.string().required(t('product.yup.name')),
+    tags: Yup.array().min(1, t('product.yup.tags')),
+    slug: Yup.string().required(t('product.yup.slug')),
+    price: Yup.number().moreThan(0, t('product.yup.price')).required(t('product.yup.price')),
+    category: Yup.string().required(t('product.yup.category')),
     code: Yup.string(),
     sku: Yup.string(),
     gender: Yup.string(),
     subDescription: Yup.string(),
-    description: Yup.string().required('Description is required'),
+    description: Yup.string().required(t('product.yup.description')),
     // not required
     taxes: Yup.number(),
-    quantity: Yup.number(),
+    quantity: Yup.number().required(t('product.yup.quantity')),
     priceSale: Yup.number(),
     newLabel: Yup.object().shape({
       enabled: Yup.boolean(),
@@ -79,7 +80,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       enabled: Yup.boolean(),
       content: Yup.string(),
     }),
-    images: Yup.array().min(1, 'Images is required').required(),
+    images: Yup.array().min(1, t('product.yup.images')).required(),
   });
 
   const defaultValues = useMemo(
@@ -89,7 +90,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       description: currentProduct?.description || '',
       subDescription: currentProduct?.subDescription || '',
       images: currentProduct?.images || [],
-      slug: currentProduct?.code || '',
+      slug: currentProduct?.slug || '',
       //
       code: currentProduct?.code || '',
       sku: currentProduct?.sku || '',
@@ -99,7 +100,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       tags: currentProduct?.tags || [],
       taxes: currentProduct?.taxes || 0,
       gender: currentProduct?.gender || '',
-      category: currentProduct?.category.title || '',
+      category: currentProduct?.category._id || '',
       newLabel: currentProduct?.newLabel || { enabled: false, content: '' },
       saleLabel: currentProduct?.saleLabel || { enabled: false, content: '' },
     }),
@@ -136,7 +137,8 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   }, [currentProduct?.taxes, includeTaxes, setValue]);
 
   // -----------------------------------------------------------------
-
+  console.log('currentProduct');
+  console.log(currentProduct);
   // -----------------------------------------------------------------
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -214,37 +216,42 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       {mdUp && (
         <Grid md={4}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Details
+            {t('product.details')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Title, short description, image...
+            {t('product.form_description')}
           </Typography>
         </Grid>
       )}
 
       <Grid xs={12} md={8}>
         <Card>
-          {!mdUp && <CardHeader title="Details" />}
+          {!mdUp && <CardHeader title={t('product.details')} />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
-            <RHFTextField name="name" label="Product Name" />
+            <RHFTextField name="name" label={t('product.product_name')} />
 
-            <RHFTextField name="slug" label="Product Slug" />
+            <RHFTextField name="slug" label={t('product.slug')} />
 
-            <RHFTextField name="subDescription" label="Sub Description" multiline rows={4} />
+            <RHFTextField
+              name="subDescription"
+              label={t('product.sub-description')}
+              multiline
+              rows={4}
+            />
 
             <Stack spacing={1.5}>
-              <Typography variant="subtitle2">Content</Typography>
+              <Typography variant="subtitle2">{t('product.description')}</Typography>
               <RHFEditor simple name="description" />
             </Stack>
 
             <Stack spacing={1.5}>
-              <Typography variant="subtitle2">Images</Typography>
+              <Typography variant="subtitle2">{t('product.image')}</Typography>
               <RHFUpload
                 multiple
                 thumbnail
                 name="images"
-                maxSize={1024}
+                maxSize={500000}
                 onDrop={handleDrop}
                 onRemove={handleRemoveFile}
                 onRemoveAll={handleRemoveAllFiles}
@@ -256,16 +263,14 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       </Grid>
     </>
   );
-
+  console.log('values');
+  console.log(values);
   const renderProperties = (
     <>
       {mdUp && (
         <Grid md={4}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Properties
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Additional functions and attributes...
+            {t('product.properties')}
           </Typography>
         </Grid>
       )}
@@ -284,16 +289,21 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 md: 'repeat(2, 1fr)',
               }}
             >
-              <RHFTextField name="code" label="Product Code" />
-              <RHFTextField name="sku" label="Product SKU" />
+              <RHFTextField name="code" label={t('product.code')} />
+              <RHFTextField name="sku" label={t('product.sku')} />
               <RHFTextField
                 name="quantity"
-                label="Quantity"
+                label={t('product.quantity')}
                 placeholder="0"
                 type="number"
                 InputLabelProps={{ shrink: true }}
               />
-              <RHFSelect native name="category" label="Category" InputLabelProps={{ shrink: true }}>
+              <RHFSelect
+                native
+                name="category"
+                label={t('product.category')}
+                InputLabelProps={{ shrink: true }}
+              >
                 <option value="" />
                 {categories &&
                   categories.map((category, index) => (
@@ -306,7 +316,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
             <Stack>
               <RHFAutocomplete
                 name="tags"
-                label="Tags"
+                label={t('product.tags')}
                 placeholder="+ Tags"
                 multiple
                 freeSolo
@@ -335,7 +345,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
               <RHFSwitch name="saleLabel.enabled" label={null} sx={{ m: 0 }} />
               <RHFTextField
                 name="saleLabel.content"
-                label="Sale Label"
+                label={t('product.sale')}
                 fullWidth
                 disabled={!values.saleLabel.enabled}
               />
@@ -345,7 +355,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
               <RHFSwitch name="newLabel.enabled" label={null} sx={{ m: 0 }} />
               <RHFTextField
                 name="newLabel.content"
-                label="New Label"
+                label={t('product.new')}
                 fullWidth
                 disabled={!values.newLabel.enabled}
               />
@@ -361,22 +371,19 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       {mdUp && (
         <Grid md={4}>
           <Typography variant="h6" sx={{ mb: 0.5 }}>
-            Pricing
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Price related inputs
+            {t('product.pricing')}
           </Typography>
         </Grid>
       )}
 
       <Grid xs={12} md={8}>
         <Card>
-          {!mdUp && <CardHeader title="Pricing" />}
+          {!mdUp && <CardHeader title={t('product.pricing')} />}
 
           <Stack spacing={3} sx={{ p: 3 }}>
             <RHFTextField
               name="price"
-              label="Regular Price"
+              label={t('product.regular_price')}
               placeholder="0.00"
               type="number"
               InputLabelProps={{ shrink: true }}
@@ -384,7 +391,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 startAdornment: (
                   <InputAdornment position="start">
                     <Box component="span" sx={{ color: 'text.disabled' }}>
-                      $
+                      {t('common.currency')}
                     </Box>
                   </InputAdornment>
                 ),
@@ -393,7 +400,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
             <RHFTextField
               name="priceSale"
-              label="Sale Price"
+              label={t('product.sale_price')}
               placeholder="0.00"
               type="number"
               InputLabelProps={{ shrink: true }}
@@ -401,7 +408,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
                 startAdornment: (
                   <InputAdornment position="start">
                     <Box component="span" sx={{ color: 'text.disabled' }}>
-                      $
+                      {t('common.currency')}
                     </Box>
                   </InputAdornment>
                 ),
@@ -410,13 +417,13 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
 
             <FormControlLabel
               control={<Switch checked={includeTaxes} onChange={handleChangeIncludeTaxes} />}
-              label="Price includes taxes"
+              label={t('product.include-taxs')}
             />
 
             {!includeTaxes && (
               <RHFTextField
                 name="taxes"
-                label="Tax (%)"
+                label={t('product.tax')}
                 placeholder="0.00"
                 type="number"
                 InputLabelProps={{ shrink: true }}
@@ -441,9 +448,9 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
     <>
       {mdUp && <Grid md={4} />}
       <Grid xs={12} md={8} sx={{ display: 'flex', alignItems: 'center' }}>
-        <RHFSwitch name="publish" label="Publish" />
+        <RHFSwitch name="publish" label={t('product.publish')} />
         <LoadingButton type="submit" variant="contained" size="large" loading={isSubmitting}>
-          {!currentProduct ? 'Create Product' : 'Save Changes'}
+          {!currentProduct ? t('product.create') : t('product.save')}
         </LoadingButton>
       </Grid>
     </>

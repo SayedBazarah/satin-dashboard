@@ -20,18 +20,33 @@
   "Edit": "Edit",
 
   "common": {
+    "upload-box": {
+      "upload": "Upload",
+      "remove-all": "Remove All",
+      "drop": "Drop or Select file",
+      "drop-description": "Drop files here or click browse thorough your machine"
+    },
+    "currency": "LE",
+    "import": "import",
+    "export": "export",
+    "print": "print",
+
     "edit": "Edit",
+    "search": "search...",
     "selected": "selected",
     "cancel": "cancel",
     "preview": "Preview",
     "create": "Create",
     "update": "Update",
+    "delete-message": "Are you sure want to delete?",
     "delete-selected": "Delete Selected",
     "delete": "Delete"
   },
   "product": {
     "root": "Product",
     "created_at": "Created At",
+    "tags": "Tags",
+    "slug": "Slug",
     "stock": "Stock",
     "product_name": "Product Name",
     "create_new": "Create New",
@@ -40,17 +55,22 @@
     "details": "Details",
     "form_description": "Product name, description, ....",
     "sub-description": "Description",
+    "description": "Description",
     "content": "Content",
     "image": "Image",
     "quantity": "Quantity",
     "properties": "Properties",
     "code": "Code",
+    "category": "Category",
     "sale": "Sale Slug",
     "new": "New Slug",
+    "pricing": "Pricing",
     "price": "Price",
     "regular_price": "Regular Price",
     "sale_price": "Sale Price",
     "sku": "SKU",
+    "tax": "Tax",
+    "include-taxs": "Price includes taxs",
     "create": "Create",
     "save": "Save Shanges",
     "publish": "Publish",
@@ -67,7 +87,16 @@
     "no_result": "No Results",
     "delete_message": " Do you want to delete {{id}} ?",
     "delete_multi_message": " Do you want to delete {{length}} items?",
-
+    "yup": {
+      "name": "Name is required",
+      "tags": "Must have at least 1 tags",
+      "slug": "Select Properties Template is required",
+      "price": "Price should not be $0.00",
+      "category": "category is required",
+      "description": "description is required",
+      "quantity": "quantity is required",
+      "images": "images is required"
+    },
     "new_product": "New Product"
   },
   "order": {

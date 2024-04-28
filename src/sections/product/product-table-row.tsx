@@ -1,3 +1,4 @@
+import { TFunction } from 'i18next';
 import { useRouter } from 'next/navigation';
 
 import Box from '@mui/material/Box';
@@ -120,12 +121,13 @@ export function RenderCellProduct({ params }: ParamsProps) {
 }
 
 type Props = {
+  t: TFunction<'translate', undefined>;
   selected: boolean;
   row: IProductItem;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
 };
-export const ProductTableRow = ({ row, selected, onSelectRow, onDeleteRow }: Props) => {
+export const ProductTableRow = ({ t, row, selected, onSelectRow, onDeleteRow }: Props) => {
   const router = useRouter();
 
   const popover = usePopover();
@@ -192,11 +194,6 @@ export const ProductTableRow = ({ row, selected, onSelectRow, onDeleteRow }: Pro
             secondary={row.priceSale !== 0 && <Typography>${row.priceSale}</Typography>}
           />
         </TableCell>
-        <TableCell>
-          <Typography variant="body2" textAlign="center">
-            {row.totalSold}
-          </Typography>
-        </TableCell>
         <TableCell sx={{ maxWidth: '120px' }}>
           <Box sx={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
             {row.tags &&
@@ -223,7 +220,7 @@ export const ProductTableRow = ({ row, selected, onSelectRow, onDeleteRow }: Pro
           sx={{ color: 'error.default' }}
         >
           <Iconify icon="solar:pen-bold" />
-          Edit
+          {t('common.edit')}
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -232,18 +229,19 @@ export const ProductTableRow = ({ row, selected, onSelectRow, onDeleteRow }: Pro
           }}
           sx={{ color: 'error.main' }}
         >
-          <Iconify icon="solar:trash-bin-trash-bold" /> Delete
+          <Iconify icon="solar:trash-bin-trash-bold" /> {t('common.delete')}
         </MenuItem>
       </CustomPopover>
 
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={t('common.delete')}
+        content={t('common.delete-message')}
+        cancelTitle={t('common.cancel')}
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />

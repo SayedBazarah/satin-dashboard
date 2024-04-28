@@ -4,6 +4,7 @@ import Container from '@mui/material/Container';
 
 import { paths } from 'src/routes/paths';
 
+import { useTranslate } from 'src/locales';
 import { useGetProduct } from 'src/api/product';
 
 import { useSettingsContext } from 'src/components/settings';
@@ -19,6 +20,7 @@ type Props = {
 
 export default function ProductEditView({ id }: Props) {
   const settings = useSettingsContext();
+  const { t } = useTranslate();
 
   const { product: currentProduct } = useGetProduct(id);
 
@@ -27,9 +29,12 @@ export default function ProductEditView({ id }: Props) {
       <CustomBreadcrumbs
         heading="Edit"
         links={[
-          { name: 'Dashboard', href: paths.dashboard.root },
           {
-            name: 'Product',
+            name: t('dashboard'),
+            href: paths.dashboard.root,
+          },
+          {
+            name: t('products'),
             href: paths.dashboard.products.root,
           },
           { name: currentProduct?.name },
