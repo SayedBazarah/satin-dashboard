@@ -1,4 +1,5 @@
 import React from 'react';
+import { TFunction } from 'i18next';
 
 import {
   Button,
@@ -21,6 +22,7 @@ import { IRole } from 'src/types/employee';
 import EmployeeRoleEditForm from './employee-role-create-edit-form';
 
 type Props = {
+  t: TFunction<'translation', undefined>;
   selected: boolean;
   onEditRow: VoidFunction;
   row: IRole;
@@ -29,6 +31,7 @@ type Props = {
 };
 
 export default function EmployeeRoleRow({
+  t,
   row,
   selected,
   onSelectRow,
@@ -51,11 +54,8 @@ export default function EmployeeRoleRow({
         <TableCell>
           <Typography textAlign="center">{row.permissions.length}</Typography>
         </TableCell>
-        <TableCell>
-          <Typography textAlign="center">{row.employees}</Typography>
-        </TableCell>
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
-          <Tooltip title="Edit" placement="top" arrow>
+          <Tooltip title={t('common.edit')} placement="top" arrow>
             <IconButton color={quickEdit.value ? 'inherit' : 'default'} onClick={quickEdit.onTrue}>
               <Iconify icon="solar:pen-bold" />
             </IconButton>
@@ -80,11 +80,12 @@ export default function EmployeeRoleRow({
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={t('common.delete')}
+        content={t('common.delete-message')}
+        cancelTitle={t('common.cancel')}
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />

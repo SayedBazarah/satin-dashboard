@@ -38,6 +38,7 @@
     "cancel": "الغاء",
     "create": "انشاء",
     "update": "تحديث",
+    "update-success": "تم التحديث بنجاح",
     "delete-message": "هل انت منتاكد من انك تريد المسح؟",
     "delete-selected": "مسح المحدد",
     "delete": "مسح"
@@ -187,6 +188,27 @@
     "form-error-slug": "رابط الفئة مطلوب",
     "form-error-title": "اسم الفئة مطلوب",
     "form-error-image": "سورة الفئة مطلوبة",
+    "x": "x",
+    "y": "x"
+  },
+  "employee": {
+    "root": "الموظفين",
+    "new-employee": "موظف جديد",
+    "role": {
+      "root": "الوظائف والصلاحيات",
+      "new": "وظيفة جديده",
+      "update": "تحديث الوظيفة",
+      "id": "المعرف",
+      "title": "الوظيفة",
+      "yup-label": "اسم الوظيفة مطلوب",
+      "permissions": "الصلاحيات",
+      "permissions-select": "اختار الصلاحيات",
+      "dashboard": "لوحة التحكم",
+      "products": "المنتجات",
+      "categories": "الفئات",
+      "orders": "الطلبات",
+      "employees": "الموظفين"
+    },
     "x": "x",
     "y": "x"
   }

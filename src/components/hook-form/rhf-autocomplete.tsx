@@ -62,7 +62,7 @@ export default function RHFAutocomplete<
                 }
 
                 return (
-                  <li {...props} key={country.label}>
+                  <li {...props} key={country.code}>
                     <Iconify
                       key={country.label}
                       icon={`circle-flags:${country.code?.toLowerCase()}`}
@@ -122,7 +122,7 @@ export default function RHFAutocomplete<
                   return (
                     <Chip
                       {...getTagProps({ index })}
-                      key={country.label}
+                      key={index}
                       label={country.label}
                       icon={<Iconify icon={`circle-flags:${country.code?.toLowerCase()}`} />}
                       size="small"

@@ -19,6 +19,8 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import axios, { endpoints } from 'src/utils/axios';
 
+import { useTranslate } from 'src/locales';
+
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { useSettingsContext } from 'src/components/settings';
@@ -44,21 +46,14 @@ const defaultFilters: IRoleTableFilters = {
 
 // -----------------------------------------------------
 export default function PermissionsListView() {
+  const { t } = useTranslate();
   const { enqueueSnackbar } = useSnackbar();
 
   const table = useTable({ defaultOrderBy: 'label' });
 
   const settings = useSettingsContext();
 
-  const [tableData, setTableData] = useState<IRole[]>([
-    // {
-    //   _id: 'hr',
-    //   label: 'Human Resourses',
-    //   employees: 5,
-    //   permissions: ['Human Resourses', 'Sales'],
-    // },
-    // { _id: 'store', label: 'Store Assistance', employees: 2, permissions: ['profile'] },
-  ]);
+  const [tableData, setTableData] = useState<IRole[]>([]);
   const [filters] = useState(defaultFilters);
 
   const confirm = useBoolean();
@@ -68,9 +63,8 @@ export default function PermissionsListView() {
   // ------------------------------------------------
 
   const TABLE_HEAD = [
-    { id: 'title', label: 'Title' },
-    { id: 'permissions', label: 'Permissions', width: '60px' },
-    { id: 'members', label: 'Employees', width: '60px' },
+    { id: 'title', label: t('employee.role.title') },
+    { id: 'permissions', label: t('employee.role.permissions'), width: '60px' },
     { id: '', width: 88 },
   ];
 
@@ -86,7 +80,6 @@ export default function PermissionsListView() {
   );
 
   const handleDeleteRows = useCallback(async () => {
-    console.log('handleDeleteRows');
     await axios.delete(endpoints.roles.delete_rows, {
       data: {
         roles: table.selected,
@@ -139,20 +132,20 @@ export default function PermissionsListView() {
     <>
       <Container maxWidth={settings.themeStretch ? false : 'lg'}>
         <CustomBreadcrumbs
-          heading="Roles"
+          heading={t('employee.role.root')}
           links={[
-            { name: 'Dashboard', href: paths.dashboard.root },
-            { name: 'Employee', href: paths.dashboard.employees.root },
-            { name: 'Permissions' },
+            { name: t('dashboard'), href: paths.dashboard.root },
+            { name: t('employee.root'), href: paths.dashboard.employees.root },
+            { name: t('employee.role.root') },
           ]}
           action={
-            <Tooltip title="Create new role">
+            <Tooltip title={t('employee.role.new')}>
               <Button
                 variant="contained"
                 startIcon={<Iconify icon="mingcute:add-line" />}
                 onClick={quickCreate.onTrue}
               >
-                New Role
+                {t('employee.role.new')}
               </Button>
             </Tooltip>
           }
@@ -172,7 +165,7 @@ export default function PermissionsListView() {
               )
             }
             action={
-              <Tooltip title="Delete Selected">
+              <Tooltip title={t('common.delete-selected')}>
                 <IconButton
                   onClick={() => {
                     confirm.onTrue();
@@ -210,6 +203,7 @@ export default function PermissionsListView() {
                   )
                   .map((row) => (
                     <EmployeeRoleRow
+                      t={t}
                       key={row._id}
                       row={row}
                       selected={table.selected.includes(row._id)}
@@ -231,8 +225,9 @@ export default function PermissionsListView() {
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={t('common.delete')}
+        content={t('common.delete-message')}
+        cancelTitle={t('common.cancel')}
         action={
           <Button
             variant="contained"
@@ -243,7 +238,7 @@ export default function PermissionsListView() {
               confirm.onFalse();
             }}
           >
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />

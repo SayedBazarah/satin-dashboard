@@ -38,6 +38,7 @@
     "preview": "Preview",
     "create": "Create",
     "update": "Update",
+    "update-success": "Update Success",
     "delete-message": "Are you sure want to delete?",
     "delete-selected": "Delete Selected",
     "delete": "Delete"
@@ -72,7 +73,7 @@
     "tax": "Tax",
     "include-taxs": "Price includes taxs",
     "create": "Create",
-    "save": "Save Shanges",
+    "save": "Save Changes",
     "publish": "Publish",
     "published": "Published",
     "delete_success": "Delted Success",
@@ -195,6 +196,27 @@
     "form-error-slug": "product slug required",
     "form-error-title": "category title is needed",
     "form-error-image": "category image is needed",
+    "x": "x",
+    "y": "x"
+  },
+  "employee": {
+    "root": "Employees",
+    "new-employee": "New Employee",
+    "role": {
+      "root": "Roles & Permissions",
+      "new": "New Role",
+      "update": "Update Role",
+      "id": "Id",
+      "title": "Title",
+      "yup-label": "Role label is needed",
+      "permissions": "Permissions",
+      "permissions-select": "Select Permissions",
+      "dashboard": "Dashboard",
+      "products": "Products",
+      "categories": "categories",
+      "orders": "Orders",
+      "employees": "Employees"
+    },
     "x": "x",
     "y": "x"
   }
