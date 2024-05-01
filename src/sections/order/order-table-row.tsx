@@ -1,3 +1,5 @@
+import { TFunction } from 'i18next';
+
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -6,7 +8,6 @@ import Avatar from '@mui/material/Avatar';
 import Collapse from '@mui/material/Collapse';
 import MenuItem from '@mui/material/MenuItem';
 import TableRow from '@mui/material/TableRow';
-import Checkbox from '@mui/material/Checkbox';
 import TableCell from '@mui/material/TableCell';
 import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -21,8 +22,7 @@ import Iconify from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IOrderItem, OrderStatus } from 'src/types/order';
-import { TFunction } from 'i18next';
+import { IOrderItem } from 'src/types/order';
 
 // ----------------------------------------------------------------------
 
@@ -70,7 +70,7 @@ export default function OrderTableRow({
       </TableCell>
 
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        {<Avatar alt={customer?.name || billing.name} src={customer?.avatarUrl} sx={{ mr: 2 }} />}
+        <Avatar alt={customer?.name || billing.name} src={customer?.avatarUrl} sx={{ mr: 2 }} />
         <ListItemText
           primary={customer?.name || billing.name}
           secondary={customer?.email || billing.email}

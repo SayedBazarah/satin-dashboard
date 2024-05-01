@@ -1,5 +1,4 @@
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -12,11 +11,11 @@ import Typography from '@mui/material/Typography';
 import Iconify from 'src/components/iconify';
 
 import {
+  IBillinig,
   IOrderPayment,
   IOrderCustomer,
   IOrderDelivery,
   IOrderShippingAddress,
-  IBillinig,
 } from 'src/types/order';
 
 // ----------------------------------------------------------------------

@@ -22,9 +22,6 @@ type Props = {
 };
 
 export default function OrderDetailsHistory({ history }: Props) {
-  console.log('history');
-  console.log(history);
-  console.log(history.timeline);
   const renderSummary = (
     <Stack
       spacing={2}

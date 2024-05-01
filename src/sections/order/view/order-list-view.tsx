@@ -7,11 +7,9 @@ import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import { alpha } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import TableBody from '@mui/material/TableBody';
-import IconButton from '@mui/material/IconButton';
 import TableContainer from '@mui/material/TableContainer';
 
 import { paths } from 'src/routes/paths';
@@ -21,11 +19,10 @@ import { useBoolean } from 'src/hooks/use-boolean';
 
 import { isAfter, isBetween } from 'src/utils/format-time';
 
-import { _orders } from 'src/_mock';
 import { useTranslate } from 'src/locales';
+import { useGetOrders } from 'src/api/orders';
 
 import Label from 'src/components/label';
-import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { useSnackbar } from 'src/components/snackbar';
 import { ConfirmDialog } from 'src/components/custom-dialog';
@@ -38,7 +35,6 @@ import {
   getComparator,
   TableEmptyRows,
   TableHeadCustom,
-  TableSelectedAction,
   TablePaginationCustom,
 } from 'src/components/table';
 
@@ -47,7 +43,6 @@ import { IOrderItem, IOrderTableFilters, IOrderTableFilterValue } from 'src/type
 import OrderTableRow from '../order-table-row';
 import OrderTableToolbar from '../order-table-toolbar';
 import OrderTableFiltersResult from '../order-table-filters-result';
-import { useGetOrders } from 'src/api/orders';
 
 // ----------------------------------------------------------------------
 export const OrderStatus = {
@@ -340,7 +335,7 @@ function applyFilter({
   filters: IOrderTableFilters;
   dateError: boolean;
 }) {
-  const { status, name, startDate, endDate } = filters;
+  const { status, startDate, endDate } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
