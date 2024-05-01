@@ -18,7 +18,7 @@ import { IOrderProductItem } from 'src/types/order';
 // ----------------------------------------------------------------------
 
 type Props = {
-  taxes: number;
+  taxes?: number;
   shipping: number;
   discount: number;
   subTotal: number;
@@ -71,11 +71,6 @@ export default function OrderDetailsItems({
         </Box>
       </Stack>
 
-      <Stack direction="row">
-        <Box sx={{ color: 'text.secondary' }}>Taxes</Box>
-        <Box sx={{ width: 160 }}>{taxes ? fCurrency(taxes) : '-'}</Box>
-      </Stack>
-
       <Stack direction="row" sx={{ typography: 'subtitle1' }}>
         <Box>Total</Box>
         <Box sx={{ width: 160 }}>{fCurrency(totalAmount) || '-'}</Box>
@@ -85,14 +80,7 @@ export default function OrderDetailsItems({
 
   return (
     <Card>
-      <CardHeader
-        title="Details"
-        action={
-          <IconButton>
-            <Iconify icon="solar:pen-bold" />
-          </IconButton>
-        }
-      />
+      <CardHeader title="Details" />
 
       <Stack
         sx={{

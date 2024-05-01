@@ -22,6 +22,9 @@ type Props = {
 };
 
 export default function OrderDetailsHistory({ history }: Props) {
+  console.log('history');
+  console.log(history);
+  console.log(history.timeline);
   const renderSummary = (
     <Stack
       spacing={2}
@@ -70,7 +73,8 @@ export default function OrderDetailsHistory({ history }: Props) {
         const firstTimeline = index === 0;
 
         const lastTimeline = index === history.timeline.length - 1;
-
+        console.log('HISTORY');
+        console.log(item);
         return (
           <TimelineItem key={item.title}>
             <TimelineSeparator>

@@ -47,13 +47,20 @@ import { IOrderItem, IOrderTableFilters, IOrderTableFilterValue } from 'src/type
 import OrderTableRow from '../order-table-row';
 import OrderTableToolbar from '../order-table-toolbar';
 import OrderTableFiltersResult from '../order-table-filters-result';
+import { useGetOrders } from 'src/api/orders';
 
 // ----------------------------------------------------------------------
+export const OrderStatus = {
+  PENDING: 'معلق',
+  COMPLETED: 'مكتمل',
+  CANCELLED: 'ملغى',
+  REFUNDED: 'مرتجع',
+} as const;
 
 // ----------------------------------------------------------------------
 
 export default function OrderListView() {
-  const { t } = useTranslate();
+  const { t, i18n } = useTranslate();
 
   // ----------------------------------------------------
 
@@ -71,7 +78,7 @@ export default function OrderListView() {
     { id: 'name', label: t('order.customer') },
     { id: 'createdAt', label: t('order.created_at'), width: 140 },
     { id: 'totalQuantity', label: t('order.items'), width: 120, align: 'center' },
-    { id: 'totalAmount', label: t('order.price'), width: 140 },
+    { id: 'total', label: t('order.total'), width: 140 },
     { id: 'status', label: t('order.status'), width: 110 },
     { id: '', width: 88 },
   ];
@@ -98,23 +105,18 @@ export default function OrderListView() {
 
   const confirm = useBoolean();
 
-  const [tableData, setTableData] = useState<IOrderItem[]>(_orders);
+  const { orders } = useGetOrders();
 
   const [filters, setFilters] = useState(defaultFilters);
 
   const dateError = isAfter(filters.startDate, filters.endDate);
 
   const dataFiltered = applyFilter({
-    inputData: tableData,
+    inputData: orders,
     comparator: getComparator(table.order, table.orderBy),
     filters,
     dateError,
   });
-
-  const dataInPage = dataFiltered.slice(
-    table.page * table.rowsPerPage,
-    table.page * table.rowsPerPage + table.rowsPerPage
-  );
 
   const denseHeight = table.dense ? 56 : 56 + 20;
 
@@ -140,29 +142,14 @@ export default function OrderListView() {
 
   const handleDeleteRow = useCallback(
     (id: string) => {
-      const deleteRow = tableData.filter((row) => row.id !== id);
-
       enqueueSnackbar(t('order.deleted_message'));
-
-      setTableData(deleteRow);
-
-      table.onUpdatePageDeleteRow(dataInPage.length);
     },
-    [t, dataInPage.length, enqueueSnackbar, table, tableData]
+    [t, enqueueSnackbar]
   );
 
   const handleDeleteRows = useCallback(() => {
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
-
     enqueueSnackbar(t('order.deleted_message'));
-
-    setTableData(deleteRows);
-
-    table.onUpdatePageDeleteRows({
-      totalRowsInPage: dataInPage.length,
-      totalRowsFiltered: dataFiltered.length,
-    });
-  }, [t, dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
+  }, [t, enqueueSnackbar]);
 
   const handleViewRow = useCallback(
     (id: string) => {
@@ -227,8 +214,8 @@ export default function OrderListView() {
                     }
                   >
                     {['completed', 'pending', 'cancelled', 'refunded'].includes(tab.value)
-                      ? tableData.filter((user) => user.status === tab.value).length
-                      : tableData.length}
+                      ? orders.filter((user) => user.status === tab.value).length
+                      : orders.length}
                   </Label>
                 }
               />
@@ -255,25 +242,6 @@ export default function OrderListView() {
           )}
 
           <TableContainer sx={{ position: 'relative', overflow: 'unset' }}>
-            <TableSelectedAction
-              dense={table.dense}
-              numSelected={table.selected.length}
-              rowCount={dataFiltered.length}
-              onSelectAllRows={(checked) =>
-                table.onSelectAllRows(
-                  checked,
-                  dataFiltered.map((row) => row.id)
-                )
-              }
-              action={
-                <Tooltip title={t('order.delete')}>
-                  <IconButton color="primary" onClick={confirm.onTrue}>
-                    <Iconify icon="solar:trash-bin-trash-bold" />
-                  </IconButton>
-                </Tooltip>
-              }
-            />
-
             <Scrollbar>
               <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
                 <TableHeadCustom
@@ -281,12 +249,11 @@ export default function OrderListView() {
                   orderBy={table.orderBy}
                   headLabel={TABLE_HEAD}
                   rowCount={dataFiltered.length}
-                  numSelected={table.selected.length}
                   onSort={table.onSort}
                   onSelectAllRows={(checked) =>
                     table.onSelectAllRows(
                       checked,
-                      dataFiltered.map((row) => row.id)
+                      dataFiltered.map((row) => row._id)
                     )
                   }
                 />
@@ -299,12 +266,14 @@ export default function OrderListView() {
                     )
                     .map((row) => (
                       <OrderTableRow
-                        key={row.id}
+                        t={t}
+                        lang={i18n.language}
+                        key={row._id}
                         row={row}
-                        selected={table.selected.includes(row.id)}
-                        onSelectRow={() => table.onSelectRow(row.id)}
-                        onDeleteRow={() => handleDeleteRow(row.id)}
-                        onViewRow={() => handleViewRow(row.id)}
+                        selected={table.selected.includes(row._id)}
+                        onSelectRow={() => table.onSelectRow(row._id)}
+                        onDeleteRow={() => handleDeleteRow(row._id)}
+                        onViewRow={() => handleViewRow(row._id)}
                       />
                     ))}
 
@@ -383,17 +352,8 @@ function applyFilter({
 
   inputData = stabilizedThis.map((el) => el[0]);
 
-  if (name) {
-    inputData = inputData.filter(
-      (order) =>
-        order.orderNumber.toLowerCase().indexOf(name.toLowerCase()) !== -1 ||
-        order.customer.name.toLowerCase().indexOf(name.toLowerCase()) !== -1 ||
-        order.customer.email.toLowerCase().indexOf(name.toLowerCase()) !== -1
-    );
-  }
-
   if (status !== 'all') {
-    inputData = inputData.filter((order) => order.status === status);
+    inputData = inputData.filter((order) => order.status?.toLocaleLowerCase() === status);
   }
 
   if (!dateError) {

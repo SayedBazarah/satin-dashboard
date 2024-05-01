@@ -140,7 +140,7 @@
     "delivery_time": "وقت توصيل الشحنه",
     "completion_time": "وقت انهاء الطلب",
     "customer_info": "معلومات العميل",
-    "total": "الاجمالي",
+    "total": "اجمالي الفاتورة",
     "view": "عرض"
   },
   "auth": {

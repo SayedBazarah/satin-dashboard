@@ -1,5 +1,7 @@
 // ----------------------------------------------------------------------
 
+import { useTranslate } from 'src/locales';
+
 export type IOrderTableFilterValue = string | Date | null;
 
 export type IOrderTableFilters = {
@@ -13,11 +15,11 @@ export type IOrderTableFilters = {
 
 export type IOrderHistory = {
   orderTime: Date;
-  paymentTime: Date;
-  deliveryTime: Date;
-  completionTime: Date;
+  paymentTime?: Date;
+  deliveryTime?: Date;
+  completionTime?: Date;
   timeline: {
-    title: string;
+    title?: string;
     time: Date;
   }[];
 };
@@ -41,9 +43,11 @@ export type IOrderDelivery = {
 export type IOrderCustomer = {
   id: string;
   name: string;
-  email: string;
-  avatarUrl: string;
-  ipAddress: string;
+  email?: string;
+  address?: string;
+  phoneNumber?: string;
+  avatarUrl?: string;
+  ipAddress?: string;
 };
 
 export type IOrderProductItem = {
@@ -55,19 +59,37 @@ export type IOrderProductItem = {
   quantity: number;
 };
 
+export type IBillinig = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+};
+
 export type IOrderItem = {
-  id: string;
+  _id: string;
   taxes: number;
   status: string;
   shipping: number;
   discount: number;
   subTotal: number;
-  orderNumber: string;
+  billing: IBillinig;
+  orderNumber: number;
   totalAmount: number;
   totalQuantity: number;
   history: IOrderHistory;
-  customer: IOrderCustomer;
+  customer?: IOrderCustomer;
   delivery: IOrderDelivery;
   items: IOrderProductItem[];
   createdAt: Date;
+};
+
+export const OrderStatus = () => {
+  const { t } = useTranslate();
+  return [
+    { value: 'pending', label: t('order.pending') },
+    { value: 'completed', label: t('order.completed') },
+    { value: 'cancelled', label: t('order.cancelled') },
+    { value: 'refunded', label: t('order.refunded') },
+  ];
 };

@@ -11,15 +11,19 @@ import { fDateTime } from 'src/utils/format-time';
 import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
+import { OrderStatus } from 'src/types/order';
+import { TFunction } from 'i18next';
 
 // ----------------------------------------------------------------------
 
 type Props = {
+  t: TFunction<'translation', undefined>;
+  lang: string;
   status: string;
   backLink: string;
-  orderNumber: string;
+  orderNumber: number;
   createdAt: Date;
-  onChangeStatus: (newValue: string) => void;
+  onChangeStatus: (status: { label: string; value: string }) => void;
   statusOptions: {
     value: string;
     label: string;
@@ -27,6 +31,8 @@ type Props = {
 };
 
 export default function OrderDetailsToolbar({
+  t,
+  lang,
   status,
   backLink,
   createdAt,
@@ -86,7 +92,10 @@ export default function OrderDetailsToolbar({
             onClick={popover.onOpen}
             sx={{ textTransform: 'capitalize' }}
           >
-            {status}
+            {(lang === 'ar' && status === 'completed' && t('order.completed')) ||
+              (status === 'pending' && t('order.pending')) ||
+              (status === 'cancelled' && t('order.cancelled')) ||
+              t('order.refunded')}
           </Button>
 
           <Button
@@ -95,10 +104,6 @@ export default function OrderDetailsToolbar({
             startIcon={<Iconify icon="solar:printer-minimalistic-bold" />}
           >
             Print
-          </Button>
-
-          <Button color="inherit" variant="contained" startIcon={<Iconify icon="solar:pen-bold" />}>
-            Edit
           </Button>
         </Stack>
       </Stack>
@@ -109,16 +114,16 @@ export default function OrderDetailsToolbar({
         arrow="top-right"
         sx={{ width: 140 }}
       >
-        {statusOptions.map((option) => (
+        {OrderStatus().map((v, index) => (
           <MenuItem
-            key={option.value}
-            selected={option.value === status}
+            key={index}
+            selected={v.value === status}
             onClick={() => {
               popover.onClose();
-              onChangeStatus(option.value);
+              onChangeStatus(v);
             }}
           >
-            {option.label}
+            {v.label}
           </MenuItem>
         ))}
       </CustomPopover>

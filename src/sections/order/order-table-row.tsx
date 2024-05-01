@@ -21,11 +21,14 @@ import Iconify from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
-import { IOrderItem } from 'src/types/order';
+import { IOrderItem, OrderStatus } from 'src/types/order';
+import { TFunction } from 'i18next';
 
 // ----------------------------------------------------------------------
 
 type Props = {
+  t: TFunction<'translation', undefined>;
+  lang: string;
   row: IOrderItem;
   selected: boolean;
   onViewRow: VoidFunction;
@@ -34,13 +37,15 @@ type Props = {
 };
 
 export default function OrderTableRow({
+  t,
+  lang,
   row,
   selected,
   onViewRow,
   onSelectRow,
   onDeleteRow,
 }: Props) {
-  const { items, status, orderNumber, createdAt, customer, totalQuantity, subTotal } = row;
+  const { items, status, orderNumber, billing, createdAt, customer, totalQuantity, subTotal } = row;
 
   const confirm = useBoolean();
 
@@ -50,10 +55,6 @@ export default function OrderTableRow({
 
   const renderPrimary = (
     <TableRow hover selected={selected}>
-      <TableCell padding="checkbox">
-        <Checkbox checked={selected} onClick={onSelectRow} />
-      </TableCell>
-
       <TableCell>
         <Box
           onClick={onViewRow}
@@ -69,11 +70,10 @@ export default function OrderTableRow({
       </TableCell>
 
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar alt={customer.name} src={customer.avatarUrl} sx={{ mr: 2 }} />
-
+        {<Avatar alt={customer?.name || billing.name} src={customer?.avatarUrl} sx={{ mr: 2 }} />}
         <ListItemText
-          primary={customer.name}
-          secondary={customer.email}
+          primary={customer?.name || billing.name}
+          secondary={customer?.email || billing.email}
           primaryTypographyProps={{ typography: 'body2' }}
           secondaryTypographyProps={{
             component: 'span',
@@ -109,7 +109,10 @@ export default function OrderTableRow({
             'default'
           }
         >
-          {status}
+          {(lang === 'ar' && status === 'completed' && t('order.completed')) ||
+            (status === 'pending' && t('order.pending')) ||
+            (status === 'cancelled' && t('order.cancelled')) ||
+            t('order.refunded')}
         </Label>
       </TableCell>
 

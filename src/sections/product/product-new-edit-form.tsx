@@ -100,7 +100,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       tags: currentProduct?.tags || [],
       taxes: currentProduct?.taxes || 0,
       gender: currentProduct?.gender || '',
-      category: currentProduct?.category._id || '',
+      category: currentProduct?.category?._id || '',
       newLabel: currentProduct?.newLabel || { enabled: false, content: '' },
       saleLabel: currentProduct?.saleLabel || { enabled: false, content: '' },
     }),

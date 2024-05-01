@@ -70,6 +70,11 @@ export const endpoints = {
     latest: '/api/post/latest',
     search: '/api/post/search',
   },
+  orders: {
+    list: '/api/order',
+    update: (id: string) => `/api/order/${id}`,
+    details: (id: string) => `/api/order/${id}`,
+  },
   product: {
     test: '/api/test',
     create: '/api/product',
