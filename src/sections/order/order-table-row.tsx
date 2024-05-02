@@ -23,6 +23,7 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import { IOrderItem } from 'src/types/order';
+import Image from 'src/components/image';
 
 // ----------------------------------------------------------------------
 
@@ -70,7 +71,11 @@ export default function OrderTableRow({
       </TableCell>
 
       <TableCell sx={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar alt={customer?.name || billing.name} src={customer?.avatarUrl} sx={{ mr: 2 }} />
+        <Avatar
+          alt={customer?.name || billing.name}
+          src="https://api-dev-minimal-v510.vercel.app/assets/images/avatar/avatar_25.jpg"
+          sx={{ mr: 2 }}
+        />
         <ListItemText
           primary={customer?.name || billing.name}
           secondary={customer?.email || billing.email}
@@ -158,11 +163,7 @@ export default function OrderTableRow({
                   },
                 }}
               >
-                <Avatar
-                  src={item.coverUrl}
-                  variant="rounded"
-                  sx={{ width: 48, height: 48, mr: 2 }}
-                />
+                <Image src={item.coverUrl} sx={{ width: 48, height: 48, mr: 2, borderRadius: 1 }} />
 
                 <ListItemText
                   primary={item.name}
