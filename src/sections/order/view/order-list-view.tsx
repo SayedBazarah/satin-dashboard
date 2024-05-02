@@ -245,12 +245,6 @@ export default function OrderListView() {
                   headLabel={TABLE_HEAD}
                   rowCount={dataFiltered.length}
                   onSort={table.onSort}
-                  onSelectAllRows={(checked) =>
-                    table.onSelectAllRows(
-                      checked,
-                      dataFiltered.map((row) => row._id)
-                    )
-                  }
                 />
 
                 <TableBody>
