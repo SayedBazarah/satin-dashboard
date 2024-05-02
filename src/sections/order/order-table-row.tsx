@@ -55,7 +55,7 @@ export default function OrderTableRow({
   const popover = usePopover();
 
   const renderPrimary = (
-    <TableRow hover selected={selected}>
+    <TableRow hover>
       <TableCell>
         <Box
           onClick={onViewRow}
