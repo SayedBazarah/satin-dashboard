@@ -3,21 +3,19 @@ import type { TFunction } from 'i18next';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
-import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import ListItemText from '@mui/material/ListItemText';
 
 import { fCurrency } from 'src/utils/format-number';
 
+import Image from 'src/components/image';
 import Scrollbar from 'src/components/scrollbar';
 
 import { IOrderProductItem } from 'src/types/order';
-import Image from 'src/components/image';
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  taxes?: number;
   shipping: number;
   discount: number;
   subTotal: number;
