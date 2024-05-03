@@ -18,12 +18,12 @@ import { fCurrency } from 'src/utils/format-number';
 import { fDate, fTime } from 'src/utils/format-time';
 
 import Label from 'src/components/label';
+import Image from 'src/components/image';
 import Iconify from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
 
 import { IOrderItem } from 'src/types/order';
-import Image from 'src/components/image';
 
 // ----------------------------------------------------------------------
 

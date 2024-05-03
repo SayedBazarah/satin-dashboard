@@ -12,6 +12,7 @@ import { fCurrency } from 'src/utils/format-number';
 import Scrollbar from 'src/components/scrollbar';
 
 import { IOrderProductItem } from 'src/types/order';
+import Image from 'src/components/image';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +28,6 @@ type Props = {
 
 export default function OrderDetailsItems({
   items,
-  taxes,
   shipping,
   discount,
   subTotal,
@@ -97,7 +97,7 @@ export default function OrderDetailsItems({
                 borderBottom: (theme) => `dashed 2px ${theme.palette.background.neutral}`,
               }}
             >
-              <Avatar src={item.coverUrl} variant="rounded" sx={{ width: 48, height: 48, mr: 2 }} />
+              <Image src={item.coverUrl} sx={{ width: 48, height: 48, mr: 2, borderRadius: 1 }} />
 
               <ListItemText
                 primary={item.name}
