@@ -8,6 +8,7 @@ import { useOffSetTop } from 'src/hooks/use-off-set-top';
 import { useResponsive } from 'src/hooks/use-responsive';
 
 import { bgBlur } from 'src/theme/css';
+import { useAuthContext } from 'src/auth/hooks';
 
 import Logo from 'src/components/logo';
 import SvgColor from 'src/components/svg-color';
@@ -29,6 +30,9 @@ type Props = {
 export default function Header({ onOpenNav }: Props) {
   const theme = useTheme();
 
+  const { user } = useAuthContext();
+  console.log('user');
+  console.log(user);
   const settings = useSettingsContext();
 
   const isNavHorizontal = settings.themeLayout === 'horizontal';
@@ -62,7 +66,7 @@ export default function Header({ onOpenNav }: Props) {
       >
         <LanguagePopover />
 
-        <NotificationsPopover />
+        <NotificationsPopover notifications={user?.notification || []} />
 
         <SettingsButton />
 

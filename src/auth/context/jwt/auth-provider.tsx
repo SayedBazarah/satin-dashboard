@@ -41,7 +41,7 @@ type ActionsType = ActionMapType<Payload>[keyof ActionMapType<Payload>];
 // ----------------------------------------------------------------------
 
 const initialState: AuthStateType = {
-  user: {},
+  user: null,
   loading: true,
 };
 

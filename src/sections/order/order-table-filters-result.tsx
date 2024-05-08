@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { TFunction } from 'i18next';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
@@ -14,6 +15,7 @@ import { IOrderTableFilters, IOrderTableFilterValue } from 'src/types/order';
 // ----------------------------------------------------------------------
 
 type Props = StackProps & {
+  t: TFunction<'translation', undefined>;
   filters: IOrderTableFilters;
   onFilters: (name: string, value: IOrderTableFilterValue) => void;
   //
@@ -23,6 +25,7 @@ type Props = StackProps & {
 };
 
 export default function OrderTableFiltersResult({
+  t,
   filters,
   onFilters,
   //
@@ -51,19 +54,19 @@ export default function OrderTableFiltersResult({
       <Box sx={{ typography: 'body2' }}>
         <strong>{results}</strong>
         <Box component="span" sx={{ color: 'text.secondary', ml: 0.25 }}>
-          results found
+          {t('common.results-found')}
         </Box>
       </Box>
 
       <Stack flexGrow={1} spacing={1} direction="row" flexWrap="wrap" alignItems="center">
         {filters.status !== 'all' && (
-          <Block label="Status:">
+          <Block label={t('order.status')}>
             <Chip size="small" label={filters.status} onDelete={handleRemoveStatus} />
           </Block>
         )}
 
         {filters.startDate && filters.endDate && (
-          <Block label="Date:">
+          <Block label={t('order.date')}>
             <Chip size="small" label={shortLabel} onDelete={handleRemoveDate} />
           </Block>
         )}
@@ -79,7 +82,7 @@ export default function OrderTableFiltersResult({
           onClick={onResetFilters}
           startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
         >
-          Clear
+          {t('common.delete')}
         </Button>
       </Stack>
     </Stack>

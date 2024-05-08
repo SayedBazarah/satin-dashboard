@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { TFunction } from 'i18next';
 
 import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,13 +17,14 @@ import { IOrderTableFilters, IOrderTableFilterValue } from 'src/types/order';
 // ----------------------------------------------------------------------
 
 type Props = {
+  t: TFunction<'translation', undefined>;
   filters: IOrderTableFilters;
   onFilters: (name: string, value: IOrderTableFilterValue) => void;
   //
   dateError: boolean;
 };
 
-export default function OrderTableToolbar({ filters, onFilters, dateError }: Props) {
+export default function OrderTableToolbar({ t, filters, onFilters, dateError }: Props) {
   const popover = usePopover();
 
   const handleFilterName = useCallback(
@@ -61,7 +63,7 @@ export default function OrderTableToolbar({ filters, onFilters, dateError }: Pro
         }}
       >
         <DatePicker
-          label="Start date"
+          label={t('order.start-date')}
           value={filters.startDate}
           onChange={handleFilterStartDate}
           slotProps={{
@@ -75,7 +77,7 @@ export default function OrderTableToolbar({ filters, onFilters, dateError }: Pro
         />
 
         <DatePicker
-          label="End date"
+          label={t('order.end-date')}
           value={filters.endDate}
           onChange={handleFilterEndDate}
           slotProps={{
@@ -99,7 +101,7 @@ export default function OrderTableToolbar({ filters, onFilters, dateError }: Pro
             fullWidth
             value={filters.name}
             onChange={handleFilterName}
-            placeholder="Search customer or order number..."
+            placeholder={t('common.search')}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -127,7 +129,7 @@ export default function OrderTableToolbar({ filters, onFilters, dateError }: Pro
           }}
         >
           <Iconify icon="solar:printer-minimalistic-bold" />
-          Print
+          {t('common.print')}
         </MenuItem>
 
         <MenuItem
@@ -136,7 +138,7 @@ export default function OrderTableToolbar({ filters, onFilters, dateError }: Pro
           }}
         >
           <Iconify icon="solar:import-bold" />
-          Import
+          {t('common.import')}
         </MenuItem>
 
         <MenuItem
@@ -145,7 +147,7 @@ export default function OrderTableToolbar({ filters, onFilters, dateError }: Pro
           }}
         >
           <Iconify icon="solar:export-bold" />
-          Export
+          {t('common.export')}
         </MenuItem>
       </CustomPopover>
     </>

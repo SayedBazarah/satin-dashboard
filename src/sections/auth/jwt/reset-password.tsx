@@ -53,8 +53,6 @@ export default function ResetPasswordView() {
           },
         });
       } catch (error) {
-        console.error('error');
-        console.error(error);
         router.push(paths.auth.jwt.token_expired);
       }
     })();

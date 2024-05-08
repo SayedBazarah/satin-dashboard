@@ -1,14 +1,9 @@
 import { m } from 'framer-motion';
-import { useState, useCallback } from 'react';
 
-import Tab from '@mui/material/Tab';
-import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
 import List from '@mui/material/List';
 import Stack from '@mui/material/Stack';
 import Badge from '@mui/material/Badge';
 import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
@@ -17,61 +12,33 @@ import Typography from '@mui/material/Typography';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { useResponsive } from 'src/hooks/use-responsive';
 
-import { _notifications } from 'src/_mock';
-
-import Label from 'src/components/label';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 import { varHover } from 'src/components/animate';
+
+import { INotification } from 'src/types/employee';
 
 import NotificationItem from './notification-item';
 
 // ----------------------------------------------------------------------
 
-const TABS = [
-  {
-    value: 'all',
-    label: 'All',
-    count: 22,
-  },
-  {
-    value: 'unread',
-    label: 'Unread',
-    count: 12,
-  },
-  {
-    value: 'archived',
-    label: 'Archived',
-    count: 10,
-  },
-];
+type Props = {
+  notifications: INotification[];
+};
 
-// ----------------------------------------------------------------------
-
-export default function NotificationsPopover() {
+export default function NotificationsPopover({ notifications = [] }: Props) {
   const drawer = useBoolean();
-
+  console.log('NOTIFICATION ===========================');
+  console.info(notifications);
   const smUp = useResponsive('up', 'sm');
-
-  const [currentTab, setCurrentTab] = useState('all');
-
-  const handleChangeTab = useCallback((event: React.SyntheticEvent, newValue: string) => {
-    setCurrentTab(newValue);
-  }, []);
-
-  const [notifications, setNotifications] = useState(_notifications);
 
   const totalUnRead = notifications.filter((item) => item.isUnRead === true).length;
 
+  console.log('totalUnRead');
+  console.log(totalUnRead);
   const handleMarkAllAsRead = () => {
-    setNotifications(
-      notifications.map((notification) => ({
-        ...notification,
-        isUnRead: false,
-      }))
-    );
+    console.log('HANDLE MAKE NOTIFICATION READ');
   };
-
   const renderHead = (
     <Stack direction="row" alignItems="center" sx={{ py: 2, pl: 2.5, pr: 1, minHeight: 68 }}>
       <Typography variant="h6" sx={{ flexGrow: 1 }}>
@@ -94,41 +61,11 @@ export default function NotificationsPopover() {
     </Stack>
   );
 
-  const renderTabs = (
-    <Tabs value={currentTab} onChange={handleChangeTab}>
-      {TABS.map((tab) => (
-        <Tab
-          key={tab.value}
-          iconPosition="end"
-          value={tab.value}
-          label={tab.label}
-          icon={
-            <Label
-              variant={((tab.value === 'all' || tab.value === currentTab) && 'filled') || 'soft'}
-              color={
-                (tab.value === 'unread' && 'info') ||
-                (tab.value === 'archived' && 'success') ||
-                'default'
-              }
-            >
-              {tab.count}
-            </Label>
-          }
-          sx={{
-            '&:not(:last-of-type)': {
-              mr: 3,
-            },
-          }}
-        />
-      ))}
-    </Tabs>
-  );
-
   const renderList = (
     <Scrollbar>
       <List disablePadding>
-        {notifications.map((notification) => (
-          <NotificationItem key={notification.id} notification={notification} />
+        {notifications.map((notification, index) => (
+          <NotificationItem key={index} notification={notification} />
         ))}
       </List>
     </Scrollbar>
@@ -164,27 +101,7 @@ export default function NotificationsPopover() {
 
         <Divider />
 
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          sx={{ pl: 2.5, pr: 1 }}
-        >
-          {renderTabs}
-          <IconButton onClick={handleMarkAllAsRead}>
-            <Iconify icon="solar:settings-bold-duotone" />
-          </IconButton>
-        </Stack>
-
-        <Divider />
-
         {renderList}
-
-        <Box sx={{ p: 1 }}>
-          <Button fullWidth size="large">
-            View All
-          </Button>
-        </Box>
       </Drawer>
     </>
   );

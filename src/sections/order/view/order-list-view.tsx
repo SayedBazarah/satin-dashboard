@@ -66,7 +66,7 @@ export default function OrderListView() {
     { value: 'refunded', label: t('order.refunded') },
   ];
 
-  const STATUS_OPTIONS = [{ value: 'all', label: 'All' }, ...ORDER_STATUS_OPTIONS];
+  const STATUS_OPTIONS = [{ value: 'all', label: t('order.all') }, ...ORDER_STATUS_OPTIONS];
 
   const TABLE_HEAD = [
     { id: 'orderNumber', label: t('order.order'), width: 116 },
@@ -171,7 +171,7 @@ export default function OrderListView() {
               href: paths.dashboard.root,
             },
             {
-              name: t('category'),
+              name: t('order.root'),
               href: paths.dashboard.order.root,
             },
             { name: t('list') },
@@ -218,6 +218,7 @@ export default function OrderListView() {
           </Tabs>
 
           <OrderTableToolbar
+            t={t}
             filters={filters}
             onFilters={handleFilters}
             //
@@ -226,6 +227,7 @@ export default function OrderListView() {
 
           {canReset && (
             <OrderTableFiltersResult
+              t={t}
               filters={filters}
               onFilters={handleFilters}
               //

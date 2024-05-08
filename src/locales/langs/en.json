@@ -20,6 +20,8 @@
   "Edit": "Edit",
 
   "common": {
+    "dense": "Dense",
+    "table-rows": "Rows per page",
     "upload-box": {
       "upload": "Upload",
       "remove-all": "Remove All",
@@ -106,6 +108,9 @@
     "new_product": "New Product"
   },
   "order": {
+    "root": "Orders List",
+    "start-date": "Start date",
+    "end-date": "End date",
     "completed": "Completed",
     "created_at": "Created At",
     "cancelled": "Cancelled",

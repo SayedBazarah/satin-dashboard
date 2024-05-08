@@ -92,6 +92,15 @@ export type IEmployeeCard = {
   status: boolean;
 };
 
+export type INotification = {
+  _id: string;
+  title: string;
+  category: string;
+  createdAt: Date;
+  isUnRead: boolean;
+  type: string;
+};
+
 export type IEmployeeItem = {
   _id: string;
   name: string;
@@ -103,6 +112,7 @@ export type IEmployeeItem = {
   area?: string;
   branch?: string;
   role: IRole;
+  notification?: INotification[];
 };
 export type QuickUpdateEmployeeItem = {
   _id: string;

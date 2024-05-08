@@ -209,7 +209,7 @@ export default function OrderTableRow({
           sx={{ color: 'error.main' }}
         >
           <Iconify icon="solar:trash-bin-trash-bold" />
-          Delete
+          {t('common.delete')}
         </MenuItem>
 
         <MenuItem
@@ -219,18 +219,19 @@ export default function OrderTableRow({
           }}
         >
           <Iconify icon="solar:eye-bold" />
-          View
+          {t('common.preview')}
         </MenuItem>
       </CustomPopover>
 
       <ConfirmDialog
         open={confirm.value}
         onClose={confirm.onFalse}
-        title="Delete"
-        content="Are you sure want to delete?"
+        title={t('common.delete')}
+        content={t('common.delete-message')}
+        cancelTitle={t('common.cancel')}
         action={
           <Button variant="contained" color="error" onClick={onDeleteRow}>
-            Delete
+            {t('common.delete')}
           </Button>
         }
       />

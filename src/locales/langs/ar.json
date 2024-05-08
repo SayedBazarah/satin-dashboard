@@ -21,6 +21,10 @@
   "Edit": "Edit",
 
   "common": {
+    "dense": "تعريض",
+
+    "table-rows": "عدد لكل صفحة",
+
     "upload-box": {
       "upload": "رفع",
       "remove-all": "مسح الكل",
@@ -108,6 +112,10 @@
     "new_product": "منتح جديد"
   },
   "order": {
+    "root": "قائمة الطلبات",
+    "start-date": "من تاريخ",
+    "end-date": "الي تاريخ",
+    "all": "الكل",
     "completed": "مكتمل",
     "created_at": "انشاء في",
     "cancelled": "ملغي",
