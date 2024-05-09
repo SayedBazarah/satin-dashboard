@@ -40,6 +40,7 @@ export const endpoints = {
   employee: {
     list: '/api/employee',
     update: '/api/employee',
+    notification_subscribe: (id: string) => `/api/employee/subscribe-notification/${id}`,
     delete: (id: string) => `/api/employee/delete/${id}`,
     delete_rows: `/api/employee`,
     single: '/api/employee/single',

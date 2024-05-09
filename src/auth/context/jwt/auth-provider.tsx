@@ -122,10 +122,6 @@ export function AuthProvider({ children }: Props) {
     }
   }, []);
 
-  useEffect(() => {
-    initialize();
-  }, [initialize]);
-
   // LOGIN
   const login = useCallback(async (email: string, password: string) => {
     const data = {
@@ -191,6 +187,11 @@ export function AuthProvider({ children }: Props) {
   const forgotPassword = useCallback(async (email: string) => {
     await axios.post(endpoints.auth.forgot, { email });
   }, []);
+
+  //
+  useEffect(() => {
+    initialize();
+  }, [initialize, login]);
 
   // NEW PASSWORD
   const newPassword = useCallback(async (token: string, confirm: string, password: string) => {

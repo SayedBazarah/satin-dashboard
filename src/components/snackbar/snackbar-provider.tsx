@@ -31,7 +31,7 @@ export default function SnackbarProvider({ children }: Props) {
       autoHideDuration={3000}
       TransitionComponent={isRTL ? Collapse : undefined}
       variant="success" // Set default variant
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: (isRTL && 'left') || 'right' }}
       iconVariant={{
         info: (
           <StyledIcon color="info">
@@ -63,7 +63,11 @@ export default function SnackbarProvider({ children }: Props) {
       }}
       // with close as default
       action={(snackbarId) => (
-        <IconButton size="small" onClick={() => closeSnackbar(snackbarId)} sx={{ p: 0.5 }}>
+        <IconButton
+          size="small"
+          onClick={() => closeSnackbar(snackbarId)}
+          sx={{ ...(!isRTL && { p: 1.5 }) }}
+        >
           <Iconify width={16} icon="mingcute:close-line" />
         </IconButton>
       )}

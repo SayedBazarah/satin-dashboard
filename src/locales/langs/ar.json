@@ -19,8 +19,15 @@
   "orders": "الطلبات",
   "Print": "Print",
   "Edit": "Edit",
+  "notification": {
+    "subscribe-success": "تم تفعيل الاشعارات بنجاح ",
+    "subscribe-failed": "الرجاء السماح بالاشعارات من متصفحك"
+  },
 
   "common": {
+    "subscribe": "اشترك",
+    "notification-subscribe": "اشترك في الاشعارات ليصلك تحديث بكل الطلبات",
+
     "dense": "تعريض",
 
     "table-rows": "عدد لكل صفحة",

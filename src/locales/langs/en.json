@@ -18,8 +18,13 @@
   "orders": "Orders",
   "Print": "Print",
   "Edit": "Edit",
-
+  "notification": {
+    "subscribe-success": "Subscribe Successfully",
+    "subscribe-failed": "Subscribe Failed, Allow Notification first"
+  },
   "common": {
+    "subscribe": "Subscribe",
+    "notification-subscribe": "Subscribe to Notification",
     "dense": "Dense",
     "table-rows": "Rows per page",
     "upload-box": {
