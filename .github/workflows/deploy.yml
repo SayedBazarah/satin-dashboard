@@ -18,5 +18,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-      - run: npm ci
+      - run: |
+          npm install 
+          npm run build
+          pm2 restart pm2 restart satin-api
+
       
