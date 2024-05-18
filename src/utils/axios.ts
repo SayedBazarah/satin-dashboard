@@ -58,7 +58,9 @@ export const endpoints = {
   categories: {
     all: '/api/category',
     create: '/api/category',
-    update: '/api/category',
+    deleteRows: '/api/category',
+    update: (id: string) => `/api/category/${id}`,
+    delete: (id: string) => `/api/category/${id}`,
   },
   mail: {
     list: '/api/mail/list',

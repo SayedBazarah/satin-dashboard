@@ -29,7 +29,7 @@ type Props = {
   currentCategory?: ICategory;
   open: boolean;
   onClose: VoidFunction;
-  onEditRow: VoidFunction;
+  onEditRow: (category: FormData) => void;
 };
 
 export default function CategoryCreateEditForm({
@@ -72,17 +72,15 @@ export default function CategoryCreateEditForm({
     try {
       const formdata = new FormData();
 
-      if (currentCategory) formdata.append('_id', currentCategory._id);
-
       formdata.append('title', data.title);
       formdata.append('slug', data.slug);
       formdata.append('coverImage', data.coverImage as File);
 
-      if (currentCategory) await axios.patch(endpoints.categories.update, formdata);
-      else await axios.post(endpoints.categories.create, formdata);
-      onEditRow();
-      onClose();
+      onEditRow(formdata);
+
       enqueueSnackbar('Update success!');
+
+      onClose();
     } catch (error) {
       console.error(error && error);
     }

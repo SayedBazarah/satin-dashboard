@@ -76,11 +76,7 @@ export function useNavData() {
             path: paths.dashboard.categories,
             icon: ICONS.label,
           },
-          // {
-          //   title: t('nav.promotions'),
-          //   path: paths.dashboard.promotions.root,
-          //   icon: ICONS.label,
-          // },
+
           // {
           //   title: t('nav.inventory'),
           //   path: paths.dashboard.inventory.root,
@@ -121,21 +117,17 @@ export function useNavData() {
               },
             ],
           },
-          // {
-          //   title: t('nav.customers'),
-          //   path: paths.dashboard.customers.root,
-          //   icon: ICONS.label,
-          // },
-          // {
-          //   title: t('nav.notification'),
-          //   path: paths.dashboard.notification.root,
-          //   icon: ICONS.chat,
-          // },
-          // {
-          //   title: t('nav.blog'),
-          //   path: paths.dashboard.blog.root,
-          //   icon: ICONS.blog,
-          // },
+          {
+            title: t('nav.settings'),
+            path: paths.dashboard.settings.root,
+            icon: ICONS.label,
+            children: [
+              {
+                title: t('nav.change-password'),
+                path: paths.dashboard.settings.changePassword,
+              },
+            ],
+          },
         ],
       },
     ],

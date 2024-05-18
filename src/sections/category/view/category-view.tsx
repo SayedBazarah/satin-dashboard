@@ -62,8 +62,6 @@ export default function PermissionsListView() {
 
   const quickCreate = useBoolean();
 
-  // ------------------------------------------------
-
   const TABLE_HEAD = [
     { id: 'title', label: t('category.title') },
     { id: '', width: 88 },
@@ -81,38 +79,51 @@ export default function PermissionsListView() {
   );
 
   const handleDeleteRows = useCallback(async () => {
-    await axios.delete(endpoints.roles.delete_rows, {
+    await axios.delete(endpoints.categories.deleteRows, {
       data: {
-        roles: table.selected,
+        categories: table.selected,
       },
     });
-    const deleteRows = tableData.filter((row) => !table.selected.includes(row._id));
-
     enqueueSnackbar('Delete success!');
-
-    setTableData(deleteRows);
-
-    table.onUpdatePageDeleteRows({
-      totalRowsInPage: dataInPage.length,
-      totalRowsFiltered: dataFiltered.length,
-    });
-  }, [dataFiltered.length, dataInPage.length, enqueueSnackbar, table, tableData]);
+    GetData();
+  }, [table.selected, enqueueSnackbar]);
 
   const handleDeleteRow = useCallback(
     async (_id: string) => {
-      await axios.delete(endpoints.roles.delete(_id));
-      const deleteRow = tableData.filter((row) => row._id !== _id);
-
+      await axios.delete(endpoints.categories.delete(_id));
       enqueueSnackbar('Delete success!');
-
-      setTableData(deleteRow);
-
-      table.onUpdatePageDeleteRow(dataInPage.length);
+      GetData();
     },
-    [dataInPage.length, enqueueSnackbar, table, tableData]
+    [enqueueSnackbar]
   );
 
-  const updateData = useCallback(async () => {
+  const handleUpdateCategory = useCallback(
+    async (id: string, category?: FormData) => {
+      try {
+        await axios.patch(endpoints.categories.update(id), category);
+        enqueueSnackbar('Updated success!');
+        GetData();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [enqueueSnackbar]
+  );
+
+  const handleCreateCategory = useCallback(
+    async (category: FormData) => {
+      try {
+        await axios.post(endpoints.categories.create, category);
+        enqueueSnackbar('Created success!');
+        GetData();
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [enqueueSnackbar]
+  );
+
+  const GetData = useCallback(async () => {
     try {
       const { data } = await axios.get(endpoints.categories.all);
       if (data) setTableData(data.categories);
@@ -124,8 +135,8 @@ export default function PermissionsListView() {
   // ------------------------------------------------
 
   useEffect(() => {
-    updateData();
-  }, [updateData]);
+    GetData();
+  }, []);
 
   // ------------------------------------------------
 
@@ -210,7 +221,7 @@ export default function PermissionsListView() {
                       selected={table.selected.includes(row._id)}
                       onSelectRow={() => table.onSelectRow(row._id)}
                       onDeleteRow={() => handleDeleteRow(row._id)}
-                      onEditRow={updateData}
+                      onEditRow={handleUpdateCategory}
                     />
                   ))}
               </TableBody>
@@ -219,7 +230,7 @@ export default function PermissionsListView() {
         </TableContainer>
       </Container>
       <CategoryCreateEditForm
-        onEditRow={updateData}
+        onEditRow={handleCreateCategory}
         onClose={quickCreate.onFalse}
         open={quickCreate.value}
       />

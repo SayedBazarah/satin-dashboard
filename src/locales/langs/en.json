@@ -189,6 +189,8 @@
     "invoices": "Invoices",
     "blog": "Blog",
     "logistics": "Logistics",
+    "settings": "Settings",
+    "change-password": "Change Password",
     "orders": "Orders"
   },
   "employees": {

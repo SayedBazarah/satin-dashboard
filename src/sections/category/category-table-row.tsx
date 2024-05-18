@@ -24,7 +24,7 @@ import CategoryCreateEditForm from './category-create-edit-form';
 
 type Props = {
   selected: boolean;
-  onEditRow: VoidFunction;
+  onEditRow: (id: string, category: FormData) => void;
   row: ICategory;
   onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
@@ -77,8 +77,6 @@ export default function CategoryTableRow({
           </Stack>
         </TableCell>
 
-        {/* <TableCell sx={{ whiteSpace: 'nowrap' }}>{branch?.label}</TableCell> */}
-
         <TableCell align="right" sx={{ px: 1, whiteSpace: 'nowrap' }}>
           <IconButton color={popover.open ? 'inherit' : 'default'} onClick={popover.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
@@ -88,7 +86,11 @@ export default function CategoryTableRow({
 
       <CategoryCreateEditForm
         currentCategory={row}
-        onEditRow={onEditRow}
+        onEditRow={(formdata: FormData) => {
+          onEditRow(row._id, formdata);
+          console.log('formdata');
+          console.log(formdata);
+        }}
         onClose={quickEdit.onFalse}
         open={quickEdit.value}
       />
@@ -101,7 +103,6 @@ export default function CategoryTableRow({
       >
         <MenuItem
           onClick={() => {
-            onEditRow();
             popover.onClose();
           }}
         >
