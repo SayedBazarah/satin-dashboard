@@ -31,8 +31,7 @@ export default function Header({ onOpenNav }: Props) {
   const theme = useTheme();
 
   const { user } = useAuthContext();
-  console.log('user');
-  console.log(user);
+
   const settings = useSettingsContext();
 
   const isNavHorizontal = settings.themeLayout === 'horizontal';

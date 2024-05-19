@@ -47,7 +47,6 @@ export default function NextAppDirEmotionCacheProvider(props: NextAppDirEmotionC
   });
 
   useServerInsertedHTML(() => {
-    console.log('first');
     const inserted = registry.flush();
 
     if (inserted.length === 0) {

@@ -256,5 +256,13 @@
       "role": "الوظيفة"
     },
     "y": "x"
+  },
+  "settings": {
+    "root": "الاعدادات",
+    "old-password": "كلمة المرور القديمة",
+    "new-password": "كلمة المرور الجديده",
+    "confirm-password": "تاكيد كلمة المرور",
+    "confirm-password-error": "يجب ان تكون كلمة السر متشابه",
+    "change-password": "تغيير كلمة المرور"
   }
 }

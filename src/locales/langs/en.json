@@ -256,5 +256,13 @@
       "role": "Role is required"
     },
     "y": "x"
+  },
+  "settings": {
+    "root": "Settings",
+    "old-password": "Old Password",
+    "new-password": "New Password",
+    "confirm-password": "Confirm Password",
+    "confirm-password-error": "The password must be the same",
+    "change-password": "Change Password"
   }
 }

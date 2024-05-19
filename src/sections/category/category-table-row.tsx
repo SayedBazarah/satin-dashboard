@@ -88,8 +88,6 @@ export default function CategoryTableRow({
         currentCategory={row}
         onEditRow={(formdata: FormData) => {
           onEditRow(row._id, formdata);
-          console.log('formdata');
-          console.log(formdata);
         }}
         onClose={quickEdit.onFalse}
         open={quickEdit.value}

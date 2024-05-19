@@ -175,6 +175,20 @@ export function AuthProvider({ children }: Props) {
     []
   );
 
+  // REGISTER
+  const changePassword = useCallback(
+    async (data: { password: string; newPassword: string; confirm: string }) => {
+      await axios.patch(endpoints.auth.changePassword, data);
+
+      localStorage.setItem(STORAGE_KEY, '');
+      setSession(null);
+      dispatch({
+        type: Types.LOGOUT,
+      });
+    },
+    []
+  );
+
   // LOGOUT
   const logout = useCallback(async () => {
     setSession(null);
@@ -228,8 +242,9 @@ export function AuthProvider({ children }: Props) {
       logout,
       forgotPassword,
       newPassword,
+      changePassword,
     }),
-    [login, logout, register, forgotPassword, newPassword, state.user, status]
+    [login, logout, register, forgotPassword, newPassword, changePassword, state.user, status]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;

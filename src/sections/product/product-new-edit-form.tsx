@@ -137,9 +137,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
   }, [currentProduct?.taxes, includeTaxes, setValue]);
 
   // -----------------------------------------------------------------
-  console.log('currentProduct');
-  console.log(currentProduct);
-  // -----------------------------------------------------------------
+
   const onSubmit = handleSubmit(async (data) => {
     try {
       const formData = new FormData();
@@ -263,8 +261,7 @@ export default function ProductNewEditForm({ currentProduct }: Props) {
       </Grid>
     </>
   );
-  console.log('values');
-  console.log(values);
+
   const renderProperties = (
     <>
       {mdUp && (

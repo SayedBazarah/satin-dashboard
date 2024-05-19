@@ -1,7 +1,5 @@
-// ----------------------------------------------------------------------
-
-import { OverviewEcommerceView } from 'src/sections/dashboard/view';
+import { ChangePasswordView } from 'src/sections/settings/view';
 
 export default function HomePage() {
-  return <OverviewEcommerceView />;
+  return <ChangePasswordView />;
 }

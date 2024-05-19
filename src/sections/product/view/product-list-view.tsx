@@ -347,8 +347,7 @@ function applyFilter({
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  console.log('filters');
-  console.log(filters);
+
   if (name.length) {
     inputData = inputData.filter(
       (poduct) => poduct.name.toLowerCase().indexOf(name.toLowerCase()) !== -1

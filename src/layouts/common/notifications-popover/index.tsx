@@ -28,17 +28,11 @@ type Props = {
 
 export default function NotificationsPopover({ notifications = [] }: Props) {
   const drawer = useBoolean();
-  console.log('NOTIFICATION ===========================');
-  console.info(notifications);
   const smUp = useResponsive('up', 'sm');
 
   const totalUnRead = notifications.filter((item) => item.isUnRead === true).length;
 
-  console.log('totalUnRead');
-  console.log(totalUnRead);
-  const handleMarkAllAsRead = () => {
-    console.log('HANDLE MAKE NOTIFICATION READ');
-  };
+  const handleMarkAllAsRead = () => {};
   const renderHead = (
     <Stack direction="row" alignItems="center" sx={{ py: 2, pl: 2.5, pr: 1, minHeight: 68 }}>
       <Typography variant="h6" sx={{ flexGrow: 1 }}>

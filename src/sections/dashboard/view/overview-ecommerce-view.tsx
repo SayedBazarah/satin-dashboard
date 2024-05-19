@@ -13,14 +13,16 @@ import { useMockedUser } from 'src/hooks/use-mocked-user';
 
 import { Locale, useLocales, useTranslate } from 'src/locales';
 import { MotivationIllustration } from 'src/assets/illustrations';
-import { _ecommerceBestSaleItems, _ecommerceLatestProducts } from 'src/_mock';
+import {
+  _ecommerceBestSaleItems,
+  _ecommerceLatestProducts,
+} from 'src/_mock';
 
 import { useSettingsContext } from 'src/components/settings';
 
 import EcommerceWelcome from '../ecommerce-welcome';
 import EcommerceYearlySales from '../ecommerce-yearly-sales';
 import EcommerceBestSaleItem from '../ecommerce-best-salesman';
-import EcommerceSaleByGender from '../ecommerce-sale-by-gender';
 import EcommerceWidgetSummary from '../ecommerce-widget-summary';
 import EcommerceLatestProducts from '../ecommerce-latest-products';
 
@@ -70,10 +72,6 @@ export default function OverviewEcommerceView() {
           />
         </Grid>
 
-        {/* <Grid xs={12} md={4}>
-          <EcommerceNewProducts list={_ecommerceNewProducts} />
-        </Grid> */}
-
         <Grid xs={12} md={4}>
           <EcommerceWidgetSummary
             title={t('solid')}
@@ -112,20 +110,7 @@ export default function OverviewEcommerceView() {
           />
         </Grid>
 
-        <Grid xs={12} md={6} lg={4}>
-          <EcommerceSaleByGender
-            title={t('sales-by-gender')}
-            total={2324}
-            chart={{
-              series: [
-                { label: t('mens'), value: 44 },
-                { label: t('womens'), value: 75 },
-              ],
-            }}
-          />
-        </Grid>
-
-        <Grid xs={12} md={6} lg={8}>
+        <Grid xs={12}>
           <EcommerceYearlySales
             title={t('yearly-sales')}
             subheader={`"(+43%) ${t('than-last-week')}`}

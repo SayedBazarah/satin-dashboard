@@ -1,7 +1,7 @@
 'use client';
 
 import { useSnackbar } from 'notistack';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 import {
   Table,
@@ -20,6 +20,7 @@ import { useBoolean } from 'src/hooks/use-boolean';
 import axios, { endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
+import { useGetCategories } from 'src/api/category';
 
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
@@ -54,13 +55,13 @@ export default function PermissionsListView() {
 
   const settings = useSettingsContext();
 
-  const [tableData, setTableData] = useState<ICategory[]>([]);
-
   const [filters] = useState(defaultFilters);
 
   const confirm = useBoolean();
 
   const quickCreate = useBoolean();
+
+  const { categories, mutate } = useGetCategories();
 
   const TABLE_HEAD = [
     { id: 'title', label: t('category.title') },
@@ -68,15 +69,10 @@ export default function PermissionsListView() {
   ];
 
   const dataFiltered = applyFilter({
-    inputData: tableData,
+    inputData: categories,
     comparator: getComparator(table.order, table.orderBy),
     filters,
   });
-
-  const dataInPage = dataFiltered.slice(
-    table.page * table.rowsPerPage,
-    table.page * table.rowsPerPage + table.rowsPerPage
-  );
 
   const handleDeleteRows = useCallback(async () => {
     await axios.delete(endpoints.categories.deleteRows, {
@@ -84,59 +80,49 @@ export default function PermissionsListView() {
         categories: table.selected,
       },
     });
+
+    mutate(undefined, { revalidate: true });
+
     enqueueSnackbar('Delete success!');
-    GetData();
-  }, [table.selected, enqueueSnackbar]);
+  }, [table.selected, mutate, enqueueSnackbar]);
 
   const handleDeleteRow = useCallback(
     async (_id: string) => {
       await axios.delete(endpoints.categories.delete(_id));
+      mutate(undefined, { revalidate: true });
+
       enqueueSnackbar('Delete success!');
-      GetData();
     },
-    [enqueueSnackbar]
+    [enqueueSnackbar, mutate]
   );
 
   const handleUpdateCategory = useCallback(
     async (id: string, category?: FormData) => {
       try {
         await axios.patch(endpoints.categories.update(id), category);
+        mutate(undefined, { revalidate: true });
+
         enqueueSnackbar('Updated success!');
-        GetData();
       } catch (error) {
         console.error(error);
       }
     },
-    [enqueueSnackbar]
+    [enqueueSnackbar, mutate]
   );
 
   const handleCreateCategory = useCallback(
     async (category: FormData) => {
       try {
         await axios.post(endpoints.categories.create, category);
+        mutate(undefined, { revalidate: true });
+
         enqueueSnackbar('Created success!');
-        GetData();
       } catch (error) {
         console.error(error);
       }
     },
-    [enqueueSnackbar]
+    [enqueueSnackbar, mutate]
   );
-
-  const GetData = useCallback(async () => {
-    try {
-      const { data } = await axios.get(endpoints.categories.all);
-      if (data) setTableData(data.categories);
-    } catch (error) {
-      console.error(error);
-    }
-  }, []);
-
-  // ------------------------------------------------
-
-  useEffect(() => {
-    GetData();
-  }, []);
 
   // ------------------------------------------------
 
@@ -245,7 +231,6 @@ export default function PermissionsListView() {
             variant="contained"
             color="error"
             onClick={() => {
-              console.log('ConfirmDialog');
               handleDeleteRows();
               confirm.onFalse();
             }}

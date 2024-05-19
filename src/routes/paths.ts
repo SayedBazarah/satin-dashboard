@@ -74,7 +74,7 @@ export const paths = {
     },
     settings: {
       root: `${ROOTS.DASHBOARD}/settings`,
-      changePassword: `${ROOTS.DASHBOARD}/change-password`,
+      changePassword: `${ROOTS.DASHBOARD}/settings/change-password`,
     },
   },
 };

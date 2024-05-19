@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import { useSnackbar } from 'notistack';
 import { useForm } from 'react-hook-form';
 import React, { useMemo, useCallback } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,8 +14,6 @@ import {
   DialogActions,
   DialogContent,
 } from '@mui/material';
-
-import axios, { endpoints } from 'src/utils/axios';
 
 import { useTranslate } from 'src/locales';
 
@@ -39,8 +36,6 @@ export default function CategoryCreateEditForm({
   onEditRow,
 }: Props) {
   const { t } = useTranslate();
-
-  const { enqueueSnackbar } = useSnackbar();
 
   const NewRoleSchema = Yup.object().shape({
     slug: Yup.string().required(t('category.form-error-slug')),
@@ -77,8 +72,6 @@ export default function CategoryCreateEditForm({
       formdata.append('coverImage', data.coverImage as File);
 
       onEditRow(formdata);
-
-      enqueueSnackbar('Update success!');
 
       onClose();
     } catch (error) {

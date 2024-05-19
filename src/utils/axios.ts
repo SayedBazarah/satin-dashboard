@@ -36,6 +36,7 @@ export const endpoints = {
     forgot: '/api/auth/forgot-password',
     update: '/api/auth/update-password',
     check_token: '/api/auth/token-validator',
+    changePassword: '/api/auth/change-password',
   },
   employee: {
     list: '/api/employee',

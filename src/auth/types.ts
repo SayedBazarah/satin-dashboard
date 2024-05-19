@@ -46,6 +46,11 @@ type CanRemove = {
   resendCodeRegister?: (email: string) => Promise<void>;
   newPassword?: (token: string, password: string, confirm: string) => Promise<void>;
   updatePassword?: (password: string) => Promise<void>;
+  changePassword: (data: {
+    password: string;
+    newPassword: string;
+    confirm: string;
+  }) => Promise<void>;
 };
 
 export type JWTContextType = CanRemove & {

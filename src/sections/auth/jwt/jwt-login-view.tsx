@@ -48,8 +48,8 @@ export default function JwtLoginView() {
   });
 
   const defaultValues = {
-    email: 'sayed@multisystem-eg.com',
-    password: 'demo1234',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({
