@@ -127,11 +127,6 @@ export default function JwtLoginView() {
     <>
       {renderHead}
 
-      <Alert severity="info" sx={{ mb: 3 }}>
-        {t('auth.email')} : <strong>sayed@multisystem-eg.com</strong> / {t('auth.password')} :
-        <strong> demo1234</strong>
-      </Alert>
-
       {!!errorMsg && (
         <Alert severity="error" sx={{ mb: 3 }}>
           {errorMsg}
