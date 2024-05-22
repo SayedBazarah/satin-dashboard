@@ -11,6 +11,8 @@ import { paths } from 'src/routes/paths';
 
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
+import axiosInstance from 'src/utils/axios';
+
 import { Locale, useLocales, useTranslate } from 'src/locales';
 import { MotivationIllustration } from 'src/assets/illustrations';
 import { _ecommerceBestSaleItems, _ecommerceLatestProducts } from 'src/_mock';
@@ -22,7 +24,6 @@ import EcommerceYearlySales from '../ecommerce-yearly-sales';
 import EcommerceBestSaleItem from '../ecommerce-best-salesman';
 import EcommerceWidgetSummary from '../ecommerce-widget-summary';
 import EcommerceLatestProducts from '../ecommerce-latest-products';
-import axiosInstance, { endpoints } from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 

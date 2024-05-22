@@ -3,12 +3,12 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import axios from 'src/utils/axios';
 import { localStorageGetItem } from 'src/utils/storage-available';
 
 import { useSettingsContext } from 'src/components/settings';
 
 import { allLangs, defaultLang } from './config-lang';
-import axios from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
