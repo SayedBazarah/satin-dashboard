@@ -13,10 +13,7 @@ import { useMockedUser } from 'src/hooks/use-mocked-user';
 
 import { Locale, useLocales, useTranslate } from 'src/locales';
 import { MotivationIllustration } from 'src/assets/illustrations';
-import {
-  _ecommerceBestSaleItems,
-  _ecommerceLatestProducts,
-} from 'src/_mock';
+import { _ecommerceBestSaleItems, _ecommerceLatestProducts } from 'src/_mock';
 
 import { useSettingsContext } from 'src/components/settings';
 
@@ -25,6 +22,7 @@ import EcommerceYearlySales from '../ecommerce-yearly-sales';
 import EcommerceBestSaleItem from '../ecommerce-best-salesman';
 import EcommerceWidgetSummary from '../ecommerce-widget-summary';
 import EcommerceLatestProducts from '../ecommerce-latest-products';
+import axiosInstance, { endpoints } from 'src/utils/axios';
 
 // ----------------------------------------------------------------------
 
@@ -54,6 +52,16 @@ export default function OverviewEcommerceView() {
 
   const settings = useSettingsContext();
 
+  return (
+    <Button
+      onClick={async () => {
+        const { data } = await axiosInstance.get('/api/test');
+        alert(`${data}`);
+      }}
+    >
+      Test
+    </Button>
+  );
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <Grid container spacing={3}>
