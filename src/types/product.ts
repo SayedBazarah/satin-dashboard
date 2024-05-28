@@ -32,6 +32,7 @@ export type IProductReview = {
 };
 
 export type IProductItem = {
+  locale: string;
   _id: string;
   sku: string;
   name: string;
@@ -77,6 +78,7 @@ export type ICategory = {
   _id: string;
   slug: string;
   title: string;
+  icon: string;
   coverImage: string;
 };
 
@@ -88,6 +90,7 @@ export type IProductTableFilterValue = string | string[];
 
 export type IProductTableFilters = {
   stock: string[];
+  locale: string[];
   publish: string[];
   name: string;
 };

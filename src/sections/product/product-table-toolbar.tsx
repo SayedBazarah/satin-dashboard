@@ -30,6 +30,10 @@ type Props = {
     value: string;
     label: string;
   }[];
+  localeOptions: {
+    value: string;
+    label: string;
+  }[];
 };
 
 export default function ProductTableToolbar({
@@ -39,6 +43,7 @@ export default function ProductTableToolbar({
   //
   stockOptions,
   publishOptions,
+  localeOptions,
 }: Props) {
   const popover = usePopover();
 
@@ -58,6 +63,16 @@ export default function ProductTableToolbar({
         target: { value },
       } = event;
       onFilters('publish', typeof value === 'string' ? value.split(',') : value);
+    },
+    [onFilters]
+  );
+
+  const handleChangeLocale = useCallback(
+    (event: SelectChangeEvent<string[]>) => {
+      const {
+        target: { value },
+      } = event;
+      onFilters('locale', typeof value === 'string' ? value.split(',') : value);
     },
     [onFilters]
   );
@@ -127,6 +142,34 @@ export default function ProductTableToolbar({
                 disableRipple
                 size="small"
                 checked={filters.publish.includes(option.value)}
+              />
+              {option.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl
+        sx={{
+          flexShrink: 0,
+          width: { xs: 1, md: 200 },
+        }}
+      >
+        <InputLabel>{t('product.locale')}</InputLabel>
+
+        <Select
+          multiple
+          value={filters.locale}
+          onChange={handleChangeLocale}
+          input={<OutlinedInput label="Locale" />}
+          renderValue={(selected) => selected.map((value) => value).join(', ')}
+          sx={{ textTransform: 'capitalize' }}
+        >
+          {localeOptions.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              <Checkbox
+                disableRipple
+                size="small"
+                checked={filters.locale.includes(option.value)}
               />
               {option.label}
             </MenuItem>

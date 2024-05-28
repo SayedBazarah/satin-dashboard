@@ -53,6 +53,7 @@ import ProductTableFiltersResult from '../product-table-filters-result';
 const defaultFilters: IProductTableFilters = {
   publish: [],
   stock: [],
+  locale: [],
   name: '',
 };
 
@@ -85,6 +86,11 @@ export default function ProductListView() {
   //   useState<GridColumnVisibilityModel>(HIDE_COLUMNS);
 
   // ----------------------------------------------------------------------
+
+  const LOCALE_OPTIONS = [
+    { value: 'ar', label: t('product.ar') },
+    { value: 'en', label: t('product.en') },
+  ];
 
   const PUBLISH_OPTIONS = [
     { value: 'publish', label: t('product.published') },
@@ -211,6 +217,7 @@ export default function ProductListView() {
             onFilters={handleFilters}
             stockOptions={PRODUCT_STOCK_OPTIONS}
             publishOptions={PUBLISH_OPTIONS}
+            localeOptions={LOCALE_OPTIONS}
           />
           {canReset && (
             <ProductTableFiltersResult
@@ -338,7 +345,7 @@ function applyFilter({
 
   filters: IProductTableFilters;
 }) {
-  const { name, stock, publish } = filters;
+  const { name, stock, publish, locale } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -361,6 +368,9 @@ function applyFilter({
     inputData = inputData.filter((product) =>
       publish.includes((product.publish && 'published') || 'draft')
     );
+  }
+  if (locale.length) {
+    inputData = inputData.filter((product) => locale.includes(product.locale));
   }
 
   return inputData;

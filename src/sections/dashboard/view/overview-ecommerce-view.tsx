@@ -11,8 +11,6 @@ import { paths } from 'src/routes/paths';
 
 import { useMockedUser } from 'src/hooks/use-mocked-user';
 
-import axiosInstance from 'src/utils/axios';
-
 import { Locale, useLocales, useTranslate } from 'src/locales';
 import { MotivationIllustration } from 'src/assets/illustrations';
 import { _ecommerceBestSaleItems, _ecommerceLatestProducts } from 'src/_mock';
@@ -53,16 +51,6 @@ export default function OverviewEcommerceView() {
 
   const settings = useSettingsContext();
 
-  return (
-    <Button
-      onClick={async () => {
-        const { data } = await axiosInstance.get('/api/test');
-        alert(`${data}`);
-      }}
-    >
-      Test
-    </Button>
-  );
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
       <Grid container spacing={3}>
