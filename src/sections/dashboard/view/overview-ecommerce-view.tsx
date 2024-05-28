@@ -13,10 +13,7 @@ import { useMockedUser } from 'src/hooks/use-mocked-user';
 
 import { Locale, useLocales, useTranslate } from 'src/locales';
 import { MotivationIllustration } from 'src/assets/illustrations';
-import {
-  _ecommerceBestSaleItems,
-  _ecommerceLatestProducts,
-} from 'src/_mock';
+import { _ecommerceBestSaleItems, _ecommerceLatestProducts } from 'src/_mock';
 
 import { useSettingsContext } from 'src/components/settings';
 

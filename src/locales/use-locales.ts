@@ -3,6 +3,7 @@
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
+import axios from 'src/utils/axios';
 import { localStorageGetItem } from 'src/utils/storage-available';
 
 import { useSettingsContext } from 'src/components/settings';
@@ -37,6 +38,7 @@ export function useTranslate() {
     (newlang: string) => {
       i18n.changeLanguage(newlang);
       settings.onChangeDirectionByLang(newlang);
+      axios.defaults.headers['Accept-Language'] = newlang;
     },
     [i18n, settings]
   );

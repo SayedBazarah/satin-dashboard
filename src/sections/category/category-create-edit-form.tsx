@@ -41,6 +41,7 @@ export default function CategoryCreateEditForm({
     slug: Yup.string().required(t('category.form-error-slug')),
     title: Yup.string().required(t('category.form-error-title')),
     coverImage: Yup.mixed().required(t('category.form-error-image')),
+    icon: Yup.mixed().required(t('category.form-error-image')),
   });
 
   const defaultValues = useMemo(
@@ -48,6 +49,7 @@ export default function CategoryCreateEditForm({
       slug: currentCategory?.slug || '',
       title: currentCategory?.title || '',
       coverImage: currentCategory?.coverImage || {},
+      icon: currentCategory?.icon || {},
     }),
     [currentCategory]
   );
@@ -66,10 +68,10 @@ export default function CategoryCreateEditForm({
   const onSubmit = handleSubmit(async (data) => {
     try {
       const formdata = new FormData();
-
       formdata.append('title', data.title);
       formdata.append('slug', data.slug);
       formdata.append('coverImage', data.coverImage as File);
+      formdata.append('icon', data.icon as File);
 
       onEditRow(formdata);
 
@@ -80,12 +82,21 @@ export default function CategoryCreateEditForm({
   });
 
   // ------------------------------------------------
-  const handleDrop = useCallback(
+  const handleDropCover = useCallback(
     (acceptedFile: File[]) => {
       const newFile = Object.assign(acceptedFile[0], {
         preview: URL.createObjectURL(acceptedFile[0]),
       });
       setValue('coverImage', newFile, { shouldValidate: true });
+    },
+    [setValue]
+  );
+  const handleDropIcon = useCallback(
+    (acceptedFile: File[]) => {
+      const newFile = Object.assign(acceptedFile[0], {
+        preview: URL.createObjectURL(acceptedFile[0]),
+      });
+      setValue('icon', newFile, { shouldValidate: true });
     },
     [setValue]
   );
@@ -116,10 +127,32 @@ export default function CategoryCreateEditForm({
               <RHFTextField name="title" label={t('category.title')} />
               <RHFTextField name="slug" label={t('category.slug')} />
             </Box>
-            <Stack spacing={1.5}>
-              <Typography variant="subtitle2">{t('category.image')} </Typography>
-              <RHFUploadCover name="coverImage" maxFiles={1014} onDrop={handleDrop} />
-            </Stack>
+            <Box
+              rowGap={3}
+              columnGap={2}
+              display="grid"
+              gridTemplateColumns={{
+                xs: 'repeat(1, 1fr)',
+                sm: '200px 1fr',
+              }}
+            >
+              <Stack spacing={1.5} alignItems="flex-start">
+                <Typography variant="subtitle2">{t('category.icon')} </Typography>
+                <RHFUploadCover
+                  name="icon"
+                  maxFiles={512}
+                  onDrop={handleDropIcon}
+                  sx={{
+                    width: '200px',
+                    height: '200px',
+                  }}
+                />
+              </Stack>
+              <Stack spacing={1.5}>
+                <Typography variant="subtitle2">{t('category.image')} </Typography>
+                <RHFUploadCover name="coverImage" maxFiles={1014} onDrop={handleDropCover} />
+              </Stack>
+            </Box>
           </Stack>
         </DialogContent>
         <DialogActions>

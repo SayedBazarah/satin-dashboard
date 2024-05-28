@@ -86,6 +86,9 @@
     "include-taxs": "Price includes taxs",
     "create": "Create",
     "save": "Save Changes",
+    "ar": "Arabic Products",
+    "en": "English Products",
+    "locale": "Locale",
     "publish": "Publish",
     "published": "Published",
     "delete_success": "Delted Success",
@@ -203,6 +206,7 @@
     "address": "Address"
   },
   "category": {
+    "icon": "Icon",
     "root": "Categories",
     "list": "List",
     "new": "New Category",

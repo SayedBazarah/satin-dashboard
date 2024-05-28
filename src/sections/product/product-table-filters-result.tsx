@@ -51,6 +51,14 @@ export default function ProductTableFiltersResult({
     },
     [filters.publish, onFilters]
   );
+  const handleRemoveLocale = useCallback(
+    (inputValue: string) => {
+      const newValue = filters.locale.filter((item) => item !== inputValue);
+
+      onFilters('locale', newValue);
+    },
+    [filters.locale, onFilters]
+  );
 
   return (
     <Stack spacing={1.5} {...other}>
@@ -84,6 +92,18 @@ export default function ProductTableFiltersResult({
                 label={item}
                 size="small"
                 onDelete={() => handleRemovePublish(item)}
+              />
+            ))}
+          </Block>
+        )}
+        {!!filters.locale.length && (
+          <Block label="Locale:">
+            {filters.locale.map((item) => (
+              <Chip
+                key={item}
+                label={item}
+                size="small"
+                onDelete={() => handleRemoveLocale(item)}
               />
             ))}
           </Block>

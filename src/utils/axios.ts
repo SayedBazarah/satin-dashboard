@@ -57,7 +57,7 @@ export const endpoints = {
     delete_rows: `/api/role/delete/rows`,
   },
   categories: {
-    all: '/api/category',
+    all: '/api/category/list',
     create: '/api/category',
     deleteRows: '/api/category',
     update: (id: string) => `/api/category/${id}`,
