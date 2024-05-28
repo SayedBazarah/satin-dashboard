@@ -21,12 +21,3 @@ jobs:
       - run: |
           npm install 
           npm run build
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-          pm2 restart pm2 restart satin-api
-
-      
->>>>>>> 6d3bab8 (update .yml to build everytime)
-=======
->>>>>>> 70ee9d5 (update workfole)
